@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * Handle the Creation of the UI here
@@ -15,6 +16,11 @@ import javax.swing.JLabel;
  */
 public class GUI extends JFrame implements ActionListener{
     
+    //Panels
+    private JPanel startMenuPanel;
+    private JPanel createPlayerPanel;
+    
+    //Components
     private JButton startButton;
     private JButton createPlayerButton;
     private JButton quitButton; 
@@ -27,7 +33,9 @@ public class GUI extends JFrame implements ActionListener{
     }
     
     public void initLayout(){
-        setLayout(new GridBagLayout());
+        startMenuPanel = new JPanel();
+        
+        startMenuPanel.setLayout(new GridBagLayout());
         GridBagConstraints cons = new GridBagConstraints();
         
         startButton = new JButton("Start Game");
@@ -35,22 +43,24 @@ public class GUI extends JFrame implements ActionListener{
         cons.gridx=0; cons.gridy=0; //Use Grid cell 0,0
         cons.weightx = 100; cons.weighty = 1;
         cons.insets = new Insets(5,5,5,5); //Add 5px all around of padding
-        add(startButton,cons);
+        startMenuPanel.add(startButton,cons);
         
         createPlayerButton = new JButton("Create New Player");
         createPlayerButton.addActionListener(this);
         cons.gridy++;
-        add(createPlayerButton,cons);
+        startMenuPanel.add(createPlayerButton,cons);
         
         cons.gridy++;
         quitButton = new JButton("Quit Game"); 
         quitButton.addActionListener(this);
-        add(quitButton,cons);
+        startMenuPanel.add(quitButton,cons);
         
         playersLabel = new JLabel("No Players Created");
         cons.gridy++; cons.anchor = GridBagConstraints.SOUTH;
         cons.weighty = 100;
-        add(playersLabel,cons);
+        startMenuPanel.add(playersLabel,cons);
+        
+        add(startMenuPanel);
     }
     
     public void initGui(){
@@ -59,13 +69,33 @@ public class GUI extends JFrame implements ActionListener{
         setSize(300,500);
         setVisible(true);
     }
+    
+    public void createPlayer(){
+        remove(startMenuPanel);
+        repaint();
+        
+        createPlayerPanel = new JPanel();
+        
+        createPlayerPanel.setLayout(new GridBagLayout());
+        GridBagConstraints cons = new GridBagConstraints();
+        
+        //Add JLabel
+        
+        //Add JTextField (use getText() to get entered text)
+        //You can update the players label by using setText("new text") on the label object
+        
+        //Add Create Button (remember to add action listener)
+        
+        add(createPlayerPanel);
+        //You might have to repaint
+    }
 
     @Override
     public void actionPerformed(ActionEvent event) {
         if(event.getSource() == startButton){
             //Start Game
         } else if(event.getSource() == createPlayerButton){
-            //Create Player
+            createPlayer();
         } else if(event.getSource() == quitButton){
             System.exit(0);
         }
