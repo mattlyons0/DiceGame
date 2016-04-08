@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 public class GUI extends JFrame{
     
     private JButton startButton;
+    private JButton quitButton; 
     
     public GUI(){
         super("Dice Golf");
@@ -26,6 +27,11 @@ public class GUI extends JFrame{
         
         startButton = new JButton("Start Game");
         add(startButton,cons);
+        
+        cons.gridy=1;
+        quitButton = new JButton("Quit Game"); 
+        add(quitButton,cons);
+        
     }
     
     public void initGui(){
