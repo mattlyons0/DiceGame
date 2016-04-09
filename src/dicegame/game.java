@@ -14,7 +14,8 @@ public class game {
 	
 	/**
 	 * Rolls the dice and returns the value between 1 and (diceSize -1) 
-	 * @return int value rolled by dice
+	 *
+	 * Initializes: distance remaining, rolled value
 	 */
 	
 	public static void roll()
@@ -38,6 +39,8 @@ public class game {
 	/**
 	 * Rolls the dice a number of times determined by roll(). This roll does include 0 in
 	 * the possible returns as it is possible to completely miss the ball.
+	 * 
+	 * Updates: Distance Remaining
 	 */
 	
 	public static void hitTheBall()
@@ -65,7 +68,13 @@ public class game {
 		}
 	}
 	
-	
+	/**
+	 * Calls the method to roll the dice, then repeatedly hits the ball while counting the strokes 
+	 * until less than a dice roll is left. It then adds one stroke that counts for the putt and ends 
+	 * the turn.
+	 * 
+	 * Initializes: number of strokes
+	 */
 	public static void takeATurn()
 	{
 		//reset the number of strokes for the turn to 0
@@ -92,7 +101,7 @@ public class game {
 	public static void main(String[] args) 
 	{
 		
-		
+		//This block was just to test the methods. It just repeatedly calls the methods.
 		Scanner in = new Scanner(System.in);
 		
 		int turn = 1;
