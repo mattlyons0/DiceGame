@@ -12,6 +12,19 @@ public class game {
 	static int distanceRemaining; //place holder for the distance remaining, initialized in the roll() method
 	static int numberOfStrokes; //place holder to keep track of strokes
 	
+	
+	/**
+	 * Constructor to ensure that all values are initialized when starting a 
+	 * new game.
+	 */
+	game()
+	{
+		rolledValue = 0;
+		distanceRemaining = 36;
+		numberOfStrokes = 0;
+	}
+	
+	
 	/**
 	 * Rolls the dice and returns the value between 1 and (diceSize -1) 
 	 *
@@ -31,6 +44,7 @@ public class game {
 		
 		rolledValue = rolled;
 		
+		
 		//when the first dice is rolled it signals the start of new hole.
 		distanceRemaining = holeDistance;
 	}
@@ -45,6 +59,7 @@ public class game {
 	
 	public static void hitTheBall()
 	{
+		//Troubleshooting key
 		boolean seeValues = false;
 		
 		int sumOfStroke = 0; //value to store how far the ball is going to go
@@ -66,6 +81,8 @@ public class game {
 			System.out.println("size of stroke:\t\t" + sumOfStroke);
 			System.out.println("distance remaining:\t" + distanceRemaining);
 		}
+		
+		numberOfStrokes++;
 	}
 	
 	/**
@@ -101,30 +118,69 @@ public class game {
 	public static void main(String[] args) 
 	{
 		
-		//This block was just to test the methods. It just repeatedly calls the methods.
-		Scanner in = new Scanner(System.in);
 		
-		int turn = 1;
+		//Testing that dice values are in the correct range.
+		boolean diceValue = true;
+		for (int i = 0; i < 100 && diceValue; i++) //100 is just an arbitrary amount
+		{
+			roll();
+			if(rolledValue > diceSize - 1 || rolledValue < 1)//ensures that values should be between 1 and the dice value -1
+			{
+				diceValue = false;
+			}
+			
+		}
 		
-		while (turn == 1)
-		{	
-			System.out.println("Take a turn? 1 --> yes / 2 --> no");
-			turn = in.nextInt();
-			if(turn == 1)
-			{
-				takeATurn();
-				System.out.println("Number of Strokes:\t" + numberOfStrokes);
-			}
-			else
-			{
-				System.out.println("Exiting System......");
-			}
+		if(diceValue)
+		{
+			System.out.println("roll()       : testing 100 dice values  : Passed");
+		}
+		else
+		{
+			System.out.println("roll()       : testing 100 dice values  : Failed");
+		}
+		
+		
+		
+		//Testing that hit the ball decreases the distance remaining
+		roll();
+		hitTheBall();
+		if(distanceRemaining < holeDistance)
+		{
+			System.out.println("hitTheBall() : distance remaining test  : Passed");
+		}
+		else
+		{
+			System.out.println("hitTheBall() : distance remaining test  : Failed");
+		}
+		
+		//Testing that hit the ball increase the number of strokes
+		roll();
+		
+		numberOfStrokes = 0;
+		
+		hitTheBall();
+		if(numberOfStrokes == 1)
+		{
+			System.out.println("hitTheBall() : number of strokes test   : Passed");
+		}
+		else
+		{
+			System.out.println("hitTheBall() : number of strokes test   : Failed");
 		}
 			
-		
-		
-			
-
+		//Testing that hit the ball increase the number of strokes after the initial hit
+		roll();
+		hitTheBall();
+		if(numberOfStrokes == 2)
+		{
+			System.out.println("hitTheBall() : number of strokes test   : Passed");
+		}
+		else
+		{
+			System.out.println("hitTheBall() : number of strokes test   : Failed");
+		}
+					
 	}
 
 }
