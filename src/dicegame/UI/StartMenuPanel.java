@@ -1,6 +1,5 @@
 package dicegame.UI;
 
-import dicegame.GUI;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -23,6 +22,10 @@ public class StartMenuPanel extends JPanel implements ActionListener{
     private JButton createPlayerButton;
     private JButton quitButton; 
     
+    /**
+     * Create a StartMenuPanel to be used in the GUI
+     * @param gui GUI object which is used to display this panel
+     */
     public StartMenuPanel(GUI gui){
         super(); //Calls JPanel constructor
         
@@ -54,6 +57,10 @@ public class StartMenuPanel extends JPanel implements ActionListener{
         add(playersLabel,cons);
     }
     
+    /**
+     * Add a player to the UI in the startMenu
+     * @param playerName String of players name
+     */
     public void addPlayer(String playerName){
         if(playersLabel.getText().equals("No Players Created")){
             playersLabel.setText("Players: "+playerName);

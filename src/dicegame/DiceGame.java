@@ -1,5 +1,6 @@
 package dicegame;
 
+import dicegame.UI.GUI;
 import javax.swing.UIManager;
 
 /**

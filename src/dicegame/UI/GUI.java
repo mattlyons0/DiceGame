@@ -1,7 +1,5 @@
-package dicegame;
+package dicegame.UI;
 
-import dicegame.UI.PlayerCreationPanel;
-import dicegame.UI.StartMenuPanel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -11,9 +9,10 @@ import javax.swing.JPanel;
  */
 public class GUI extends JFrame{
     
-    //Panels
-    private StartMenuPanel startMenuPanel;
-    private PlayerCreationPanel playerCreationPanel;
+    //Panels (Public so other panels can call their methods)
+    public StartMenuPanel startMenuPanel;
+    public PlayerCreationPanel playerCreationPanel;
+    public GameplayPanel gameplayPanel;
     
     //Store Current Panel so it can be easilly removed
     private JPanel currentPanel;
@@ -48,6 +47,11 @@ public class GUI extends JFrame{
     public void createPlayer(){
         playerCreationPanel = new PlayerCreationPanel(this);
         switchPanel(playerCreationPanel);
+    }
+    
+    public void startGame(){
+        gameplayPanel = new GameplayPanel(this);
+        switchPanel(gameplayPanel);
     }
     
     /**
