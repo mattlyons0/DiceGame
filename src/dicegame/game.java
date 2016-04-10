@@ -76,6 +76,16 @@ public class game {
 			//calculates how many yards remain, remaining yards is reset in the roll() method
 			distanceRemaining = distanceRemaining - addToStroke;
 		}
+		
+		//if the distance remaining is less than the dice size just add once stroke for the putt 
+		//and zero out the distance remaining to prevent endless game play
+		if (distanceRemaining < diceSize - 1)
+		{
+			distanceRemaining = 0;
+			numberOfStrokes++;
+		}
+		
+		
 		if(seeValues)
 		{
 			System.out.println("size of stroke:\t\t" + sumOfStroke);
