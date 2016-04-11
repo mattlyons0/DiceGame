@@ -72,7 +72,7 @@ public class StartMenuPanel extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent event) {
         if(event.getSource() == startButton){
-            //Start Game
+            gui.startGame();
         } else if(event.getSource() == createPlayerButton){
             gui.createPlayer();
         } else if(event.getSource() == quitButton){

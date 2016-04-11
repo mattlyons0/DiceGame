@@ -1,16 +1,23 @@
 package dicegame.UI;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
 /**
- *
+ * Contains the UI for the Gameplay view.
  * @author Matt Lyons
  */
 public class GameplayPanel extends JPanel implements ActionListener{
     
     private GUI gui;
+    
+    private GameAnimationComponent animationComp;
+    private GameScoreboardComponent scoreboardComp;
+    private GameControlsComponent controlsComp;
     
     /**
      * Create a StartMenuPanel to be used in the GUI
@@ -20,8 +27,28 @@ public class GameplayPanel extends JPanel implements ActionListener{
         super();
         
         this.gui=gui;
+        gui.maximize();
         
+        setLayout(new GridBagLayout());
         
+        GridBagConstraints cons = new GridBagConstraints();
+        cons.gridx=0; cons.gridy=0; cons.weightx=1; cons.weighty=30;
+        cons.fill=GridBagConstraints.BOTH; //Stretch components to fill space
+        cons.insets=new Insets(5,5,5,5); //Add some padding to components
+        
+        //Animation Part
+        animationComp = new GameAnimationComponent();
+        add(animationComp,cons);
+        
+        //Scoreboard Part
+        cons.gridy++;
+        scoreboardComp = new GameScoreboardComponent();
+        add(scoreboardComp,cons);
+        
+        //Game Controls
+        cons.gridy++; cons.weighty=5;
+        controlsComp = new GameControlsComponent();
+        add(controlsComp,cons);
     }
 
     @Override

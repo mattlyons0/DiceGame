@@ -1,5 +1,10 @@
 package dicegame.UI;
 
+import java.awt.Dimension;
+import java.awt.DisplayMode;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -49,6 +54,9 @@ public class GUI extends JFrame{
         switchPanel(playerCreationPanel);
     }
     
+    /**
+     * Switch to the gameplay view.
+     */
     public void startGame(){
         gameplayPanel = new GameplayPanel(this);
         switchPanel(gameplayPanel);
@@ -66,5 +74,15 @@ public class GUI extends JFrame{
         
         add(newPanel);
         revalidate();
+    }
+    
+    /**
+     * Maximize this JFrame
+     */
+    public void maximize(){
+//        DisplayMode display = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
+//        setLocation(0,20);
+//        setSize(display.getWidth(),display.getHeight());
+        setExtendedState(getExtendedState()|JFrame.MAXIMIZED_BOTH );
     }
 }
