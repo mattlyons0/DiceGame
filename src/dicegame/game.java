@@ -12,6 +12,10 @@ public class game {
 	static int distanceRemaining; //place holder for the distance remaining, initialized in the roll() method
 	static int numberOfStrokes; //place holder to keep track of strokes
 	
+	static int playerCount;
+	static int holeCount = 18;
+	static int gameStates[playerCount][holeCount];
+	
 	
 	/**
 	 * Constructor to ensure that all values are initialized when starting a 
@@ -22,6 +26,8 @@ public class game {
 		rolledValue = 0;
 		distanceRemaining = 36;
 		numberOfStrokes = 0;
+		playerCount = 1;
+		
 	}
 	
 	
@@ -122,6 +128,11 @@ public class game {
 		
 		
 		numberOfStrokes = strokes;
+	}
+	
+	public static void createPlayer()
+	{
+		playerCount++;
 	}
 	
 	
