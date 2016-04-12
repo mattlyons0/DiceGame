@@ -76,7 +76,7 @@ public class PlayerCreationPanel extends JPanel implements ActionListener{
         	name = name + " , "; 
         	
         	//removing panel
-        	GUI.switchStart(); 
+        	gui.switchStart();
         }
         
     }

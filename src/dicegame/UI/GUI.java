@@ -61,8 +61,7 @@ public class GUI extends JFrame {
     /**
      * Switch to the main menu.
      */
-    public static void switchStart(){
-    	startMenuPanel = new StartMenuPanel(this);
+    public void switchStart(){
     	switchPanel(startMenuPanel);
     }
 
@@ -78,6 +77,7 @@ public class GUI extends JFrame {
         currentPanel = newPanel;
 
         add(newPanel);
+        repaint();
         revalidate();
     }
 
