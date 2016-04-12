@@ -13,7 +13,7 @@
 	static int holeDistance = 36;
  	static int distanceRemaining; //place holder for the distance remaining, initialized in the roll() method
  	static int numberOfStrokes; //place holder to keep track of strokes
- 	
+ 
  	static int playerName;
  	static int playerCount;
  	static int holeCount = 18;
