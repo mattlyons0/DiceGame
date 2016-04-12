@@ -14,8 +14,8 @@ public class game {
 	
 	static int playerCount;
 	static int holeCount = 18;
-	static int gameStates[playerCount][holeCount];
-	
+	static int[][]	gameStats = new int[playerCount][holeCount];
+	static String[] playerName = new String[playerCount];
 	
 	/**
 	 * Constructor to ensure that all values are initialized when starting a 
@@ -57,13 +57,13 @@ public class game {
 	
 	
 	/**
-	 * Rolls the dice a number of times determined by roll(). This roll does include 0 in
-	 * the possible returns as it is possible to completely miss the ball.
-	 * 
-	 * Updates: Distance Remaining
+	 * Finds the sum of a number of values that determine how far the ball is hit.
+	 * The number of values is determined by rolling the dice.
+	 * @param playerIndex
+	 * @param holeNumber
 	 */
 	
-	public static void hitTheBall()
+	public static void hitTheBall(int playerIndex, int holeNumber)
 	{
 		//Troubleshooting key
 		boolean seeValues = false;
@@ -88,7 +88,7 @@ public class game {
 		if (distanceRemaining < diceSize - 1)
 		{
 			distanceRemaining = 0;
-			numberOfStrokes++;
+			gameStats[playerIndex][holeNumber] = gameStats[playerIndex][holeNumber]++;
 		}
 		
 		
@@ -98,41 +98,37 @@ public class game {
 			System.out.println("distance remaining:\t" + distanceRemaining);
 		}
 		
-		numberOfStrokes++;
+		gameStats[playerIndex][holeNumber]++;
 	}
+	
+	
 	
 	/**
-	 * Calls the method to roll the dice, then repeatedly hits the ball while counting the strokes 
-	 * until less than a dice roll is left. It then adds one stroke that counts for the putt and ends 
-	 * the turn.
+	 * Creates a new player in the game by adding 1 to the player count in the stats array
 	 * 
-	 * Initializes: number of strokes
+	 * @param String players name to be added
 	 */
-	public static void takeATurn()
-	{
-		//reset the number of strokes for the turn to 0
-		int strokes = 0;
-		
-		//find the initial roll value
-		roll();
-		
-		//keep hitting the ball until it goes in the hole
-		while(distanceRemaining > 1 && distanceRemaining >= diceSize - 1)
-		{
-			hitTheBall();
-			strokes++;
-		}
-		
-		//Once the distanceRemaining is less than a dice roll add one for the putt and end the turn
-		strokes++;
-		
-		
-		numberOfStrokes = strokes;
-	}
-	
-	public static void createPlayer()
+	public static void createPlayer(String name)
 	{
 		playerCount++;
+		playerName[(playerCount - 1)] = name;
+		
+	}
+	
+	
+	/**
+	 * Initialize the game statistics array to all 0s so that additions can be performed.
+	 * 
+	 */
+	public static void initializeGameStats()
+	{
+		for (int playerIndex = 0; playerIndex < playerCount; playerIndex++)
+		{
+			for (int holeIndex = 0; holeIndex < holeCount; holeIndex++)
+			{
+				gameStats[playerIndex][holeIndex] = 0;
+			}
+		}
 	}
 	
 	
@@ -165,7 +161,7 @@ public class game {
 		
 		//Testing that hit the ball decreases the distance remaining
 		roll();
-		hitTheBall();
+		hitTheBall(0,0);
 		if(distanceRemaining < holeDistance)
 		{
 			System.out.println("hitTheBall() : distance remaining test  : Passed");
@@ -180,7 +176,7 @@ public class game {
 		
 		numberOfStrokes = 0;
 		
-		hitTheBall();
+		hitTheBall(0,0);
 		if(numberOfStrokes == 1)
 		{
 			System.out.println("hitTheBall() : number of strokes test   : Passed");
@@ -192,7 +188,7 @@ public class game {
 			
 		//Testing that hit the ball increase the number of strokes after the initial hit
 		roll();
-		hitTheBall();
+		hitTheBall(0,0);
 		if(numberOfStrokes == 2)
 		{
 			System.out.println("hitTheBall() : number of strokes test   : Passed");
