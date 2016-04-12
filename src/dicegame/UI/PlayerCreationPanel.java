@@ -16,8 +16,8 @@ public class PlayerCreationPanel extends JPanel implements ActionListener{
     
     private GUI gui;
     private JLabel playersName; 
-    private JTextField enterName;
-    private JTextField displayName; 
+    private JLabel displayName;
+    private JTextField enterName; 
     private JButton addPlayer; 
     private String name; 
     
@@ -58,8 +58,7 @@ public class PlayerCreationPanel extends JPanel implements ActionListener{
         
         //Adding JTextField to display name for entered players
         cons.gridy++;
-        displayName = new JTextField();
-        displayName.setText(name);
+        displayName = new JLabel("Please enter name and press add");
         add(displayName, cons);
         
     }
@@ -72,8 +71,9 @@ public class PlayerCreationPanel extends JPanel implements ActionListener{
         	
         	//storing name
         	name = enterName.getText();
-        	displayName.setText(name);
-        	name = name + " , "; 
+        	
+        	//adding players to game.
+        	gui.startMenuPanel.addPlayer(name);
         	
         	//removing panel
         	gui.switchStart();
