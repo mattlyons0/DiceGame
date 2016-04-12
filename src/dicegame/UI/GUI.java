@@ -57,6 +57,13 @@ public class GUI extends JFrame {
         gameplayPanel = new GameplayPanel(this);
         switchPanel(gameplayPanel);
     }
+    
+    /**
+     * Switch to the main menu.
+     */
+    public void switchStart(){
+    	switchPanel(startMenuPanel);
+    }
 
     /**
      * Remove the current panel (if it exists), and add the new panel
@@ -70,6 +77,7 @@ public class GUI extends JFrame {
         currentPanel = newPanel;
 
         add(newPanel);
+        repaint();
         revalidate();
     }
 
