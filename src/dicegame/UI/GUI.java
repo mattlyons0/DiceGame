@@ -57,12 +57,12 @@ public class GUI extends JFrame {
         gameplayPanel = new GameplayPanel(this);
         switchPanel(gameplayPanel);
     }
-    
+
     /**
      * Switch to the main menu.
      */
-    public void switchStart(){
-    	switchPanel(startMenuPanel);
+    public void switchStart() {
+        switchPanel(startMenuPanel);
     }
 
     /**

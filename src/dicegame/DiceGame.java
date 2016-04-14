@@ -4,13 +4,15 @@ import dicegame.UI.GUI;
 import javax.swing.UIManager;
 
 /**
- * Main class, creates the GUI
+ * Main class, creates the GUI and uses system's L&F
+ *
  * @author Matt Lyons, David Lukacs, Daniel Kercheski, David McClure
  */
 public class DiceGame {
-    public static void main(String[] args){
-            
-            //Use operating system look and feel.
+
+    public static void main(String[] args) {
+
+        //Use operating system look and feel.
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             if (UIManager.getSystemLookAndFeelClassName().equals("javax.swing.plaf.metal.MetalLookAndFeel")) { //Fix detection with linux
@@ -21,7 +23,7 @@ public class DiceGame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         GUI gui = new GUI();
-	}
+    }
 }

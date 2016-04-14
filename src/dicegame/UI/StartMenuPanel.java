@@ -40,7 +40,7 @@ public class StartMenuPanel extends JPanel implements ActionListener {
 
         startButton = new JButton("Start Game");
         startButton.addActionListener(this);
-        
+
         cons.gridx = 0;
         cons.gridy = 0; //Use Grid cell 0,0
         cons.weightx = 100;

@@ -35,7 +35,7 @@ class GameScoreboardComponent extends JComponent {
         table.setRowSelectionAllowed(false);
         table.setColumnSelectionAllowed(false);
         table.getTableHeader().setReorderingAllowed(false);
-        
+
         JScrollPane scroll = new JScrollPane(table);
 
         add(scroll, cons);
