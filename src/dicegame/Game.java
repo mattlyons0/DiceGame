@@ -14,7 +14,7 @@ public class Game {
 	static int distanceRemaining; //place holder for the distance remaining, initialized in the roll() method
 	static int numberOfStrokes; //place holder to keep track of strokes
 	
-	static int playerCount;
+	static int playerCount = 10;
 	static int holeCount = 18;
 	static int[][]	gameStats = new int[playerCount][holeCount];
 	static String[] playerName = new String[playerCount];
@@ -90,7 +90,12 @@ public class Game {
 		if (distanceRemaining < diceSize - 1)
 		{
 			distanceRemaining = 0;
-			gameStats[playerIndex][holeNumber] = gameStats[playerIndex][holeNumber]++;
+			gameStats[playerIndex][holeNumber] = gameStats[playerIndex][holeNumber] + 1;
+		}
+		
+		else
+		{
+			gameStats[playerIndex][holeNumber] = gameStats[playerIndex][holeNumber] + 1;
 		}
 		
 		
@@ -100,7 +105,7 @@ public class Game {
 			System.out.println("distance remaining:\t" + distanceRemaining);
 		}
 		
-		gameStats[playerIndex][holeNumber]++;
+		
 	}
 	
 	
@@ -133,11 +138,26 @@ public class Game {
 		}
 	}
 	
-	
+	/**
+ 	 * Prints out current stats of players and hole-stroke counts for each respective hole
+ 	 * in a 2D-array format
+ 	 */
+ 	public static void statsUpdate()
+ 	{
+ 		for (int i=0; i < playerCount; i++)
+		{
+			   for (int j=0; j < holeCount; j++)
+			   {
+			      System.out.print(gameStats[i][j] + "\t");
+			   }
+			   System.out.println();
+		}
+ 	}
+ 	
 	public static void main(String[] args) 
 	{
 		
-		
+		initializeGameStats();
 		//Testing that dice values are in the correct range.
 		boolean diceValue = true;
 		for (int i = 0; i < 100 && diceValue; i++) //100 is just an arbitrary amount
@@ -173,32 +193,36 @@ public class Game {
 			System.out.println("hitTheBall() : distance remaining test  : Failed");
 		}
 		
-		//Testing that hit the ball increase the number of strokes
-		roll();
 		
-		numberOfStrokes = 0;
 		
-		hitTheBall(0,0);
-		if(numberOfStrokes == 1)
-		{
-			System.out.println("hitTheBall() : number of strokes test   : Passed");
-		}
-		else
-		{
-			System.out.println("hitTheBall() : number of strokes test   : Failed");
-		}
-			
-		//Testing that hit the ball increase the number of strokes after the initial hit
+		//Test that hit the ball adds one hit to the score card for the appropriate person.
+		System.out.println("Score card: should show player 1 has 2 strokes, player 2 has 1, and player 3 has 1.");
 		roll();
 		hitTheBall(0,0);
-		if(numberOfStrokes == 2)
-		{
-			System.out.println("hitTheBall() : number of strokes test   : Passed");
-		}
-		else
-		{
-			System.out.println("hitTheBall() : number of strokes test   : Failed");
-		}
+		
+		roll();
+		hitTheBall(1,0);
+		
+		roll();
+		hitTheBall(2,0);
+		
+		statsUpdate();
+		
+		//Test that hit the ball adds one hit to the score card for different holes.
+		System.out.println("\nScore card: should show player 1 has 1 strokes, player 2 has 1, and player 3 has 1, for hole 2.");
+		roll();
+		hitTheBall(0,1);
+		
+		roll();
+		hitTheBall(1,1);
+		
+		roll();
+		hitTheBall(2,1);
+		
+		statsUpdate();
+		
+		
+		
 					
 	}
 
