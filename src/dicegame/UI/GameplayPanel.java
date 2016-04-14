@@ -15,7 +15,7 @@ public class GameplayPanel extends JPanel {
     private GUI gui;
 
     private GameAnimationComponent animationComp;
-    private GameScoreboardComponent scoreboardComp;
+    public GameScoreboardComponent scoreboardComp;
     private GameControlsComponent controlsComp;
 
     /**
@@ -51,7 +51,7 @@ public class GameplayPanel extends JPanel {
         //Game Controls
         cons.gridy++;
         cons.weighty = 5;
-        controlsComp = new GameControlsComponent();
+        controlsComp = new GameControlsComponent(gui);
         add(controlsComp, cons);
     }
 

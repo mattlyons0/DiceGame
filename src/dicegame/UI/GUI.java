@@ -1,5 +1,6 @@
 package dicegame.UI;
 
+import dicegame.Game;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -17,6 +18,9 @@ public class GUI extends JFrame {
 
     //Store Current Panel so it can be easilly removed
     private JPanel currentPanel;
+    
+    //Logic which runs the game and stores the Stats
+    public Game gameLogic;
 
     /**
      * Create a JFrame with the start menu view.

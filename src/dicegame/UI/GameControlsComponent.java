@@ -1,5 +1,6 @@
 package dicegame.UI;
 
+import dicegame.Game;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -21,14 +22,21 @@ import javax.swing.JPanel;
  */
 class GameControlsComponent extends JComponent implements ActionListener {
 
-    JLabel playerTurnLabel;
-    JPanel dicePanel;
+    private JLabel playerTurnLabel;
+    private JPanel dicePanel;
 
+    private Game gameLogic;
+    private GameScoreboardComponent scoreboard;
+    
+    private int[] rollValues;
     /**
      * Create a new GameControlsComponent and all its components.
      */
-    public GameControlsComponent() {
+    public GameControlsComponent(GUI gui) {
         super();
+        
+        this.gameLogic = gui.gameLogic;
+        this.scoreboard = gui.gameplayPanel.scoreboardComp;
 
         setBorder(BorderFactory.createLoweredBevelBorder());
         setLayout(new GridBagLayout());
@@ -87,11 +95,19 @@ class GameControlsComponent extends JComponent implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getActionCommand().equals("MultiplierRoll")) {
-            Random rand = new Random();
-            diceRoll(rand.nextInt(6) + 1);
+            int multiplier = gameLogic.roll();
+            rollValues = gameLogic.hitTheBall(0,0); //Preroll values and display them as they are clicked
+            
+            diceRoll(multiplier); //Update GUI with multiplier
         } else if (event.getActionCommand().startsWith("RollDie")) {
-            int number = Integer.parseInt(event.getActionCommand().split(" ")[1]);
-            System.out.println("Got Dice Roll " + number + " command.");
+            int diceNum = Integer.parseInt(event.getActionCommand().split(" ")[1]);
+            
+            JButton rollButton = (JButton) event.getSource();
+            rollButton.setEnabled(false);
+            rollButton.setText(rollValues[diceNum]+"");
+            rollButton.removeActionListener(this);
+            
+            scoreboard.hitBall(rollValues[diceNum]);
         }
     }
 }
