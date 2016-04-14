@@ -31,9 +31,9 @@ public class PlayerCreationPanel extends JPanel implements ActionListener{
         GridBagConstraints cons = new GridBagConstraints();        
         cons.gridx = 0;
         cons.gridy = 0;
-        cons.weightx = 1;
-        cons.weighty = 30;
-        cons.fill = GridBagConstraints.BOTH; //Stretch components to fill space
+        cons.weightx = 100;
+        cons.weighty = 1;
+        cons.gridwidth = 2;
         cons.insets = new Insets(5, 5, 5, 5); //Add some padding to components
 
         
@@ -45,19 +45,25 @@ public class PlayerCreationPanel extends JPanel implements ActionListener{
         
         //Add JTextField (use getText() to get entered text)
         cons.gridy++;
-        enterName = new JTextField();
-        enterName.getText();
+        cons.gridwidth = 1;
+        cons.weightx=90;
+        enterName = new JTextField(20);
         add(enterName,cons);
         
         //You can update the players label by using setText("new text") on the label object
         //Add Create Button (remember to add action listener)
-        cons.gridy++;
+        cons.gridx++;
+        cons.weightx = 1;
         addPlayer = new JButton("add");
         addPlayer.addActionListener(this);
         add(addPlayer, cons);
         
         //Adding JTextField to display name for entered players
         cons.gridy++;
+        cons.gridx = 0;
+        cons.gridwidth = 2;
+        cons.weightx = 100;
+        cons.anchor = GridBagConstraints.NORTH;
         displayName = new JLabel("Please enter name and press add");
         add(displayName, cons);
         
@@ -71,6 +77,8 @@ public class PlayerCreationPanel extends JPanel implements ActionListener{
         	
         	//storing name
         	name = enterName.getText();
+        	
+        	//for none text enters: name.trim().equals("");
         	
         	//adding players to game.
         	gui.startMenuPanel.addPlayer(name);
