@@ -1,141 +1,205 @@
 package dicegame;
 
 import java.util.*;
-/**
- * Handle the gameplay data and logic
- * @author Matt Lyons, David Lukacs, David McClure, Daniel Kercheski
- * 
- * 	UPDATE: New methods completed - randomRoll(), secondRoll(), distanceLeft()
- * 
- * 			Other needs:
- * 			
- * 						~Need to continuously deduct yardage from a TOTAL until
- * 						remaining distance is 0 (hole is complete).
- * 
- * 						~Need to store number of turns (strokes). Not sure if should be
- * 						implemented in Game class, or Statistics.
- *
- */
-public class Game
-{
-	static int initialDistance = 36;	//distance from each hole
-	static int upperBound = 7;			//7; because random goes up to n-1
-	static int lowerBound = 1;			//1; because lowest die value
+/**Handle the game play logic and statistics
+	 * @param args
+	 * @authors Matt Lyons, David Lukacs, David McClure, Daniel Kercheski
+	 * CSE360 Team Project
+	 */
+public class Game {
 	
+	static int rolledValue; //place holder for the first rolled value
+	static int diceSize = 7; //roll method will return random whole number between 1 and diceSize - 1
+	static int holeDistance = 36;
+	static int distanceRemaining; //place holder for the distance remaining, initialized in the roll() method
+	static int numberOfStrokes; //place holder to keep track of strokes
 	
-	//method for calculating first roll value
-	public static int randomRoll()
+	static int playerCount;
+	static int holeCount = 18;
+	static int[][]	gameStats = new int[playerCount][holeCount];
+	static String[] playerName = new String[playerCount];
+	
+	/**
+	 * Constructor to ensure that all values are initialized when starting a 
+	 * new game.
+	 */
+	Game()
 	{
-		Random random = new Random();
-		int value = random.nextInt(upperBound - lowerBound) + (lowerBound);
+		rolledValue = 0;
+		distanceRemaining = 36;
+		numberOfStrokes = 0;
+		playerCount = 1;
 		
-		return value;
 	}
 	
 	
-	//method for calculating total yardage from second roll
-	public static int secondRoll(int value)
+	/**
+	 * Rolls the dice and returns the value between 1 and (diceSize -1) 
+	 *
+	 * Initializes: distance remaining, rolled value
+	 */
+	
+	public static void roll()
 	{
-		int randomDiceRoll1;
-		int randomDiceRoll2;
-		int randomDiceRoll3;
-		int randomDiceRoll4;
-		int randomDiceRoll5;
-		int randomDiceRoll6;
+		int rolled = 0;
+		Random rollTheDice = new Random();
 		
-		int rollTotal;
+		//rollTheDice has the possibility of returning a 0, this prevents returning a 0 roll
+		while(rolled == 0)
+		{	
+			rolled = rollTheDice.nextInt(diceSize);
+		}
 		
-		Random random = new Random();
+		rolledValue = rolled;
 		
-		if (value == 1)
+		
+		//when the first dice is rolled it signals the start of new hole.
+		distanceRemaining = holeDistance;
+	}
+	
+	
+	/**
+	 * Finds the sum of a number of values that determine how far the ball is hit.
+	 * The number of values is determined by rolling the dice.
+	 * @param playerIndex
+	 * @param holeNumber
+	 */
+	
+	public static void hitTheBall(int playerIndex, int holeNumber)
+	{
+		//Troubleshooting key
+		boolean seeValues = false;
+		
+		int sumOfStroke = 0; //value to store how far the ball is going to go
+		int addToStroke = 0;
+		Random rollTheDice = new Random();
+		
+		//(distanceRemaining >= diceSize - 1) stops sumOfStroke from going over the hole
+		for(int i = 0; i < rolledValue && distanceRemaining >= diceSize - 1; i++ )
 		{
-			randomDiceRoll1 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			rollTotal = randomDiceRoll1;
+			//calculates how far the ball goes during this stroke
+			addToStroke = rollTheDice.nextInt(diceSize);
+			sumOfStroke = sumOfStroke + addToStroke;
+			
+			//calculates how many yards remain, remaining yards is reset in the roll() method
+			distanceRemaining = distanceRemaining - addToStroke;
+		}
+		
+		//if the distance remaining is less than the dice size just add once stroke for the putt 
+		//and zero out the distance remaining to prevent endless game play
+		if (distanceRemaining < diceSize - 1)
+		{
+			distanceRemaining = 0;
+			gameStats[playerIndex][holeNumber] = gameStats[playerIndex][holeNumber]++;
+		}
+		
+		
+		if(seeValues)
+		{
+			System.out.println("size of stroke:\t\t" + sumOfStroke);
+			System.out.println("distance remaining:\t" + distanceRemaining);
+		}
+		
+		gameStats[playerIndex][holeNumber]++;
+	}
+	
+	
+	
+	/**
+	 * Creates a new player in the game by adding 1 to the player count in the stats array
+	 * 
+	 * @param String players name to be added
+	 */
+	public static void createPlayer(String name)
+	{
+		playerCount++;
+		playerName[(playerCount - 1)] = name;
+		
+	}
+	
+	
+	/**
+	 * Initialize the game statistics array to all 0s so that additions can be performed.
+	 * 
+	 */
+	public static void initializeGameStats()
+	{
+		for (int playerIndex = 0; playerIndex < playerCount; playerIndex++)
+		{
+			for (int holeIndex = 0; holeIndex < holeCount; holeIndex++)
+			{
+				gameStats[playerIndex][holeIndex] = 0;
+			}
+		}
+	}
+	
+	
+	public static void main(String[] args) 
+	{
+		
+		
+		//Testing that dice values are in the correct range.
+		boolean diceValue = true;
+		for (int i = 0; i < 100 && diceValue; i++) //100 is just an arbitrary amount
+		{
+			roll();
+			if(rolledValue > diceSize - 1 || rolledValue < 1)//ensures that values should be between 1 and the dice value -1
+			{
+				diceValue = false;
+			}
 			
 		}
-		else if(value == 2)
+		
+		if(diceValue)
 		{
-			randomDiceRoll1 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			randomDiceRoll2 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			rollTotal = randomDiceRoll1 + randomDiceRoll2;
-			
-		}
-		else if(value == 3)
-		{
-			randomDiceRoll1 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			randomDiceRoll2 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			randomDiceRoll3 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			rollTotal = randomDiceRoll1 + randomDiceRoll2 + randomDiceRoll3;
-			
-		}
-		else if(value == 4)
-		{
-			randomDiceRoll1 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			randomDiceRoll2 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			randomDiceRoll3 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			randomDiceRoll4 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			rollTotal = randomDiceRoll1 + randomDiceRoll2 + randomDiceRoll3
-						+ randomDiceRoll4;
-			
-		}
-		else if(value == 5)
-		{
-			randomDiceRoll1 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			randomDiceRoll2 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			randomDiceRoll3 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			randomDiceRoll4 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			randomDiceRoll5 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			rollTotal = randomDiceRoll1 + randomDiceRoll2 + randomDiceRoll3
-					+ randomDiceRoll4 + randomDiceRoll5;
-			
+			System.out.println("roll()       : testing 100 dice values  : Passed");
 		}
 		else
 		{
-			randomDiceRoll1 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			randomDiceRoll2 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			randomDiceRoll3 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			randomDiceRoll4 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			randomDiceRoll5 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			randomDiceRoll6 = random.nextInt(upperBound - lowerBound) + (lowerBound);
-			rollTotal = randomDiceRoll1 + randomDiceRoll2 + randomDiceRoll3
-					+ randomDiceRoll4 + randomDiceRoll5 + randomDiceRoll6;
-			
+			System.out.println("roll()       : testing 100 dice values  : Failed");
 		}
 		
-		return rollTotal;
+		
+		
+		//Testing that hit the ball decreases the distance remaining
+		roll();
+		hitTheBall(0,0);
+		if(distanceRemaining < holeDistance)
+		{
+			System.out.println("hitTheBall() : distance remaining test  : Passed");
+		}
+		else
+		{
+			System.out.println("hitTheBall() : distance remaining test  : Failed");
+		}
+		
+		//Testing that hit the ball increase the number of strokes
+		roll();
+		
+		numberOfStrokes = 0;
+		
+		hitTheBall(0,0);
+		if(numberOfStrokes == 1)
+		{
+			System.out.println("hitTheBall() : number of strokes test   : Passed");
+		}
+		else
+		{
+			System.out.println("hitTheBall() : number of strokes test   : Failed");
+		}
+			
+		//Testing that hit the ball increase the number of strokes after the initial hit
+		roll();
+		hitTheBall(0,0);
+		if(numberOfStrokes == 2)
+		{
+			System.out.println("hitTheBall() : number of strokes test   : Passed");
+		}
+		else
+		{
+			System.out.println("hitTheBall() : number of strokes test   : Failed");
+		}
+					
 	}
-	
-	
-	//method for calculating remaining distance
-	public static int distanceLeft(int value)
-	{
-		int remainingDistance;
-		
-		remainingDistance = initialDistance - value;
-		
-		return remainingDistance;
-	}
-	
-	
-	//Testing the current methods
-	public static void main(String[] args)
-	{
-		System.out.println("Testing the created methods: ");
-		System.out.println();
-		
-		int firstRoll = randomRoll();
-		System.out.println("Here is the number of dice allowed for second roll: " + 
-		firstRoll);
-		System.out.println();
-		
-		int secondRoll = secondRoll(firstRoll);
-		System.out.println("Here is the total yardage value of first stroke: " + 
-		secondRoll);
-		System.out.println();
-		
-		int remainder = distanceLeft(secondRoll);
-		System.out.println("Here is the yardage remaining until the hole is reached: " + 
-		remainder);
-	}
-	
+
 }
