@@ -1,5 +1,6 @@
 package dicegame.UI;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -48,6 +49,7 @@ public class PlayerCreationPanel extends JPanel implements ActionListener{
         cons.gridwidth = 1;
         cons.weightx=90;
         enterName = new JTextField(20);
+        enterName.setMinimumSize(new Dimension(enterName.getPreferredSize().width - 1, enterName.getPreferredSize().height));
         add(enterName,cons);
         
         //You can update the players label by using setText("new text") on the label object
