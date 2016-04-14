@@ -17,6 +17,9 @@
 - The statistics button should be greyed out and should not respond to clicks
 - There should be a Quit Game button
 - Clicking the Quit Game button should close the window and the java application
+- Upon the bottom of the of the screen there should be a label stating either no players are created or listing the created players
+- Upon creating a new player, this player's name should be added to the list of players at the bottom of the Main Menu screen
+- There should be a comma in between every player's name if there are more than one
 
 #### Game Screen
 
