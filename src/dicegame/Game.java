@@ -235,15 +235,6 @@ public class Game {
  		
  	public static void main(String[] args) 
 	{
-		/**
-		 * setNumberOfPlayers(int numberOfPlayers)
-		 * getNumberOfPlayers()
-		 * createPlayer(String name)
-		 * getPlayer()
-		 * roll()
-		 * hitTheBall(int roll)
-		 * 
-		 */
  		
  		Game test = new Game();
  		
