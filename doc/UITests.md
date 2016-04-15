@@ -37,7 +37,24 @@
 
 #### Player Creation
 
-- David's Part
+- Clicking the Create New Player button should bring a switch window to: 2 buttons, 2 labels, and 1 field for text. 
+- The window layout should default size, the same as Start Menu screen. 
+- "Back" button should be located on the top left corner of the window.
+- Clicking the "Back" button should return the user back to the start menu. 
+- "Add" button should be located in the center to the right. 
+- Clicking the "Add" button should change the display label beneath it to say, "A name must be entered".
+- Clicking the "Add" button after entering text into the text field, should return the user back to the Start Menu. 
+- Clicking the "Add" button after entering white space into the field, should change the display label beneath to say, "A name must be entered".
+- "Top" label should be located at the top right of the window. 
+- "Top" Label should display, "Enter Players Name".
+- "Bottom" Label: 
+- "Bottom" Label should be located at the Bottom of the window. 
+- The "Bottom" label should display, "Please enter name and press add"
+- If a player is not added correctly, the "Bottom" label should change its display to, "A name must be entered".
+- Text field should be located in the center to the left. 
+- Writing into the Text field, should display the letters written. 
+- Pressing enter on the keypad while in the Text field should change the display label beneath to say, "A name must be entered".
+- Pressing enter on the keypad while in the Text field with letters inside, should return the user back to the Start Menu.   
 
 #### Statistics
 
