@@ -53,8 +53,7 @@ public class PlayerCreationPanel extends JPanel implements ActionListener {
 		add(backButton, cons);
 
 		// Add JLabel to prompt user to enter player name.
-		cons.gridx = 1;
-		cons.gridwidth = 5;
+		cons.gridwidth = 2;
 		cons.weightx = 90;
 		cons.anchor = GridBagConstraints.CENTER;
 		playersName = new JLabel("Enter Players Name");
@@ -62,7 +61,6 @@ public class PlayerCreationPanel extends JPanel implements ActionListener {
 
 		// Added JTextField for user to enter player name.
 		cons.gridy++;
-		cons.gridx--;
 		cons.gridwidth = 1;
 		cons.weightx = 90;
 		enterName = new JTextField(20);
