@@ -70,6 +70,8 @@ public class StartMenuPanel extends JPanel implements ActionListener {
         cons.anchor = GridBagConstraints.SOUTH;
         cons.weighty = 100;
         add(playersLabel, cons);
+        
+        
     }
 
     /**
@@ -80,8 +82,10 @@ public class StartMenuPanel extends JPanel implements ActionListener {
     public void addPlayer(String playerName) {
         if (playersLabel.getText().equals("No Players Created")) {
             playersLabel.setText("Players: " + playerName);
+            gui.gameLogic.createPlayer(playerName);
         } else {
             playersLabel.setText(playersLabel.getText() + ", " + playerName);
+            gui.gameLogic.createPlayer(playerName);
         }
     }
 
