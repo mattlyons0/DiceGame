@@ -16,9 +16,6 @@ public class diceGameTest {
 		Game test = new Game();
 		
 		assertNotNull(test);
-//		assertEquals(1, playerCount);
-//		assertEquals(0, numberOfStrokes);
-//		assertEquals(36, distanceRemaining);
 
 	}
 	
@@ -47,7 +44,7 @@ public class diceGameTest {
 
 	
 	@Test
-	public void roll()
+	public void rollTest()
 	{
 		Game test = new Game();
 		
@@ -66,10 +63,12 @@ public class diceGameTest {
 	}
 
 	@Test
-	public void hitTheBall()
+	public void hitTheBallTest()
 	{
 		
 		int rollValue = 0;
+		int high = 6;
+		int low = 0;
 		
 		Game test = new Game();
 		
@@ -80,11 +79,76 @@ public class diceGameTest {
 		int[] distance = test.hitTheBall(rollValue);
 		
 		
-	 	//prints out distance of each stroke
+	 	//prints out distance of each stroke 'rollValue' number of times
 		for(int i = 0; i < rollValue; i++)
  		{
-			System.out.println("Distance: " + distance[i]);
+			//checks that each distance[i] value is within the range of 0 through 6
+			assertTrue("Error, random is too high", high >= distance[i]);
+			assertTrue("Error, random is too low",  low  <= distance[i]);
+//			System.out.println("Distance: " + distance[i]);
  		}
 		
 	}
+	
+	@Test
+	public void strokeCountTest()
+	{
+		int rollValue = 0;
+		int strokes = 0;
+		
+		Game test = new Game();
+		
+		//rolls random value between 0 and 6
+		rollValue = test.roll();
+		
+		//rolls 'rollValue' of dice and stores each of their values
+//		int[] distance = test.hitTheBall(rollValue);
+		
+		//collects the number of roll() occurrences (strokes) from hitTheBall()
+		//by multiplying number of roll() occurrences by instance of numberOfStrokes count
+		strokes = (test.getStrokes() * rollValue);
+//		System.out.println("\n" + "Number of value: " + rollValue);
+//		System.out.println("Number of strokes: " + strokes);
+		
+		assertEquals(rollValue, strokes);
+	}
+	
+	
+	@Test
+	public void puttTest()
+	{
+		int distanceRemaining = 6;
+		int rollValue;
+		int stroke = 0;
+		int total = 0;
+		
+		Game test = new Game();
+		
+		rollValue = test.roll();
+		
+		//runs number of strokes to add to total yards hit
+		test.hitTheBall(rollValue);
+		int[] distance = test.hitTheBall(rollValue);
+		
+		//add total yards from first hitTheBall() call
+		//use hitTheBall() again until total yardage reaches 36
+		//count number of strokes
+		//print out distance values to show distance left was between 0 and 6
+		//and only 1 stroke was added
+		
+		for(int i = 0; i < rollValue; i++)
+		{
+			System.out.println("Distance: " + distance[i]);
+			stroke++;
+			
+			//add up total yards
+			
+		}
+		
+		System.out.println("Number of strokes: " + stroke);
+		System.out.println("total yards: " + total);
+		
+		
+	}
+	
 }
