@@ -171,14 +171,13 @@ public class GameTest {
         for (int loop = 0; loop < 100; loop++) {
             int stroke = 0;
             int ydsLeft = test.getDistanceFromHole();
-
+        	System.out.println(test.getDistanceFromHole());
             assertEquals(test.getHoleLength(), test.getDistanceFromHole());
 
             while (ydsLeft > 0) {
                 int rollValue = test.roll();
 
                 //runs number of strokes to add to total yards hit
-                test.hitTheBall(rollValue);
                 int[] distance = test.hitTheBall(rollValue);
 
                 //add total yards from first hitTheBall() call
@@ -195,6 +194,8 @@ public class GameTest {
             assertEquals(stroke, test.getStrokes()); //Verify strokes match up
 
             assertEquals(ydsLeft, test.getDistanceFromHole()); //Verify distance matches up
+            
+            test = new Game(); //Reset for next iteration
         }
     }
 
