@@ -71,7 +71,7 @@ public class GameTest {
         int low = 1;
 
         //Runs 100 attempts of random value assignment to ensure value is between 0 and 6
-        for (int i = 0; i < 100; i++) {
+        for (int index = 0; index < 100; index++) {
             int roll = test.roll();
             assertTrue("Error, random is too high", high >= roll);
             assertTrue("Error, random is too low", low <= roll);
@@ -97,10 +97,10 @@ public class GameTest {
             int[] distance = test.hitTheBall(rollValue);
 
             //prints out distance of each stroke 'rollValue' number of times
-            for (int i = 0; i < rollValue; i++) {
+            for (int index = 0; index < rollValue; index++) {
                 //checks that each distance[i] value is within the range of 0 through 6
-                assertTrue("Error, random is too high", high >= distance[i]);
-                assertTrue("Error, random is too low", low <= distance[i]);
+                assertTrue("Error, random is too high", high >= distance[index]);
+                assertTrue("Error, random is too low", low <= distance[index]);
 //			System.out.println("Distance: " + distance[i]);
             }
         }

@@ -17,9 +17,9 @@ import javax.swing.table.TableModel;
 class GameScoreboardComponent extends JComponent {
 
     private Game gameLogic;
-    
+
     private JTable table;
-    
+
     private int distanceLeft;
     private int strokes;
 
@@ -30,10 +30,10 @@ class GameScoreboardComponent extends JComponent {
         super();
 
         this.gameLogic = gui.gameLogic;
-        
+
         distanceLeft = gameLogic.getHoleLength();
         strokes = 0;
-        
+
         setLayout(new GridBagLayout());
         GridBagConstraints cons = new GridBagConstraints();
         cons.gridx = 0;
@@ -93,15 +93,16 @@ class GameScoreboardComponent extends JComponent {
 
         return model;
     }
-    
+
     /**
      * Update Scoreboard by subtracting distance hit from distance remaining
+     *
      * @param distance the distance the ball was just hit
      */
-    public void hitBall(int distance){
-        
+    public void hitBall(int distance) {
+
         distanceLeft -= distance;
         strokes = gameLogic.getStrokes();
-        ((AbstractTableModel)table.getModel()).fireTableDataChanged();
+        ((AbstractTableModel) table.getModel()).fireTableDataChanged();
     }
 }

@@ -5,8 +5,8 @@ import java.util.Random;
 /**
  * Handle the game play logic and statistics
  *
- * @authors Matt Lyons, David Lukacs, David McClure, Daniel Kercheski
- * Team Project
+ * @authors Matt Lyons, David Lukacs, David McClure, Daniel Kercheski Team
+ * Project
  */
 public class Game {
 
@@ -105,7 +105,6 @@ public class Game {
 
         //when the first dice is rolled it signals the start of new hole
         //distanceRemaining = holeDistance; //THIS BREAKS OVERSHOOTING
-
         //increment the number of strokes every time the dice is rolled
         numberOfStrokes++;
         return rolled;

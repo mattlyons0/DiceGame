@@ -12,112 +12,110 @@ import javax.swing.*;
 /**
  * Class PlayerCreationPanel: Interface accessed from StartMenu to create
  * players for DiceGolf.
- * 
+ *
  * @author David Lukacs
  */
 public class PlayerCreationPanel extends JPanel implements ActionListener {
 
-	// Variables
-	private GUI gui;
-	private JLabel playersName, displayName;
-	private JTextField enterName;
-	private JButton addPlayer, backButton;
-	private String name;
+    // Variables
+    private GUI gui;
+    private JLabel playersName, displayName;
+    private JTextField enterName;
+    private JButton addPlayer, backButton;
+    private String name;
 
-	/**
-	 * Create a PlayerCreationPanel to be used in the GUI
-	 *
-	 * @param gui
-	 *            GUI object which is used to display this panel *
-	 */
-	public PlayerCreationPanel(GUI gui) {
-		// Calls JPanel Constructor.
-		super();
+    /**
+     * Create a PlayerCreationPanel to be used in the GUI
+     *
+     * @param gui GUI object which is used to display this panel *
+     */
+    public PlayerCreationPanel(GUI gui) {
+        // Calls JPanel Constructor.
+        super();
 
-		this.gui = gui;
+        this.gui = gui;
 
-		// Setting GridBagConstraints.
-		setLayout(new GridBagLayout());
-		GridBagConstraints cons = new GridBagConstraints();
-		cons.gridx = 0;
-		cons.gridy = 0;
-		cons.weightx = 100;
-		cons.weighty = 1;
-		cons.gridwidth = 2;
-		cons.insets = new Insets(5, 5, 5, 5); // Add some padding to components
+        // Setting GridBagConstraints.
+        setLayout(new GridBagLayout());
+        GridBagConstraints cons = new GridBagConstraints();
+        cons.gridx = 0;
+        cons.gridy = 0;
+        cons.weightx = 100;
+        cons.weighty = 1;
+        cons.gridwidth = 2;
+        cons.insets = new Insets(5, 5, 5, 5); // Add some padding to components
 
-		// Adding JButton with ActionListener.
-		backButton = new JButton("Back");
-		backButton.addActionListener(this);
-		cons.anchor = GridBagConstraints.NORTHWEST;
-		add(backButton, cons);
+        // Adding JButton with ActionListener.
+        backButton = new JButton("Back");
+        backButton.addActionListener(this);
+        cons.anchor = GridBagConstraints.NORTHWEST;
+        add(backButton, cons);
 
-		// Add JLabel to prompt user to enter player name.
-		cons.gridwidth = 2;
-		cons.weightx = 90;
-		cons.anchor = GridBagConstraints.CENTER;
-		playersName = new JLabel("Enter Players Name");
-		add(playersName, cons);
+        // Add JLabel to prompt user to enter player name.
+        cons.gridwidth = 2;
+        cons.weightx = 90;
+        cons.anchor = GridBagConstraints.CENTER;
+        playersName = new JLabel("Enter Players Name");
+        add(playersName, cons);
 
-		// Added JTextField for user to enter player name.
-		cons.gridy++;
-		cons.gridwidth = 1;
-		cons.weightx = 90;
-		enterName = new JTextField(20);
-		enterName.addActionListener(this);
-		enterName.setMinimumSize(
-				new Dimension(enterName.getPreferredSize().width - 1, enterName.getPreferredSize().height));
-		add(enterName, cons);
+        // Added JTextField for user to enter player name.
+        cons.gridy++;
+        cons.gridwidth = 1;
+        cons.weightx = 90;
+        enterName = new JTextField(20);
+        enterName.addActionListener(this);
+        enterName.setMinimumSize(
+                new Dimension(enterName.getPreferredSize().width - 1, enterName.getPreferredSize().height));
+        add(enterName, cons);
 
-		// Adding JButton with ActionListener to confirm addition of player
-		cons.gridx++;
-		cons.weightx = 1;
-		addPlayer = new JButton("Add");
-		addPlayer.addActionListener(this);
-		add(addPlayer, cons);
+        // Adding JButton with ActionListener to confirm addition of player
+        cons.gridx++;
+        cons.weightx = 1;
+        addPlayer = new JButton("Add");
+        addPlayer.addActionListener(this);
+        add(addPlayer, cons);
 
-		// Adding JLabel to display user on how to enter players name.
-		cons.gridy++;
-		cons.gridx--;
-		cons.gridwidth = 2;
-		cons.weightx = 100;
-		cons.anchor = GridBagConstraints.NORTH;
-		displayName = new JLabel("Please enter name and press add");
-		add(displayName, cons);
+        // Adding JLabel to display user on how to enter players name.
+        cons.gridy++;
+        cons.gridx--;
+        cons.gridwidth = 2;
+        cons.weightx = 100;
+        cons.anchor = GridBagConstraints.NORTH;
+        displayName = new JLabel("Please enter name and press add");
+        add(displayName, cons);
 
-	}
+    }
 
-	/**
-	 * ActionPerfomed: Connecting with JTextfield & JButtons to enter player's
-	 * name and return to start menuS.
-	 */
-	@Override
-	public void actionPerformed(ActionEvent event) {
+    /**
+     * ActionPerfomed: Connecting with JTextfield & JButtons to enter player's
+     * name and return to start menuS.
+     */
+    @Override
+    public void actionPerformed(ActionEvent event) {
 
-		// Storing player name and exiting back to start menu
-		if (event.getSource() == addPlayer || event.getSource() == enterName) {
+        // Storing player name and exiting back to start menu
+        if (event.getSource() == addPlayer || event.getSource() == enterName) {
 
-			// storing name to string variable
-			name = enterName.getText();
+            // storing name to string variable
+            name = enterName.getText();
 
-			// conditional for non-text being entered.
-			if (name.trim().equals("")) {
-				displayName.setText("A name must be entered.");
-			}
+            // conditional for non-text being entered.
+            if (name.trim().equals("")) {
+                displayName.setText("A name must be entered.");
+            } else {
+                // adding players to game.
+                gui.startMenuPanel.addPlayer(name);
 
-			else {
-				// adding players to game.
-				gui.startMenuPanel.addPlayer(name);
+                // removing panel
+                gui.showStartMenu();
+            }
 
-				// removing panel
-				gui.showStartMenu();
-			}
+        }
 
-		}
+        // For backButton to return to Start Menu
+        if (event.getSource() == backButton) {
+            gui.showStartMenu();
+        }
 
-		// For backButton to return to Start Menu
-		if (event.getSource() == backButton)
-			gui.showStartMenu();
-
-	}
+    }
 }

@@ -18,7 +18,7 @@ public class GUI extends JFrame {
 
     //Store Current Panel so it can be easilly removed
     private JPanel currentPanel;
-    
+
     //Logic which runs the game and stores the Stats
     public Game gameLogic;
 
@@ -29,7 +29,7 @@ public class GUI extends JFrame {
         super("Dice Golf");
 
         gameLogic = new Game();
-        
+
         currentPanel = null;
 
         initLayout();
@@ -61,7 +61,7 @@ public class GUI extends JFrame {
      */
     public void startGame() {
         gameLogic = new Game();
-        
+
         gameplayPanel = new GameplayPanel(this);
         switchPanel(gameplayPanel);
     }
@@ -98,7 +98,7 @@ public class GUI extends JFrame {
 //        setSize(display.getWidth(),display.getHeight());
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
-
+    
     void showStatistics() {
         throw new UnsupportedOperationException("Not supported yet.");
     }

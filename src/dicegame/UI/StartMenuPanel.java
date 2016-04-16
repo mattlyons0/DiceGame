@@ -70,8 +70,7 @@ public class StartMenuPanel extends JPanel implements ActionListener {
         cons.anchor = GridBagConstraints.SOUTH;
         cons.weighty = 100;
         add(playersLabel, cons);
-        
-        
+
     }
 
     /**
