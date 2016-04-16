@@ -32,8 +32,13 @@
 - There should be a border inset for the bottom element taking up approximately 15-20% of the screen
 - The bottom element should contain the controls for the game (Roll Dice Multiplier or Dice Roll buttons)
 - There should be a label at the top of the element stating which player's turn it is
-- When Roll Dice Multiplier is clicked 1-6 dice should appear with the label 'Roll'
-- Upon clicking these roll buttons nothing should currently happen
+- When Roll Dice Multiplier is clicked 1-6 dice buttons should appear with the label 'Roll'
+- Upon clicking any of these buttons, in any given order, the Distance From Hole should be subtracted by the amount displayed on the die
+- Upon clicking the first die the strokes should increment by one
+- After all the die have been clicked as long as the Distance from Hole is not 0 a Next Turn button should appear
+- Pressing the Next Turn button should show the 'Roll Dice Multiplier' button once again and this loop will continue until the Distance from Hole is 0.
+- Once the Distance from Hole is 0, after all dice have been rolled, instead of displaying a Next Turn button, a End Game button should display to the right of the dice rolled
+- Clicking the End Game button should take you back to the main menu
 
 #### Player Creation
 
