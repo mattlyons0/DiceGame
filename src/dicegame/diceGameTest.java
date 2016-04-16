@@ -12,7 +12,9 @@ public class diceGameTest {
         Game test = new Game();
 
         assertNotNull(test);
-
+        assertEquals(36,test.getHoleLength());
+        assertEquals(0,test.getStrokes());
+        assertEquals(36,test.getDistanceFromHole());
     }
 
 //	@Test
