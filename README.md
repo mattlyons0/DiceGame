@@ -18,7 +18,11 @@ A Java Golf game where the hole is a defined number of spaces away and you roll 
 * For subsequent moves the *n* dice will be shrunk and the number on the dice will be shrunk so you can never shoot over the hole (for now)
 * Once the ball is in the hole, the turns taken (rolls) will be recorded as score.
 
-
+## How To Play
+* Compile like any java file into a jar, or [Download a Jar (Sprint 2)](http://mattlyons.net/downloads/school/cse360/DiceGame.jar)
+* Hit Start Game to play!
+* Roll the dice until you make it to the hole.
+* Try to use the least strokes possible.
 
 
 
