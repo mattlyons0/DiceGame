@@ -60,6 +60,8 @@ public class GUI extends JFrame {
      * Switch to the gameplay view.
      */
     public void startGame() {
+        gameLogic = new Game();
+        
         gameplayPanel = new GameplayPanel(this);
         switchPanel(gameplayPanel);
     }

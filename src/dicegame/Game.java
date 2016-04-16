@@ -5,8 +5,7 @@ import java.util.Random;
 /**
  * Handle the game play logic and statistics
  *
- * @param args
- * @authors Matt Lyons, David Lukacs, David McClure, Daniel Kercheski CSE360
+ * @authors Matt Lyons, David Lukacs, David McClure, Daniel Kercheski
  * Team Project
  */
 public class Game {
@@ -105,7 +104,7 @@ public class Game {
         }
 
         //when the first dice is rolled it signals the start of new hole
-        distanceRemaining = holeDistance;
+        //distanceRemaining = holeDistance; //THIS BREAKS OVERSHOOTING
 
         //increment the number of strokes every time the dice is rolled
         numberOfStrokes++;
@@ -158,7 +157,7 @@ public class Game {
             }
 
             distanceRemaining = 0;
-            resetDistance();
+//            resetDistance(); //This also breaks tests since it resets before it can even be detected it was 0.
         }
 
         return distances;
