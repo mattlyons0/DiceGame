@@ -67,12 +67,6 @@ public class Game {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Returns the amount of players.
 	 * @return player count
@@ -226,20 +220,26 @@ public class Game {
  			return distances;
  	}
  	
-	
- 	
+	/**
+	 * Returns number of strokes from each roll() function
+	 * @return number of strokes
+	 */
+ 	public int getStrokes()
+ 	{
+ 		return numberOfStrokes;
+ 	}
  		
  		
  	
+} 		
  		
+ //	public static void main(String[] args) 
+//	{
  		
- 	public static void main(String[] args) 
-	{
+// 		Game test = new Game();
  		
- 		Game test = new Game();
- 		
- 		test.setNumberOfPlayers(4);
- 		System.out.println("Number of players: " + test.getNumberOfPlayers());
+ //		test.setNumberOfPlayers(4);
+ //		System.out.println("Number of players: " + test.getNumberOfPlayers());
  		
  //		test.createPlayer("George");
  //		test.createPlayer("John");
@@ -247,27 +247,27 @@ public class Game {
  //		test.createPlayer("Sean");
  //		System.out.println("Names of players: " + test.getPlayer());
  		
- 		int value = 0;
- 		System.out.println("value: " + value);
+ //		int value = 0;
+ //		System.out.println("value: " + value);
  		
- 		test.roll();
- 		System.out.println("new value: " + value);
+ //		test.roll();
+ //		System.out.println("new value: " + value);
  		
- 		value = 0;
+ //		value = 0;
  		
- 		value = test.roll();
- 		System.out.println("new value: " + value + "\n");
+ //		value = test.roll();
+ //		System.out.println("new value: " + value + "\n");
 		
- 		int[] shotDistances = test.hitTheBall(value);
+ //		int[] shotDistances = test.hitTheBall(value);
  		
  		
  		
- 		for(int i = 0; i < value; i++)
- 		{
- 			System.out.println("Distance: " + shotDistances[i]);
- 		}
+ //		for(int i = 0; i < value; i++)
+ //		{
+ 	//		System.out.println("Distance: " + shotDistances[i]);
+ 	//	}
 		
-	}
+//	}
 
-}
+//}
 
