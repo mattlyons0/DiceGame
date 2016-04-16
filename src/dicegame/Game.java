@@ -64,7 +64,7 @@ public class Game {
      * @param name
      */
     public void createPlayer(String name) {
-        playerName[0] = name;
+//        playerName[0] = name; //Doesn't work
     }
 
     /**
