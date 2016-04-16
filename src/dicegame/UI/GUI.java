@@ -28,6 +28,8 @@ public class GUI extends JFrame {
     public GUI() {
         super("Dice Golf");
 
+        gameLogic = new Game();
+        
         currentPanel = null;
 
         initLayout();
