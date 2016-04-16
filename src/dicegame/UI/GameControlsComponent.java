@@ -106,13 +106,21 @@ class GameControlsComponent extends JComponent implements ActionListener {
             scoreboard.hitBall(rollValues[diceNum]);
             
             if(diceNum == rollValues.length-1){
-                JButton nextTurn = new JButton("Next Turn");
+                String buttonText = "Next Turn";
+                System.out.println(gameLogic.getDistanceFromHole());
+                if(gameLogic.getDistanceFromHole() == 0)
+                    buttonText = "End Game";
+                JButton nextTurn = new JButton(buttonText);
                 nextTurn.setActionCommand("NextTurn");
                 nextTurn.addActionListener(this);
                 dicePanel.add(nextTurn);
             }
         } else if (event.getActionCommand().equals("NextTurn")){
-            diceRollMultiplier();
+            if(((JButton)event.getSource()).getText().equals("End Game")){
+                gui.showStartMenu();
+            } else{
+                diceRollMultiplier();
+            }
         }
     }
 }

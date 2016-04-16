@@ -110,14 +110,14 @@ public class PlayerCreationPanel extends JPanel implements ActionListener {
 				gui.startMenuPanel.addPlayer(name);
 
 				// removing panel
-				gui.switchStart();
+				gui.showStartMenu();
 			}
 
 		}
 
 		// For backButton to return to Start Menu
 		if (event.getSource() == backButton)
-			gui.switchStart();
+			gui.showStartMenu();
 
 	}
 }
