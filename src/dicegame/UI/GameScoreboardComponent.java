@@ -31,7 +31,7 @@ class GameScoreboardComponent extends JComponent {
 
         this.gameLogic = gui.gameLogic;
         
-        distanceLeft = gameLogic.holeDistance;
+        distanceLeft = gameLogic.getHoleLength();
         strokes = 0;
         
         setLayout(new GridBagLayout());
@@ -101,7 +101,7 @@ class GameScoreboardComponent extends JComponent {
     public void hitBall(int distance){
         
         distanceLeft -= distance;
-        strokes = gameLogic.numberOfStrokes;
-        //TODO update Table (either repaint or trigger data model refresh?)
+        strokes = gameLogic.getStrokes();
+        ((AbstractTableModel)table.getModel()).fireTableDataChanged();
     }
 }

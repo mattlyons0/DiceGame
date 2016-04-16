@@ -178,8 +178,17 @@ public class Game {
      *
      * @return the distance of the hole from where the ball starts
      */
-    public int getHoleDistance() {
+    public int getHoleLength() {
         return holeDistance;
+    }
+
+    /**
+     * Returns the distance the player is currently from the hole
+     *
+     * @return the distance the player is currently from the hole
+     */
+    public int getDistanceFromHole() {
+        return distanceRemaining;
     }
 
 }

@@ -26,6 +26,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
     private JPanel dicePanel;
 
     private Game gameLogic;
+    private GUI gui;
     private GameScoreboardComponent scoreboard;
     
     private int[] rollValues;
@@ -35,8 +36,8 @@ class GameControlsComponent extends JComponent implements ActionListener {
     public GameControlsComponent(GUI gui) {
         super();
         
+        this.gui = gui;
         this.gameLogic = gui.gameLogic;
-        this.scoreboard = gui.gameplayPanel.scoreboardComp;
 
         setBorder(BorderFactory.createLoweredBevelBorder());
         setLayout(new GridBagLayout());
@@ -56,16 +57,9 @@ class GameControlsComponent extends JComponent implements ActionListener {
         cons.anchor = GridBagConstraints.CENTER;
         dicePanel = new JPanel();
         dicePanel.setLayout(new FlowLayout());
-        updateDice();
+        diceRollMultiplier();
         add(dicePanel, cons);
 
-    }
-
-    /**
-     * Update Dice UI from Game Logic //TODO implement this correctly
-     */
-    public void updateDice() {
-        diceRollMultiplier();
     }
 
     private void diceRollMultiplier() { //Display multiplier UI
@@ -96,7 +90,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         if (event.getActionCommand().equals("MultiplierRoll")) {
             int multiplier = gameLogic.roll();
-            rollValues = gameLogic.hitTheBall(0,0); //Preroll values and display them as they are clicked
+            rollValues = gameLogic.hitTheBall(multiplier); //Preroll values and display them as they are clicked
             
             diceRoll(multiplier); //Update GUI with multiplier
         } else if (event.getActionCommand().startsWith("RollDie")) {
@@ -107,7 +101,18 @@ class GameControlsComponent extends JComponent implements ActionListener {
             rollButton.setText(rollValues[diceNum]+"");
             rollButton.removeActionListener(this);
             
+            if(scoreboard == null)
+                this.scoreboard = this.gui.gameplayPanel.scoreboardComp;
             scoreboard.hitBall(rollValues[diceNum]);
+            
+            if(diceNum == rollValues.length-1){
+                JButton nextTurn = new JButton("Next Turn");
+                nextTurn.setActionCommand("NextTurn");
+                nextTurn.addActionListener(this);
+                dicePanel.add(nextTurn);
+            }
+        } else if (event.getActionCommand().equals("NextTurn")){
+            diceRollMultiplier();
         }
     }
 }

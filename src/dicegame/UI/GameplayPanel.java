@@ -45,13 +45,13 @@ public class GameplayPanel extends JPanel {
 
         //Scoreboard Part
         cons.gridy++;
-        scoreboardComp = new GameScoreboardComponent();
+        scoreboardComp = new GameScoreboardComponent(this.gui);
         add(scoreboardComp, cons);
 
         //Game Controls
         cons.gridy++;
         cons.weighty = 5;
-        controlsComp = new GameControlsComponent(gui);
+        controlsComp = new GameControlsComponent(this.gui);
         add(controlsComp, cons);
     }
 
