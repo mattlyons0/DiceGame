@@ -83,14 +83,6 @@ public class GUI extends JFrame {
     	}
     
     /**
-     * Switch to the statistics view.
-     * this could probably be taken out. 
-     */
-    void showStatistics() {
-    	switchPanel(statsPanel);
-    }
-
-    /**
      * Remove the current panel (if it exists), and add the new panel
      *
      * @param newPanel JPanel to be added to JFrame

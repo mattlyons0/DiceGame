@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -98,7 +99,8 @@ class GameControlsComponent extends JComponent implements ActionListener {
             JButton rollButton = (JButton) event.getSource();
             rollButton.setEnabled(false);
             rollButton.setText(rollValues[diceNum]+"");
-            //new ImageIcon(getClass().getResource("/Images/Dice#.png"));
+            rollButton.setIcon(new ImageIcon(getClass().getResource("/src/Images/Dice" + rollValues[diceNum] 
+            		+ ".png")));
             rollButton.removeActionListener(this);
             
             if(scoreboard == null)

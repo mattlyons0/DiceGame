@@ -15,6 +15,7 @@ import javax.swing.*;
  * @author David Lukacs
  */
 public class StatsPanel extends JPanel implements ActionListener{
+	
 	//Variables
 	private GUI gui; 
 	
