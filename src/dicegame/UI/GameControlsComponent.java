@@ -99,7 +99,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
             JButton rollButton = (JButton) event.getSource();
             rollButton.setEnabled(false);
             rollButton.setText(rollValues[diceNum]+"");
-            rollButton.setIcon(new ImageIcon(getClass().getResource("/src/Images/Dice" + rollValues[diceNum] 
+            rollButton.setIcon(new ImageIcon(getClass().getResource("/dicegame/Images/Dice" + rollValues[diceNum] 
             		+ ".png")));
             rollButton.removeActionListener(this);
             
