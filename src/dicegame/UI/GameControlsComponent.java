@@ -110,6 +110,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
             if(scoreboard == null)
                 this.scoreboard = this.gui.gameplayPanel.scoreboardComp;
             scoreboard.hitBall(rollValues[diceNum]);
+            gui.gameplayPanel.animationComp.repaint();
             
             rollValues[diceNum] = -1; //Dice has been rolled and roll has been used
             

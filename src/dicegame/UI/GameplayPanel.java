@@ -14,7 +14,7 @@ public class GameplayPanel extends JPanel {
 
     private GUI gui;
 
-    private GameAnimationComponent animationComp;
+    public GameAnimationComponent animationComp;
     public GameScoreboardComponent scoreboardComp;
     private GameControlsComponent controlsComp;
 

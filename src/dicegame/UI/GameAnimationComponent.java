@@ -5,9 +5,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +32,7 @@ public class GameAnimationComponent extends JComponent {
 
     private GUI gui;
     private Game gameLogic;
+    private GameScoreboardComponent scoreboardComp;
     
     private BufferedImage animationBuffer;
     
@@ -55,11 +58,10 @@ public class GameAnimationComponent extends JComponent {
         Random rand = new Random();
         int heightThreshold = 200;
         int heightOffset = 275;
-        int widthLimit = 1200;
+        int widthLimit = 1150 - (30*2); //30*2for starting tee spot (it is halved below)
         //Max values for course from gameLogic
         double maxDistance = 100;
         int distance = gameLogic.getHoleLength();
-        
         int y = rand.nextInt(heightThreshold);
         double x = distance / maxDistance * 0.5;
         holeLocation = new Dimension((int)(x*widthLimit+640),y+heightOffset);
@@ -67,7 +69,10 @@ public class GameAnimationComponent extends JComponent {
     
     @Override
     public void paint(Graphics graphics) {
-        Graphics animationGraphics = animationBuffer.getGraphics();
+        if(scoreboardComp == null)
+            scoreboardComp=gui.gameplayPanel.scoreboardComp;
+        
+        Graphics2D animationGraphics = (Graphics2D) animationBuffer.getGraphics();
         
         BufferedImage courseImage = null;
         BufferedImage holeImage = null;
@@ -76,7 +81,7 @@ public class GameAnimationComponent extends JComponent {
             courseImage = ImageIO.read(getClass().getResource("/dicegame/Images/Course.png"));
             holeImage = ImageIO.read(getClass().getResource("/dicegame/Images/Hole.png"));
         } catch(IOException exception){
-            System.err.println("Error loading animation images.");
+            System.err.println("Error loading animation images.\n"+exception);
         }
         
         Rectangle visibleArea = this.getVisibleRect();
@@ -89,8 +94,17 @@ public class GameAnimationComponent extends JComponent {
         }
         if(holeImage != null){
             //Display hole in randomized location based on how far away the hole is
-            animationGraphics.drawImage(holeImage,(int)(holeLocation.width * scaleFactorX),(int)(holeLocation.height*scaleFactorY),null);
+            animationGraphics.drawImage(holeImage,(int)(((holeLocation.width) + 30)* scaleFactorX),(int)(holeLocation.height*scaleFactorY),null);
         }
+        
+        int ballLoc = gameLogic.getHoleLength() - scoreboardComp.getBallDistanceLeft();
+        double ballPercent = (double)ballLoc / gameLogic.getHoleLength();
+        int ballPixels =(int)(((ballPercent * ((holeLocation.width)) + 30) * scaleFactorX)) ;
+        
+        animationGraphics.setColor(Color.red);
+        
+        Ellipse2D.Double ball = new Ellipse2D.Double(ballPixels, (int)(holeLocation.height*scaleFactorY), 10, 10);
+        animationGraphics.fill(ball);
         
         
         

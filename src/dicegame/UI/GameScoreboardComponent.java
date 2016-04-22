@@ -100,9 +100,12 @@ class GameScoreboardComponent extends JComponent {
      * @param distance the distance the ball was just hit
      */
     public void hitBall(int distance) {
-
         distanceLeft -= distance;
         strokes = gameLogic.getStrokes();
         ((AbstractTableModel) table.getModel()).fireTableDataChanged();
+    }
+    
+    public int getBallDistanceLeft(){
+        return distanceLeft;
     }
 }
