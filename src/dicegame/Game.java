@@ -14,9 +14,10 @@ public class Game {
     private int holeDistance = 36;
     private int distanceRemaining; //place holder for the distance remaining, initialized in the roll() method
     private int numberOfStrokes; //place holder to keep track of strokes
+    private int randomHoleDistance;
 
     private int playerCount;
-    private int holeCount = 18;
+    private int holeCount;
     private int[][] gameStats = new int[playerCount][holeCount];
     private String[] playerName = new String[playerCount];
 
@@ -31,7 +32,41 @@ public class Game {
 //		initializeGameStats(playerCount, 0, gameStats);
 
     }
-
+    
+    /**
+     * Returns the amount of holes.
+     *
+     * @return hole count
+     */
+    public int getNumberOfHoles() {
+        return holeCount;
+    }
+    
+    /**
+     * Inputs the amount of holes
+     */
+    public void setNumberOfHoles(int numberOfHoles) {
+        holeCount = numberOfHoles;
+    }
+    
+    /**
+     * function that returns randomHoleDistance that ranges between
+     * a given high and low value
+     * 
+     * @return
+     */
+    public int randomHoleDistancer(){
+    	
+    	int high = 100;
+    	int low = 15;
+    	
+    	Random rollTheDice = new Random();
+    	
+    	randomHoleDistance = rollTheDice.nextInt(high - low) + low; //result is between 15 and 100
+    	
+    	return randomHoleDistance;
+    }
+    
     /**
      * Once a putt is completed the distance remaining will reset to the full
      * distance
@@ -190,10 +225,18 @@ public class Game {
     }
 
 }
-
+//
 //	public static void main(String[] args) 
 //	{
 // 		Game test = new Game();
+// 		
+// 		for (int i = 0; i < 100; i++)
+// 		{
+// 			int distance = test.randomHoleDistancer();
+// 	 		System.out.println("Value: " + distance);
+// 		}
+// 		
+ //		
 //		test.setNumberOfPlayers(4);
 //		System.out.println("Number of players: " + test.getNumberOfPlayers());
 //		test.createPlayer("George");
@@ -215,4 +258,4 @@ public class Game {
 //	}
 //	}
 //}
-
+//}
