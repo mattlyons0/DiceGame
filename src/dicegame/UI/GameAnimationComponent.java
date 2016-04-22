@@ -5,6 +5,10 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -33,9 +37,12 @@ public class GameAnimationComponent extends JComponent {
     
     @Override
     public void paint(Graphics graphics) {
-        System.out.println("called");
         Graphics animationGraphics = animationBuffer.getGraphics();
-        //drawImage(ImageIO.read(f).getScaledInstance(tileSize, tileSize, Image.SCALE_FAST), 0, 0, null);
+        try {
+            animationGraphics.drawImage(ImageIO.read(getClass().getResource("/dicegame/Images/Course.png")).getScaledInstance(this.getVisibleRect().width, this.getVisibleRect().height, Image.SCALE_SMOOTH), 0, 0, null);
+        } catch (IOException ex) {
+            Logger.getLogger(GameAnimationComponent.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         super.paint(graphics); //Repaints to white
         graphics.drawImage(animationBuffer, 0, 0, this);

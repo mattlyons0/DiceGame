@@ -96,18 +96,27 @@ class GameControlsComponent extends JComponent implements ActionListener {
         } else if (event.getActionCommand().startsWith("RollDie")) {
             int diceNum = Integer.parseInt(event.getActionCommand().split(" ")[1]);
             
+            //Show Dice Roll
+            
             JButton rollButton = (JButton) event.getSource();
             rollButton.setEnabled(false);
-            rollButton.setText(rollValues[diceNum]+"");
+            rollButton.setText("");
             rollButton.setIcon(new ImageIcon(getClass().getResource("/dicegame/Images/Dice" + rollValues[diceNum] 
             		+ ".png")));
             rollButton.removeActionListener(this);
-            
             if(scoreboard == null)
                 this.scoreboard = this.gui.gameplayPanel.scoreboardComp;
             scoreboard.hitBall(rollValues[diceNum]);
             
-            if(diceNum == rollValues.length-1){
+            rollValues[diceNum] = -1; //Dice has been rolled and roll has been used
+            
+            boolean allRolled = true;
+            for(int index = 0; index < rollValues.length; index++){
+                if(rollValues[index] != -1)
+                    allRolled = false;
+            }
+            
+            if(allRolled){
                 String buttonText = "Next Turn";
                 System.out.println(gameLogic.getDistanceFromHole());
                 if(gameLogic.getDistanceFromHole() == 0)
