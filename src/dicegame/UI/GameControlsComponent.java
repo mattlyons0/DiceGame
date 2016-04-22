@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 
 /**
  * Displays the controls for the gameplay (ex the dice to roll) and handles
- * their buttonpresses
+ * their button presses
  *
  * @author Matt Lyons
  */
@@ -98,6 +98,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
             JButton rollButton = (JButton) event.getSource();
             rollButton.setEnabled(false);
             rollButton.setText(rollValues[diceNum]+"");
+            //new ImageIcon(getClass().getResource("/Images/Dice#.png"));
             rollButton.removeActionListener(this);
             
             if(scoreboard == null)
