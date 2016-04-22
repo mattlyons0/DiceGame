@@ -40,18 +40,18 @@ public class GameplayPanel extends JPanel {
         cons.insets = new Insets(5, 5, 5, 5); //Add some padding to components
 
         //Animation Part
-        animationComp = new GameAnimationComponent();
+        animationComp = new GameAnimationComponent(this.gui);
         add(animationComp, cons);
 
         //Scoreboard Part
         cons.gridy++;
-        cons.weighty=15;
+        cons.weighty=1;
         scoreboardComp = new GameScoreboardComponent(this.gui);
         add(scoreboardComp, cons);
 
         //Game Controls
         cons.gridy++;
-        cons.weighty = 15;
+        cons.weighty = 6;
         controlsComp = new GameControlsComponent(this.gui);
         add(controlsComp, cons);
     }

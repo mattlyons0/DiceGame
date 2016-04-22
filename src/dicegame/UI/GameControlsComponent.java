@@ -1,6 +1,7 @@
 package dicegame.UI;
 
 import dicegame.Game;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -64,6 +65,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
 
     private void diceRollMultiplier() { //Display multiplier UI
         JButton multiplierRoll = new JButton("Roll Dice Multiplier");
+        multiplierRoll.setPreferredSize(new Dimension(180,76));
         multiplierRoll.setActionCommand("MultiplierRoll");
         multiplierRoll.addActionListener(this);
 
@@ -78,6 +80,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
 
         for (int number = 0; number < numDice; number++) {
             JButton die = new JButton("Roll");
+            die.setPreferredSize(new Dimension(76,76));
             die.setActionCommand("RollDie " + number);
             die.addActionListener(this);
             dicePanel.add(die);
