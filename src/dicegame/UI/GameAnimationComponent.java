@@ -35,6 +35,8 @@ public class GameAnimationComponent extends JComponent {
     private GameScoreboardComponent scoreboardComp;
     
     private BufferedImage animationBuffer;
+    private BufferedImage courseImage;
+    private BufferedImage holeImage;
     
     private Dimension holeLocation;
     
@@ -65,6 +67,16 @@ public class GameAnimationComponent extends JComponent {
         int y = rand.nextInt(heightThreshold);
         double x = distance / maxDistance * 0.5;
         holeLocation = new Dimension((int)(x*widthLimit+640),y+heightOffset);
+        
+        courseImage = null;
+        holeImage = null;
+        
+        try{
+            courseImage = ImageIO.read(getClass().getResource("/dicegame/Images/Course.png"));
+            holeImage = ImageIO.read(getClass().getResource("/dicegame/Images/Hole.png"));
+        } catch(IOException exception){
+            System.err.println("Error loading animation images.\n"+exception);
+        }
     }
     
     @Override
@@ -73,16 +85,6 @@ public class GameAnimationComponent extends JComponent {
             scoreboardComp=gui.gameplayPanel.scoreboardComp;
         
         Graphics2D animationGraphics = (Graphics2D) animationBuffer.getGraphics();
-        
-        BufferedImage courseImage = null;
-        BufferedImage holeImage = null;
-        
-        try{
-            courseImage = ImageIO.read(getClass().getResource("/dicegame/Images/Course.png"));
-            holeImage = ImageIO.read(getClass().getResource("/dicegame/Images/Hole.png"));
-        } catch(IOException exception){
-            System.err.println("Error loading animation images.\n"+exception);
-        }
         
         Rectangle visibleArea = this.getVisibleRect();
         double scaleFactorX = visibleArea.width / 1280.0;

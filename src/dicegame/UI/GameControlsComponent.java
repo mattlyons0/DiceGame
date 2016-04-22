@@ -122,7 +122,6 @@ class GameControlsComponent extends JComponent implements ActionListener {
             
             if(allRolled){
                 String buttonText = "Next Turn";
-                System.out.println(gameLogic.getDistanceFromHole());
                 if(gameLogic.getDistanceFromHole() == 0)
                     buttonText = "End Game";
                 JButton nextTurn = new JButton(buttonText);
