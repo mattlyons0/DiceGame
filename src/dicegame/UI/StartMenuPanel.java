@@ -55,8 +55,6 @@ public class StartMenuPanel extends JPanel implements ActionListener {
 
         cons.gridy++;
         statisticsButton = new JButton("Statistics");
-        statisticsButton.setEnabled(false);
-        statisticsButton.setToolTipText("Coming next sprint");
         statisticsButton.addActionListener(this);
         add(statisticsButton, cons);
 
@@ -95,7 +93,7 @@ public class StartMenuPanel extends JPanel implements ActionListener {
         } else if (event.getSource() == createPlayerButton) {
             gui.createPlayer();
         } else if (event.getSource() == statisticsButton) {
-            gui.showStatistics();
+            gui.statsView();
         } else if (event.getSource() == quitButton) {
             System.exit(0);
         }

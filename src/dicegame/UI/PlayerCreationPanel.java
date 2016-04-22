@@ -88,7 +88,7 @@ public class PlayerCreationPanel extends JPanel implements ActionListener {
 
     /**
      * ActionPerfomed: Connecting with JTextfield & JButtons to enter player's
-     * name and return to start menuS.
+     * name and return to StartMenu.
      */
     @Override
     public void actionPerformed(ActionEvent event) {

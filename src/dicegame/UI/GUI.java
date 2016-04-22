@@ -15,6 +15,7 @@ public class GUI extends JFrame {
     public StartMenuPanel startMenuPanel;
     public PlayerCreationPanel playerCreationPanel;
     public GameplayPanel gameplayPanel;
+    public StatsPanel statsPanel; 
 
     //Store Current Panel so it can be easilly removed
     private JPanel currentPanel;
@@ -72,6 +73,22 @@ public class GUI extends JFrame {
     public void showStartMenu() {
         switchPanel(startMenuPanel);
     }
+    
+    /**
+     *  Switch to the statistics view.
+     */
+    public void statsView(){
+    	statsPanel = new StatsPanel(this);
+    	switchPanel(statsPanel);
+    	}
+    
+    /**
+     * Switch to the statistics view.
+     * this could probably be taken out. 
+     */
+    void showStatistics() {
+    	switchPanel(statsPanel);
+    }
 
     /**
      * Remove the current panel (if it exists), and add the new panel
@@ -99,7 +116,4 @@ public class GUI extends JFrame {
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
     
-    void showStatistics() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 }
