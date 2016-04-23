@@ -18,6 +18,7 @@ public class Game {
 
     private int playerCount;
     private int holeCount;
+    private int[] course = new int[holeCount];
     private int[][] gameStats = new int[playerCount][holeCount];
     private String[] playerName = new String[playerCount];
 
@@ -29,6 +30,7 @@ public class Game {
         distanceRemaining = 36;
         numberOfStrokes = 0;
         playerCount = 1;
+        holeCount = 1;
 //		initializeGameStats(playerCount, 0, gameStats);
 
     }
@@ -65,6 +67,30 @@ public class Game {
     	randomHoleDistance = rollTheDice.nextInt(high - low) + low; //result is between 15 and 100
     	
     	return randomHoleDistance;
+    }
+    
+    /**
+     * Creates the course by putting a random number created by the randomHoleDistancer method into 
+     * a global array.
+     */
+    public void createCourse()
+    {
+    	int tempCourse[] = new int[holeCount]; //temporary storage for the course creation
+    	for (int holeIndex = 0; holeIndex < holeCount; holeIndex++)
+    	{
+    		tempCourse[holeIndex] = randomHoleDistancer();//place each distance into the array
+    	}
+    	
+    	course = tempCourse;//put all distances into the global array
+    }
+    
+    /**
+     * Returns the hole distance for each hole
+     * @return course 
+     */
+    public int[] getCourse()
+    {
+    	return course;
     }
     
     /**
