@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import dicegame.Players;
+
 /**
  * StatsPanel class: Interface accessed from StartMenu to look at players statistics and rankings. 
  * 
@@ -18,9 +20,11 @@ public class StatsPanel extends JPanel implements ActionListener{
 	
 	//Variables
 	private GUI gui; 
-	private JLabel playerLabel, winLabel, lossLabel, scoreLabel, padding;
+	private JLabel playerLabel, winLabel, lossLabel, scoreLabel, holeLabel, padding;
 	private JLabel noPlayers;
 	private JButton backButton; 
+    
+	Players p = new Players();
 	
 	//Calls JPanel constructor
 	public StatsPanel(GUI gui){
@@ -64,7 +68,7 @@ public class StatsPanel extends JPanel implements ActionListener{
         //Would be placeholder for player 1 row: wins, losses & score 
         cons.gridy++;
         cons.gridx = 0;
-        playerLabel = new JLabel("Player 1: ");
+        playerLabel = new JLabel(gui.gameLogic.getPlayer() + " : ");
         add(playerLabel, cons);
         
         cons.gridx++;
@@ -76,7 +80,7 @@ public class StatsPanel extends JPanel implements ActionListener{
         add(lossLabel,cons);
         
         cons.gridx++;
-        scoreLabel = new JLabel("NA");
+        scoreLabel = new JLabel(p.getScore() + "");
         add(scoreLabel,cons);
         
         //Would be placeholder for player 2 row: wins, losses & score
@@ -139,6 +143,44 @@ public class StatsPanel extends JPanel implements ActionListener{
         add(padding,cons);
         
         
+        //ScoreCard portion:
+        int holeNum = gui.gameLogic.getNumberOfHoles();
+        int playersNum = gui.gameLogic.getNumberOfPlayers();
+        //Testing with rows and columns here. 
+        //playersNum = 8;
+        //holeNum = 3; 
+        
+        cons.gridy++;
+        cons.gridx = 0; 
+        holeLabel = new JLabel("Holes: ");
+        add(holeLabel, cons);
+        
+        //Creating labels for number of holes
+        for(int index = 1; index <= holeNum; index++){
+        	cons.gridx++;
+        	holeLabel = new JLabel("|" +index + "|");
+        	add(holeLabel,cons);
+        }
+        
+        //Creating labels for number of Players
+        for(int index = 1; index <= playersNum; index++){
+        	cons.gridy++;
+        	cons.gridx = 0;
+        	//Placeholder for players entered name
+        	playerLabel = new JLabel("Player " + index);
+        	add(playerLabel, cons);
+        	//Setting holes for individual players
+        	for(int index2 = 1; index2 <= holeNum; index2++){
+            	cons.gridx++;
+            	//Placeholder for gui.gameLogic.getstroke
+            	// confused on how to actually get each holes individual stroke here
+            	holeLabel = new JLabel("" + gui.gameLogic.getStrokes());
+            	add(holeLabel,cons);
+            }
+        	
+        }
+        		
+        		
         //TODO: Would be conditional for dynamic player adding
         // Currently the default getNumberofPlayers() == 1; 
         if(gui.gameLogic.getNumberOfPlayers() == 0){
