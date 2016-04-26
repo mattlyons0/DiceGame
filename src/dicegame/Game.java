@@ -1,5 +1,9 @@
 package dicegame;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Random;
 
 /**
@@ -16,10 +20,11 @@ public class Game {
     private int numberOfStrokes; //place holder to keep track of strokes
     private int randomHoleDistance;
 
-    private int playerCount;
+    private int playerCount = 0; //does this need to be initialized to 0?
     private int holeCount;
     private int[][] gameStats = new int[playerCount][holeCount];
-    private String[] playerName = new String[playerCount];
+    private String[] playerName = new String[4];
+    private int[] course = new int[holeCount];
 
     /**
      * Constructor to ensure that all values are initialized when starting a new
@@ -32,6 +37,89 @@ public class Game {
 //		initializeGameStats(playerCount, 0, gameStats);
 
     }
+    		/** Gets course array
+    		 * 
+    		 * @return course hole distances
+    		 */
+    
+    		public int[] getCourse()
+    		{
+    			return course;
+    		}
+
+    		/**
+    	     * Creates the course by putting a random number created by the randomHoleDistancer method into 
+    	     * a global array.
+    	     */
+    	    public void createCourse()
+    	    {
+    	    	int tempCourse[] = new int[holeCount]; //temporary storage for the course creation
+    	    	for (int holeIndex = 0; holeIndex < holeCount; holeIndex++)
+    	    	{
+    	    		tempCourse[holeIndex] = randomHoleDistancer();//place each distance into the array
+    	    	}
+    	    	
+    	    	course = tempCourse;//put all distances into the global array
+    	    }
+
+    		/**
+    	     * Save the game data to a file named savedGameStats.sav
+    	     */
+    	    
+    	    public void saveGameStats()
+    	    {
+    	    	int oldStats[][] = gameStats;
+    	    	int number = playerCount;
+    	    	try
+    	    	{
+    	    		//create a file
+    	    		FileOutputStream savedFile = new FileOutputStream("savedGameStats.sav");
+    	    		ObjectOutputStream saved = new ObjectOutputStream(savedFile);
+    	    		
+    	    		//put the array in the file
+    	    		saved.writeObject(oldStats);
+    	    		
+    	    		
+    	    		//close the file
+    	    		saved.close();
+    	    	}
+    	    	catch(Exception e)
+    	    	{
+    	    		System.out.println("Error saving file");
+    	    	}
+    	    }
+
+
+    		/**
+    	     * Load the game stats from the file savedGameStats.sav
+    	     */
+    	    
+    	    public void loadGameStats()
+    	    {
+    	    	try
+    	    	{
+    	    		//load the file
+    	    		FileInputStream savedFile = new FileInputStream("savedGameStats.sav");
+    	    		ObjectInputStream saved = new ObjectInputStream(savedFile);
+    	    		
+    	    		//put the array back into the game
+    	    		gameStats = (int[][]) saved.readObject();
+    	    		playerCount = (int) saved.readObject();
+    	    		
+    	    		//close the file
+    	    		saved.close();
+    	    	}
+    	    	catch(Exception e)
+    	    	{
+    	    		System.out.println("Error loading the file");
+    	    	}
+    	    }
+
+
+    		
+
+    
+    
     
     /**
      * Returns the amount of holes.
@@ -98,8 +186,11 @@ public class Game {
      *
      * @param name
      */
-    public void createPlayer(String name) {
-//        playerName[0] = name; //Doesn't work
+    public void createPlayer(String newPlayer) {
+    	
+    	playerName[playerCount - 1] = newPlayer; 	// Put new player in next
+        									//     available spot.
+    	playerCount++;  						// And increment playerCt to count the new player.
     }
 
     /**
@@ -114,14 +205,32 @@ public class Game {
     /**
      * Initialize the array for testing to values of 0
      *
-     * @param numberOfPlayers
-     * @param hole
-     * @param gameStats
      */
-    private static void initializeGameStats(int numberOfPlayers, int hole, int gameStats[][]) {
-        for (int playerIndex = 0; playerIndex < numberOfPlayers; playerIndex++) {
-            gameStats[playerIndex][0] = 0;
-        }
+    private void initializeGameStats()
+    {
+    	for (int i = 0; i < playerCount; i++)
+    	{ 
+    		for (int j = 0; j < holeCount; j++)
+    		{
+    			gameStats[i][j] = 0;
+    		}
+    	}
+    }
+    /**
+     * prints out current score card values
+     */
+    private void scoreCard()
+    {
+    	for (int i = 0; i < playerCount; i++)
+    	{
+    		for (int j = 0; j < holeCount; j++)
+    		{
+    			System.out.print(gameStats[i][j] + " ");
+    		}
+    		System.out.println("\n");
+    	}
+
+    
     }
 
     /**
@@ -154,7 +263,7 @@ public class Game {
     public int[] hitTheBall(int roll) {
         //boolean to tell if putt is required
         boolean putt = true;
-
+        
         //array to hold each value added to the stroke distance
         int distances[] = new int[roll];
 
@@ -224,38 +333,76 @@ public class Game {
         return distanceRemaining;
     }
 
-}
-//
-//	public static void main(String[] args) 
-//	{
-// 		Game test = new Game();
-// 		
-// 		for (int i = 0; i < 100; i++)
-// 		{
-// 			int distance = test.randomHoleDistancer();
-// 	 		System.out.println("Value: " + distance);
-// 		}
-// 		
- //		
-//		test.setNumberOfPlayers(4);
-//		System.out.println("Number of players: " + test.getNumberOfPlayers());
-//		test.createPlayer("George");
-//		test.createPlayer("John");
-//		test.createPlayer("Stephen");
-//		test.createPlayer("Sean");
-//		System.out.println("Names of players: " + test.getPlayer());
-//		int value = 0;
-//		System.out.println("value: " + value);
-//		test.roll();
-//		System.out.println("new value: " + value);
-//		value = 0;
-//		value = test.roll();
-//		System.out.println("new value: " + value + "\n");
-//		int[] shotDistances = test.hitTheBall(value);
-//		for(int i = 0; i < value; i++)
+//}
+
+	public static void main(String[] args) 
+	{
+ 		Game test = new Game();
+ 		
+ 		//creates 100 different random hole values
+ //		for (int i = 0; i < 100; i++)
 //		{
-//		System.out.println("Distance: " + shotDistances[i]);
-//	}
-//	}
-//}
-//}
+ //			int distance = test.randomHoleDistancer();
+ //	 		System.out.println("Value: " + distance);
+ //		}
+		
+		//set number of holes and print the number out
+ 		test.setNumberOfHoles(9);
+ 		System.out.println("Number of holes: " + test.getNumberOfHoles() + "\n");
+ 		
+		//test setting player names
+		test.createPlayer("George");
+		test.createPlayer("John");
+		test.createPlayer("Stephen");
+		test.createPlayer("Sean");
+		
+		//stores address of values into new array
+		String[] playerName = test.getPlayer();
+		
+		//test printing out stored player names
+		System.out.println("Names of players: " + "\n");
+		
+		for (int i = 0; i < 4; i++)
+		{
+			System.out.println("Player name: " + playerName[i]);
+		}
+		
+		//Initialize all of matrix indices to 0
+		//print out current score card
+//		test.initializeGameStats();
+//		test.scoreCard();
+		
+		//playerCount starts at 0; each time createPlayer() is used
+		//playerCount increases by 1; when 4th player is created
+		//there would be 5 players, because of counter, thus the inclusion of "- 1"
+		System.out.println("\n" + "Number of players: " + (test.getNumberOfPlayers() - 1));
+		
+		int value = 0;
+		
+		//testing roll() method and prints out value
+		test.roll();
+		System.out.println("\n" + "new value: " + value);
+		//reset value to 0
+		value = 0;
+		//roll new value
+		value = test.roll();
+		System.out.println("new value: " + value + "\n");
+		
+		//output number of random distances based on 'value' number
+		int[] shotDistances = test.hitTheBall(value);
+		for(int i = 0; i < value; i++)
+		{
+		System.out.println("Distance: " + shotDistances[i]);
+		}
+		
+		test.createCourse();
+		System.out.println("\n" + "Hole distances: " + "\n");
+		int courseList [] = test.getCourse();
+		
+		for (int i = 0; i < test.getNumberOfHoles(); i++)
+		{
+			System.out.println("Hole distance: " + courseList[i]);
+		}
+	}
+}
+
