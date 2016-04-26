@@ -40,6 +40,16 @@ public class Game {
     }
     
     /**
+     * Give the game stats as a 2d array.
+     * @return game stats
+     */
+    
+    public int[][] getGameStats()
+    {
+    	return gameStats;
+    }
+    
+    /**
      * Save the game data to a file named savedGameStats.sav
      */
     
