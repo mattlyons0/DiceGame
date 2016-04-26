@@ -1,5 +1,9 @@
 package dicegame;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Random;
 
 /**
@@ -34,6 +38,60 @@ public class Game {
 //		initializeGameStats(playerCount, 0, gameStats);
 
     }
+    
+    /**
+     * Save the game data to a file named savedGameStats.sav
+     */
+    
+    public void saveGameStats()
+    {
+    	int oldStats[][] = gameStats;
+    	int number = playerCount;
+    	try
+    	{
+    		//create a file
+    		FileOutputStream savedFile = new FileOutputStream("savedGameStats.sav");
+    		ObjectOutputStream saved = new ObjectOutputStream(savedFile);
+    		
+    		//put the array in the file
+    		saved.writeObject(oldStats);
+    		
+    		
+    		//close the file
+    		saved.close();
+    	}
+    	catch(Exception e)
+    	{
+    		System.out.println("Error saving file");
+    	}
+    }
+    
+    
+    /**
+     * Load the game stats from the file savedGameStats.sav
+     */
+    
+    public void loadGameStats()
+    {
+    	try
+    	{
+    		//load the file
+    		FileInputStream savedFile = new FileInputStream("savedGameStats.sav");
+    		ObjectInputStream saved = new ObjectInputStream(savedFile);
+    		
+    		//put the array back into the game
+    		gameStats = (int[][]) saved.readObject();
+    		
+    		
+    		//close the file
+    		saved.close();
+    	}
+    	catch(Exception e)
+    	{
+    		System.out.println("Error loading the file");
+    	}
+    }
+    
     
     /**
      * Returns the amount of holes.
