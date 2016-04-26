@@ -22,9 +22,9 @@ public class Game {
 
     private int playerCount = 0; //does this need to be initialized to 0?
     private int holeCount;
+    private int[] course = new int[holeCount];
     private int[][] gameStats = new int[playerCount][holeCount];
     private String[] playerName = new String[4];
-    private int[] course = new int[holeCount];
 
     /**
      * Constructor to ensure that all values are initialized when starting a new
@@ -34,91 +34,64 @@ public class Game {
         distanceRemaining = 36;
         numberOfStrokes = 0;
         playerCount = 1;
+        holeCount = 1;
 //		initializeGameStats(playerCount, 0, gameStats);
 
     }
-    		/** Gets course array
-    		 * 
-    		 * @return course hole distances
-    		 */
+
     
-    		public int[] getCourse()
-    		{
-    			return course;
-    		}
-
-    		/**
-    	     * Creates the course by putting a random number created by the randomHoleDistancer method into 
-    	     * a global array.
-    	     */
-    	    public void createCourse()
-    	    {
-    	    	int tempCourse[] = new int[holeCount]; //temporary storage for the course creation
-    	    	for (int holeIndex = 0; holeIndex < holeCount; holeIndex++)
-    	    	{
-    	    		tempCourse[holeIndex] = randomHoleDistancer();//place each distance into the array
-    	    	}
-    	    	
-    	    	course = tempCourse;//put all distances into the global array
-    	    }
-
-    		/**
-    	     * Save the game data to a file named savedGameStats.sav
-    	     */
-    	    
-    	    public void saveGameStats()
-    	    {
-    	    	int oldStats[][] = gameStats;
-    	    	int number = playerCount;
-    	    	try
-    	    	{
-    	    		//create a file
-    	    		FileOutputStream savedFile = new FileOutputStream("savedGameStats.sav");
-    	    		ObjectOutputStream saved = new ObjectOutputStream(savedFile);
-    	    		
-    	    		//put the array in the file
-    	    		saved.writeObject(oldStats);
-    	    		
-    	    		
-    	    		//close the file
-    	    		saved.close();
-    	    	}
-    	    	catch(Exception e)
-    	    	{
-    	    		System.out.println("Error saving file");
-    	    	}
-    	    }
-
-
-    		/**
-    	     * Load the game stats from the file savedGameStats.sav
-    	     */
-    	    
-    	    public void loadGameStats()
-    	    {
-    	    	try
-    	    	{
-    	    		//load the file
-    	    		FileInputStream savedFile = new FileInputStream("savedGameStats.sav");
-    	    		ObjectInputStream saved = new ObjectInputStream(savedFile);
-    	    		
-    	    		//put the array back into the game
-    	    		gameStats = (int[][]) saved.readObject();
-    	    		playerCount = (int) saved.readObject();
-    	    		
-    	    		//close the file
-    	    		saved.close();
-    	    	}
-    	    	catch(Exception e)
-    	    	{
-    	    		System.out.println("Error loading the file");
-    	    	}
-    	    }
-
-
+    /**
+     * Save the game data to a file named savedGameStats.sav
+     */
+    
+    public void saveGameStats()
+    {
+    	int oldStats[][] = gameStats;
+    	int number = playerCount;
+    	try
+    	{
+    		//create a file
+    		FileOutputStream savedFile = new FileOutputStream("savedGameStats.sav");
+    		ObjectOutputStream saved = new ObjectOutputStream(savedFile);
     		
-
+    		//put the array in the file
+    		saved.writeObject(oldStats);
+    		
+    		
+    		//close the file
+    		saved.close();
+    	}
+    	catch(Exception e)
+    	{
+    		System.out.println("Error saving file");
+    	}
+    }
     
+    
+    /**
+     * Load the game stats from the file savedGameStats.sav
+     */
+    
+    public void loadGameStats()
+    {
+    	try
+    	{
+    		//load the file
+    		FileInputStream savedFile = new FileInputStream("savedGameStats.sav");
+    		ObjectInputStream saved = new ObjectInputStream(savedFile);
+    		
+    		//put the array back into the game
+    		gameStats = (int[][]) saved.readObject();
+    		
+    		
+    		//close the file
+    		saved.close();
+    	}
+    	catch(Exception e)
+    	{
+    		System.out.println("Error loading the file");
+    	}
+    }
     
     
     /**
@@ -153,6 +126,30 @@ public class Game {
     	randomHoleDistance = rollTheDice.nextInt(high - low) + low; //result is between 15 and 100
     	
     	return randomHoleDistance;
+    }
+    
+    /**
+     * Creates the course by putting a random number created by the randomHoleDistancer method into 
+     * a global array.
+     */
+    public void createCourse()
+    {
+    	int tempCourse[] = new int[holeCount]; //temporary storage for the course creation
+    	for (int holeIndex = 0; holeIndex < holeCount; holeIndex++)
+    	{
+    		tempCourse[holeIndex] = randomHoleDistancer();//place each distance into the array
+    	}
+    	
+    	course = tempCourse;//put all distances into the global array
+    }
+    
+    /**
+     * Returns the hole distance for each hole
+     * @return course 
+     */
+    public int[] getCourse()
+    {
+    	return course;
     }
     
     /**
