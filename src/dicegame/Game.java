@@ -45,10 +45,10 @@ public class Game {
      */
     public int[] currentPlayer()
     {
-    	for (int i = 0; i < playerCount; i++) {
-            for (int j = 0; j < holeCount; j++) {
-                if (gameStats[i][j] == 0) {
-                	player = gameStats[i];
+    	for (int playerIndex = 0; playerIndex < playerCount; playerIndex++) {
+            for (int holeIndex = 0; holeIndex < holeCount; holeIndex++) {
+                if (gameStats[playerIndex][holeIndex] == 0) {
+                	player = gameStats[playerIndex];
                 }
             }
     	}	
