@@ -46,7 +46,7 @@ public class Game {
     public int[] currentPlayer()
     {
     	for (int playerIndex = 0; playerIndex < playerCount; playerIndex++) {
-            for (int holeIndex = 0; holeIndex < holeCount; j++) {
+            for (int holeIndex = 0; holeIndex < holeCount; holeIndex++) {
                 if (gameStats[playerIndex][holeIndex] == 0) {
                 	player = gameStats[playerIndex];
                 }
