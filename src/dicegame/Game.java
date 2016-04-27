@@ -364,6 +364,76 @@ public class Game {
     public int getDistanceFromHole() {
         return distanceRemaining;
     }
+    
+    
+    
+    /**
+     * create a new gameStats   
+     */
+    public void createGameStats()
+    {
+    	int players = playerCount;
+    	int holes = holeCount;
+    	
+    	int temp[][] = new int[players][holes];
+    	gameStats = temp;
+    	
+    }
+    
+    /**
+     * Reset the game stats
+     */
+    
+    public void resetStats()
+    {
+    	int temp[][] = gameStats;
+    	
+    	for (int playerIndex = 0; playerIndex < temp.length; playerIndex++)
+    	{
+    		for (int holeIndex = 0; holeIndex < temp[playerIndex].length; holeIndex++)
+    		{
+    			temp[playerIndex][holeIndex] = 0;
+    		}
+    	}
+    	
+    	gameStats = temp;
+    }
+    
+    /**
+     * Add a stroke for the specified player and hole
+     * @param player
+     * @param hole
+     */
+    public void addStroke(int player, int hole)
+    {
+    	int temp[][] = gameStats;
+    	try
+    	{
+    		temp[player][hole]++;
+    	}
+    	catch(Exception e)
+    	{
+    		System.out.println("Error: incorrect player number or hole number");
+    	}
+    }
+    
+    /**
+     * Print the gameStats array for testing
+     */
+    
+    private void printStats()
+    {
+    	int temp[][] = gameStats;
+    	for (int playerIndex = 0; playerIndex < temp.length; playerIndex++)
+    	{
+    		for (int holeIndex = 0; holeIndex < temp[playerIndex].length; holeIndex++)
+    		{
+    			System.out.print(temp[playerIndex][holeIndex]);;
+    		}
+    		System.out.println();
+    	}
+    }
+
 
 //}
 
