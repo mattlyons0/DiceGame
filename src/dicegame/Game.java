@@ -55,6 +55,7 @@ public class Game {
     	return player;
     }
     
+    
     /**
      * returns current player
      * 
@@ -82,7 +83,7 @@ public class Game {
     public void saveGameStats()
     {
     	int oldStats[][] = gameStats;
-    	int number = playerCount;
+ //   	int number = playerCount;		//this is not used
     	try
     	{
     		//create a file
@@ -187,6 +188,7 @@ public class Game {
     	return course;
     }
     
+    
     /**
      * Once a putt is completed the distance remaining will reset to the full
      * distance
@@ -232,37 +234,6 @@ public class Game {
      */
     public String[] getPlayer() {
         return playerName;
-    }
-
-    /**
-     * Initialize the array for testing to values of 0
-     *
-     */
-    private void initializeGameStats()
-    {
-    	for (int i = 0; i < playerCount; i++)
-    	{ 
-    		for (int j = 0; j < holeCount; j++)
-    		{
-    			gameStats[i][j] = 0;
-    		}
-    	}
-    }
-    /**
-     * prints out current score card values
-     */
-    private void scoreCard()
-    {
-    	for (int i = 0; i < playerCount; i++)
-    	{
-    		for (int j = 0; j < holeCount; j++)
-    		{
-    			System.out.print(gameStats[i][j] + " ");
-    		}
-    		System.out.println("\n");
-    	}
-
-    
     }
 
     /**
@@ -513,8 +484,37 @@ public class Game {
 		
 		for (int i = 0; i < test.getNumberOfHoles(); i++)
 		{
-			System.out.println("Hole distance: " + courseList[i]);
+			System.out.println("Hole distance: " + courseList[i] + "\n");
 		}
+		
+		//creates 2D array that fills up all of first row
+		//fills up first column of second row
+		test.addStroke(0, 0);
+		test.addStroke(0, 1);
+		test.addStroke(0, 2);
+		test.addStroke(0, 3);
+		test.addStroke(0, 4);
+		test.addStroke(0, 5);
+		test.addStroke(0, 6);
+		test.addStroke(0, 7);
+		test.addStroke(0, 8);
+		test.addStroke(1, 0);
+		
+		test.printStats();
+		
+		//testing currentPlayer() to get current player
+		//based upon above 2D set index values, current
+		//player should be player number 1 (0 to 3)
+		test.currentPlayer();
+		int[] currentPlayer = test.getCurrentPlayer();
+		
+		System.out.println("\n" + "Current player should be player 1 (from players 0 to 3): ");
+		
+		for(int i = 0; i < 1; i++)
+		{
+			System.out.print("\n" + "Current player number: " + currentPlayer[i]);
+		}
+		
 	}
 }
 
