@@ -470,15 +470,18 @@ public class Game {
 		
 		//Initialize all of matrix indices to 0
 		//print out current score card
+		System.out.println("\n" + "Testing 2D array output and manipulations: " + "\n");
 		test.createGameStats();
 		test.printStats();
 		System.out.println();
 		
 		//change matrix values with [0][0] to 1
+		System.out.println("Changed values at [0][0] and [1][8]: " + "\n");
 		test.gameStats[0][0] = 1;
 		test.addStroke(1, 8);
 		test.printStats();
 		
+		System.out.println("\n" + "Resetting values back to 0: " + "\n");
 		//test reset method to set all values back to 0
 		test.resetStats();
 		System.out.println();
@@ -492,15 +495,11 @@ public class Game {
 		
 		int value = 0;
 		
-		//testing roll() method and prints out value
-		test.roll();
-		System.out.println("\n" + "new value: " + value);
-		//reset value to 0
-		value = 0;
-		//roll new value
+		//testing roll value
 		value = test.roll();
-		System.out.println("new value: " + value + "\n");
+		System.out.println("\n" + "Roll value: " + value + "\n");
 		
+		System.out.println("Print out of number of distances equal to roll value: " + "\n");
 		//output number of random distances based on 'value' number
 		int[] shotDistances = test.hitTheBall(value);
 		for(int i = 0; i < value; i++)
