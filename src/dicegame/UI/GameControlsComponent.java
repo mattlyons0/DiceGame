@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -133,6 +134,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
             if(((JButton)event.getSource()).getText().equals("End Game")){
                 gui.showStartMenu();
             } else{
+                System.out.println(Arrays.toString(gameLogic.currentPlayer()));
                 diceRollMultiplier();
             }
         }

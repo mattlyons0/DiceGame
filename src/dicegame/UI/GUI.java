@@ -59,10 +59,15 @@ public class GUI extends JFrame {
 
     /**
      * Switch to the gameplay view.
+     * @param holeCount number of holes to be played
      */
-    public void startGame() {
-        gameLogic = new Game();
-
+    public void startGame(int holeCount) {
+        //Prepare Course
+        gameLogic.setNumberOfHoles(holeCount);
+        gameLogic.createCourse();
+        gameLogic.createGameStats();
+        
+        //Prepare and show UI
         gameplayPanel = new GameplayPanel(this);
         switchPanel(gameplayPanel);
     }

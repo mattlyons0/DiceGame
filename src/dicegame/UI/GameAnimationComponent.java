@@ -11,21 +11,15 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.border.EtchedBorder;
 
 /**
  * Handles Animation of Gameplay.
- * Hole is at 1100,350 in image.
  * @author Matt Lyons
  */
 public class GameAnimationComponent extends JComponent {

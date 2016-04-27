@@ -84,7 +84,7 @@ public class PlayerCreationPanel extends JPanel implements ActionListener {
         cons.anchor = GridBagConstraints.NORTH;
         displayName = new JLabel("Please enter name and press add");
         add(displayName, cons);
-
+        
     }
 
     /**

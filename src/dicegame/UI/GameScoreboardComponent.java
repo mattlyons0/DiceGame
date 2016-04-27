@@ -48,7 +48,6 @@ class GameScoreboardComponent extends JComponent {
         table.getTableHeader().setReorderingAllowed(false);
 
         JScrollPane scroll = new JScrollPane(table);
-
         add(scroll, cons);
     }
 
@@ -58,7 +57,7 @@ class GameScoreboardComponent extends JComponent {
         AbstractTableModel model = new AbstractTableModel() {
             @Override
             public int getRowCount() {
-                return 1;
+                return gameLogic.getNumberOfPlayers()-1;
             }
 
             @Override
@@ -70,7 +69,7 @@ class GameScoreboardComponent extends JComponent {
             public Object getValueAt(int row, int col) {
                 switch (col) {
                     case 0:
-                        return "Player " + (row + 1);
+                        return gameLogic.getPlayer()[row];
                     case 1:
                         return strokes;
                     case 2:
