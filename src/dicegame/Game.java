@@ -25,6 +25,7 @@ public class Game {
     private int[] course = new int[holeCount];
     private int[][] gameStats = new int[playerCount][holeCount];
     private String[] playerName = new String[4];
+    private int[] player = null;
 
     /**
      * Constructor to ensure that all values are initialized when starting a new
@@ -39,6 +40,30 @@ public class Game {
 
     }
 
+    /**
+     * method that determines current player
+     */
+    public int[] currentPlayer()
+    {
+    	for (int i = 0; i < playerCount; i++) {
+            for (int j = 0; j < holeCount; j++) {
+                if (gameStats[i][j] == 0) {
+                	player = gameStats[i];
+                }
+            }
+    	}	
+    	return player;
+    }
+    
+    /**
+     * returns current player
+     * 
+     * @return player number
+     */
+    public int[] getCurrentPlayer()
+    {
+    	return player;
+    }
     
     /**
      * Save the game data to a file named savedGameStats.sav
@@ -366,6 +391,8 @@ public class Game {
 		
 		//Initialize all of matrix indices to 0
 		//print out current score card
+		test.getNumberOfHoles();
+		test.getNumberOfPlayers();
 //		test.initializeGameStats();
 //		test.scoreCard();
 		
