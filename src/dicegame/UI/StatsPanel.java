@@ -23,6 +23,8 @@ public class StatsPanel extends JPanel implements ActionListener {
 	private GUI gui;
 	private JLabel playerLabel, winLabel, lossLabel, scoreLabel, holeLabel, padding;
 	private JLabel noPlayers;
+	private int playerScore1, playerScore2, playerScore3, playerScore4;
+	private int winCounter1 = 0, winCounter2 = 0, winCounter3 = 0, winCounter4 = 0;
 	private JButton backButton;
 
 	// Calls JPanel constructor
@@ -67,22 +69,24 @@ public class StatsPanel extends JPanel implements ActionListener {
 		// variables.
 		int playersNum = gui.gameLogic.getNumberOfPlayers();
 		int holeNum = gui.gameLogic.getNumberOfHoles();
+		String[] playerName = gui.gameLogic.getPlayer();
 
 		// Testing with rows and columns here.
 		// playersNum = 8;
 		// holeNum = 3;
 
 		// Creating PlayerLabels for each player with wins, losses and scores
-		for (int index = 1; index <= playersNum; index++) {
+		for (int index = 1; index < playersNum; index++) {
 			cons.gridy++;
 			cons.gridx = 0;
 
 			// Placeholder for players name: gui.gamelogic.getPlayer()
-			playerLabel = new JLabel(" Player " + index + ": ");
+			playerLabel = new JLabel(playerName[index-1]);
 			add(playerLabel, cons);
 
 			// Placeholder value for wins
 			cons.gridx++;
+			
 			winLabel = new JLabel("NA");
 			add(winLabel, cons);
 
@@ -94,7 +98,14 @@ public class StatsPanel extends JPanel implements ActionListener {
 			// Placeholder value for score (would be total of accumulated
 			// strokes)
 			cons.gridx++;
-			scoreLabel = new JLabel("NA");
+			if(index == 1)
+				scoreLabel = new JLabel("" + playerScore1);
+			if(index == 2)
+				scoreLabel = new JLabel("" + playerScore2);
+			if(index == 3)
+				scoreLabel = new JLabel("" + playerScore3);
+			if(index == 4)
+				scoreLabel = new JLabel("" + playerScore4);
 			add(scoreLabel, cons);
 		}
 
@@ -119,12 +130,12 @@ public class StatsPanel extends JPanel implements ActionListener {
 		}
 
 		// Creating labels for number of Players
-		for (int index = 1; index <= playersNum; index++) {
+		for (int index = 1; index < playersNum; index++) {
 			cons.gridy++;
 			cons.gridx = 0;
 			// Placeholder for players entered name
 			// gui.gameLogic.getPlayer();
-			playerLabel = new JLabel("Player " + index);
+			playerLabel = new JLabel(playerName[index-1]);;
 			add(playerLabel, cons);
 			// Setting holes for individual players
 			for (int index2 = 1; index2 <= holeNum; index2++) {
@@ -149,3 +160,53 @@ public class StatsPanel extends JPanel implements ActionListener {
 			gui.showStartMenu();
 	}
 }
+
+
+/*WINS Label: For calculating wins with addStroke method adding to these. 
+ *  			if(playerScore1 <= playerScore2 && playerScore1 <= playerScore3 
+					&& playerScore1 <= playerScore4){	
+				if(index == 1){
+					winCounter1++;
+					winLabel = new JLabel("" + winCounter1);
+				}
+			}
+			if(playerScore2 <= playerScore1 && playerScore2 <= playerScore3 
+					&& playerScore2 <= playerScore4){	
+				if(index == 2){
+					winCounter2++;
+					winLabel = new JLabel("" + winCounter2);
+				}
+			}
+			if(playerScore3 <= playerScore1 && playerScore3 <= playerScore2 
+					&& playerScore3 <= playerScore4){	
+				if(index == 3){
+					winCounter3++;
+					winLabel = new JLabel("" + winCounter3);
+				}
+			}
+			if(playerScore4 <= playerScore1 && playerScore4 <= playerScore2 
+					&& playerScore4 <= playerScore3){	
+				if(index == 4){
+					winCounter4++;
+					winLabel = new JLabel("" + winCounter4);
+				}
+			}
+
+lossLabel:
+			if(index == 1){
+				if(winCounter1 < 1)
+					lossLabel = new JLabel("1");
+			}
+			if(index == 2){
+				if(winCounter2 < 1)
+					lossLabel = new JLabel("1");
+			}
+			if(index == 3){
+				if(winCounter3 < 1)
+					lossLabel = new JLabel("1");
+			}
+			if(index == 4){
+				if(winCounter4 < 1)
+					lossLabel = new JLabel("1");
+			}
+*/
