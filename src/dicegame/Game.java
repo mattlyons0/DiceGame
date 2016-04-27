@@ -366,7 +366,6 @@ public class Game {
     }
     
     
-    
     /**
      * create a new gameStats   
      */
@@ -424,7 +423,7 @@ public class Game {
     private void printStats()
     {
     	int temp[][] = gameStats;
-    	for (int playerIndex = 0; playerIndex < temp.length; playerIndex++)
+    	for (int playerIndex = 0; playerIndex < temp.length - 1; playerIndex++)
     	{
     		for (int holeIndex = 0; holeIndex < temp[playerIndex].length; holeIndex++)
     		{
@@ -471,10 +470,20 @@ public class Game {
 		
 		//Initialize all of matrix indices to 0
 		//print out current score card
-		test.getNumberOfHoles();
-		test.getNumberOfPlayers();
-//		test.initializeGameStats();
-//		test.scoreCard();
+		test.createGameStats();
+		test.printStats();
+		System.out.println();
+		
+		//change matrix values with [0][0] to 1
+		test.gameStats[0][0] = 1;
+		test.addStroke(1, 8);
+		test.printStats();
+		
+		//test reset method to set all values back to 0
+		test.resetStats();
+		System.out.println();
+		test.printStats();
+
 		
 		//playerCount starts at 0; each time createPlayer() is used
 		//playerCount increases by 1; when 4th player is created
