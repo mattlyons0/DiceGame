@@ -23,6 +23,7 @@ public class PlayerCreationPanel extends JPanel implements ActionListener {
     private JTextField enterName;
     private JButton addPlayer, backButton;
     private String name;
+    private int counter;
 
     /**
      * Create a PlayerCreationPanel to be used in the GUI
@@ -55,7 +56,7 @@ public class PlayerCreationPanel extends JPanel implements ActionListener {
         cons.gridwidth = 2;
         cons.weightx = 90;
         cons.anchor = GridBagConstraints.CENTER;
-        playersName = new JLabel("Enter Players Name");
+        playersName = new JLabel("Enter players name. 4 player limit");
         add(playersName, cons);
 
         // Added JTextField for user to enter player name.
@@ -102,10 +103,15 @@ public class PlayerCreationPanel extends JPanel implements ActionListener {
             // conditional for non-text being entered.
             if (name.trim().equals("")) {
                 displayName.setText("A name must be entered.");
-            } else {
+            } 
+            // Conditional for reaching max amount of players of 4. 
+            // User is directed to go back to StartMenu.
+            if(gui.gameLogic.getNumberOfPlayers() == 5){
+            	displayName.setText("Player limit of 4 reached, please return to Start");
+            }
+            else {
                 // adding players to game.
                 gui.startMenuPanel.addPlayer(name);
-
                 // removing panel
                 gui.showStartMenu();
             }
