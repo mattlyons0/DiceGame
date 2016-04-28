@@ -68,7 +68,7 @@ public class GUI extends JFrame {
         gameLogic.createGameStats();
         
         //Prepare and show UI
-        gameplayPanel = new GameplayPanel(this);
+        gameplayPanel = new GameplayPanel(holeCount,this);
         switchPanel(gameplayPanel);
     }
 

@@ -9,12 +9,17 @@
 #### Main Menu
 
 - There should be a Start Game button
+- The Start Game button should be initially disabled (if no players are created) with a tooltip stating a player must be created to play.
+- There should be a input field with the value 3 in it next to Start Game. It should have the label 'Holes' next to it.
+- The Start Game button should only become active under the following conditions: There is at least 1 player created & The holes field contains a number > 0.
+- If one or both of those conditions is not met the Start Game button should be disabled with a tooltip containing one of the missing conditions.
+- If the value in the holes field is not a Integer the value should turn red.
 - Clicking the Start Game button should maximize the window
 - Clicking the Start Game button should switch to a different view (see Game Screen)
 - There should be a Create New Player button
 - Clicking Create New Player button should switch to a different view (see Player Creation)
 - There should be a Statistics button
-- The statistics button should be greyed out and should not respond to clicks
+- The statistics button should switch to a different view (see Statistics)
 - There should be a Quit Game button
 - Clicking the Quit Game button should close the window and the java application
 - Upon the bottom of the of the screen there should be a label stating either no players are created or listing the created players
@@ -24,21 +29,50 @@
 #### Game Screen
 
 - Clicking the Start Game button should show 3 layout elements
-- There should be a border at the top of the window with the text 'A visualization will go here in the next sprint.'
-- The layout should take up approximately 40% of the screen
-- There should be a Table in the middle of the screen vertically
-- The table should take up approximately 40% of the screen
+- There should be a section at the top of the window containing a visualization of the game (See Game Animation)
+- The Animation should take up approximately a third of the screen vertically and fill horizontally.
+- There should be a Table in the middle of the screen vertically (See Game Table)
+- The table should take up approximately a third of the screen vertically and fill horizontally.
+- There should be a section at the bottom of the window containing a inset border and game controls (See Game Controls)
+- Thee Game Controls should be taking up approximately one third of the screen vertically and fill horizontally
+
+##### Game Animation
+
+- At the top left corner there should be a label in white text containing the hole number. This number should increment upon advancing to the next hole.
+- In the center of the screen there should be a Golf Green. This should contain a set of balls at the left.
+- Each ball should be colored randomly and match the color of the player's Row in the Game Table.
+- The balls may initially overlap one another.
+- There should be a ball for every player.
+- There should be a hole. This hole will be in a randomized location vertically while still remaining on the green.
+- The hole will be closer or further in the green depending on how far away the hole is.
+- In each hole played the drawn hole on the course should be in a slightly different location depending on the hole's length and the random variation of height with the hole.
+- Each Player's ball should represent the distance the player is away from the hole.
+- Each time a player hits Roll in the Game Controls, the ball should move closer to the hole according to the dice roll they got.
+- Movement should not be fully animated, but the balls should 'jump' forwards.
+- Any ball should never go past the hole.
+- Upon advancing to a new hole the ball locations should reset to the start (left side) of the green.
+
+##### Game Table
 - The table should contain 3 headers, Name, Turns and Distance from Hole
-- There should be a border inset for the bottom element taking up approximately 15-20% of the screen
-- The bottom element should contain the controls for the game (Roll Dice Multiplier or Dice Roll buttons)
-- There should be a label at the top of the element stating which player's turn it is
+- Each row's text should be colored with the same color as that player's ball in the animation.
+- Each row's background color should be either white or black in order to ensure readability of the text.
+- For the column Name: Each player's name should appear as a row.
+- For the column Strokes: Each player's strokes should be counted upwards after the first roll of their turn.
+- For the column Distance from Hole: Each player's distance from hole should update with respect to the distance they are away from the hole after each roll.
+- All of this data should be updated every time a player hits roll.
+
+##### Game Controls
+- The bottom should contain the controls for the game (Roll Dice Multiplier or Dice Roll buttons)
+- There should be a label at the top of stating which player's turn it is. This label should switch in accordance to the logic after each player's turn.
 - When Roll Dice Multiplier is clicked 1-6 dice buttons should appear with the label 'Roll'
 - Upon clicking any of these buttons, in any given order, the Distance From Hole should be subtracted by the amount displayed on the die
-- Upon clicking the first die the strokes should increment by one
-- After all the die have been clicked as long as the Distance from Hole is not 0 a Next Turn button should appear
-- Pressing the Next Turn button should show the 'Roll Dice Multiplier' button once again and this loop will continue until the Distance from Hole is 0.
-- Once the Distance from Hole is 0, after all dice have been rolled, instead of displaying a Next Turn button, a End Game button should display to the right of the dice rolled
-- Clicking the End Game button should take you back to the main menu
+- The amount displayed should be a picture of a die with the given roll on it. This roll should be a value of 0-6 inclusive. A zero roll is seen is a missed swing (and visualized with a blank die).
+- Upon clicking the first die (in any order) the strokes should increment by one.
+- After all the die have been clicked as long as the Distance from Hole of all players is not 0 a Next Turn button should appear.
+- Pressing the Next Turn button should show the 'Roll Dice Multiplier' button once again and this loop will continue until the Distance from Hole is 0 for all players.
+- If the distance from hole of all players is 0, either a Next Hole button should appear or a End Game button.
+- If the current hole is the last hole (selected in the Main Menu before pressing start), End Game should appear and the Statistics View should be displayed upon clicking.
+- If the current hole is not the last hole a Next Hole button should appear, incrementing the hole number in the Game Animation, Resetting the Values in the Game Table and Resetting the Player's Turn Label.
 
 #### Player Creation
 

@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -159,11 +158,12 @@ public class StartMenuPanel extends JPanel implements ActionListener,KeyListener
                 holesCount.setForeground(UIManager.getColor("Panel.foreground"));
                 holesCount.setToolTipText(null);
                 holeCount = num;
-                validateStart();
             } catch(NumberFormatException exception){
                 holesCount.setForeground(Color.red);
                 holesCount.setToolTipText("Holes must be a number!");
+                holeCount = -1;
             }
+            validateStart();
         }
     }
 }

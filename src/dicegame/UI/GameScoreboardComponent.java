@@ -1,12 +1,16 @@
 package dicegame.UI;
 
 import dicegame.Game;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
 /**
@@ -16,7 +20,7 @@ import javax.swing.table.TableModel;
  */
 class GameScoreboardComponent extends JComponent {
 
-    private Game gameLogic;
+    private final Game GAMELOGIC;
 
     private JTable table;
 
@@ -26,12 +30,12 @@ class GameScoreboardComponent extends JComponent {
     /**
      * Creates a new Game Scoreboard
      */
-    public GameScoreboardComponent(GUI gui) {
+    public GameScoreboardComponent(final GUI gui) {
         super();
 
-        this.gameLogic = gui.gameLogic;
+        this.GAMELOGIC = gui.gameLogic;
 
-        distanceLeft = gameLogic.getHoleLength();
+        distanceLeft = GAMELOGIC.getHoleLength();
         strokes = 0;
 
         setLayout(new GridBagLayout());
@@ -46,6 +50,25 @@ class GameScoreboardComponent extends JComponent {
         table.setRowSelectionAllowed(false);
         table.setColumnSelectionAllowed(false);
         table.getTableHeader().setReorderingAllowed(false);
+        table.setDefaultRenderer(table.getColumnClass(0), new DefaultTableCellRenderer(){
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, false, hasFocus, row, column);
+                
+                Color playerColor = gui.gameplayPanel.animationComp.getPlayerColor(row);
+                label.setForeground(playerColor);
+                //Perceived Luminance from the W3C spec: https://www.w3.org/TR/AERT#color-contrast
+                double luminance = (0.299*(playerColor.getRed()/255) + 0.587*(playerColor.getGreen()/255) + 0.114*(playerColor.getBlue()/255)); 
+                //W3C Color Contrast Reccomendations https://www.w3.org/TR/WCAG20/
+                if ((luminance + 0.05) / (0.0 + 0.05) > (1.0 + 0.05) / (luminance + 0.05)){
+                    label.setBackground(Color.BLACK);
+                } else {
+                    label.setBackground(Color.WHITE);
+                }
+                
+                return label;
+            }
+        });
 
         JScrollPane scroll = new JScrollPane(table);
         add(scroll, cons);
@@ -57,7 +80,7 @@ class GameScoreboardComponent extends JComponent {
         AbstractTableModel model = new AbstractTableModel() {
             @Override
             public int getRowCount() {
-                return gameLogic.getNumberOfPlayers()-1;
+                return GAMELOGIC.getNumberOfPlayers()-1;
             }
 
             @Override
@@ -69,7 +92,7 @@ class GameScoreboardComponent extends JComponent {
             public Object getValueAt(int row, int col) {
                 switch (col) {
                     case 0:
-                        return gameLogic.getPlayer()[row];
+                        return GAMELOGIC.getPlayer()[row];
                     case 1:
                         return strokes;
                     case 2:
@@ -100,11 +123,16 @@ class GameScoreboardComponent extends JComponent {
      */
     public void hitBall(int distance) {
         distanceLeft -= distance;
-        strokes = gameLogic.getStrokes();
+        strokes = GAMELOGIC.getStrokes();
         ((AbstractTableModel) table.getModel()).fireTableDataChanged();
     }
     
     public int getBallDistanceLeft(){
         return distanceLeft;
+    }
+    public void newHole(){
+        strokes = 0;
+        distanceLeft = GAMELOGIC.getDistanceFromHole();
+        ((AbstractTableModel) table.getModel()).fireTableDataChanged();
     }
 }
