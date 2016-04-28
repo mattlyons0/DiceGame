@@ -27,6 +27,10 @@ public class Game {
     private String[] playerName = new String[4]; //holds player names
     private int[] player = null;
     private int[] currentGameLocation = new int[2];//index 0 holds player index, index 1 holds hole index
+    
+   
+    private int holeIndex;
+    
 
     /**
      * Constructor to ensure that all values are initialized when starting a new
@@ -37,9 +41,44 @@ public class Game {
         numberOfStrokes = 0;
         playerCount = 1;
         holeCount = 1;
+        holeIndex = 1; 
 //		initializeGameStats(playerCount, 0, gameStats);
 
     }
+    /**
+     * Move the hole to the next hole in the game. Returns true if moved or false if the last hole.
+     * @return boolean move successful
+     */
+    public boolean nextHole()
+    {
+    	int currentHole = holeIndex;
+    	int maxHole = holeCount;
+    	boolean moveSuccessful = false;
+    	
+    	//increment only if not on the last hole.
+    	if (currentHole <  maxHole)
+    	{
+    		currentHole++;
+    		moveSuccessful = true;
+    	}
+    	
+    	holeIndex = currentHole;
+    	return moveSuccessful;
+    }
+    
+    /**
+     * returns which hole the game is on.
+     * @return hole index
+     */
+    public int getHoleIndex()
+    {
+    	return holeIndex;
+    }
+    
+    
+    
+    
+    
 
     /**
      * method that determines current player
@@ -47,13 +86,15 @@ public class Game {
     public void currentPlayer()
     {
     	int[][] temp = gameStats;//pull in the gameStats array
+    	boolean found = false;
     	for (int playerIndex = 0; playerIndex < playerCount; playerIndex++) //loop through players
     	{
             for (int holeIndex = 0; holeIndex < holeCount; holeIndex++) //loop through each hole
             {
-                if (temp[playerIndex][holeIndex] == 0) {
+                if (temp[playerIndex][holeIndex] == 0 && !found) {
                 	currentGameLocation[0] = playerIndex; //mark the player index
                 	currentGameLocation[1] = holeIndex; //mark the hole index
+                	found = true;
                 }
             }
     	}	
@@ -239,20 +280,7 @@ public class Game {
         return playerName;
     }
 
-    /**
-     * Initialize the array for testing to values of 0
-     *
-     */
-    private void initializeGameStats()
-    {
-    	for (int i = 0; i < playerCount; i++)
-    	{ 
-    		for (int j = 0; j < holeCount; j++)
-    		{
-    			gameStats[i][j] = 0;
-    		}
-    	}
-    }
+   
     /**
      * prints out current score card values
      */
@@ -293,7 +321,7 @@ public class Game {
 
     /**
      * Hits the ball for a total of values that were rolled by the multiplier.
-     *
+     *Player
      * @param roll
      * @return array of values rolled
      */
@@ -428,7 +456,7 @@ public class Game {
     private void printStats()
     {
     	int temp[][] = gameStats;
-    	for (int playerIndex = 0; playerIndex < temp.length - 1; playerIndex++)
+    	for (int playerIndex = 0; playerIndex < temp.length; playerIndex++)
     	{
     		for (int holeIndex = 0; holeIndex < temp[playerIndex].length; holeIndex++)
     		{
