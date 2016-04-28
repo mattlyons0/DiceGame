@@ -22,10 +22,11 @@ public class Game {
 
     private int playerCount = 0; //does this need to be initialized to 0?
     private int holeCount;
-    private int[] course = new int[holeCount];
-    private int[][] gameStats = new int[playerCount][holeCount];
-    private String[] playerName = new String[4];
+    private int[] course = new int[holeCount]; //holds the course distances
+    private int[][] gameStats = new int[playerCount][holeCount]; //holds the stroke counts for each player and hole
+    private String[] playerName = new String[4]; //holds player names
     private int[] player = null;
+    private int[] currentGameLocation = new int[2];//index 0 holds player index, index 1 holds hole index
 
     /**
      * Constructor to ensure that all values are initialized when starting a new
@@ -43,16 +44,20 @@ public class Game {
     /**
      * method that determines current player
      */
-    public int[] currentPlayer()
+    public void currentPlayer()
     {
-    	for (int playerIndex = 0; playerIndex < playerCount; playerIndex++) {
-            for (int holeIndex = 0; holeIndex < holeCount; holeIndex++) {
-                if (gameStats[playerIndex][holeIndex] == 0) {
-                	player = gameStats[playerIndex];
+    	int[][] temp = gameStats;//pull in the gameStats array
+    	for (int playerIndex = 0; playerIndex < playerCount; playerIndex++) //loop through players
+    	{
+            for (int holeIndex = 0; holeIndex < holeCount; holeIndex++) //loop through each hole
+            {
+                if (temp[playerIndex][holeIndex] == 0) {
+                	currentGameLocation[0] = playerIndex; //mark the player index
+                	currentGameLocation[1] = holeIndex; //mark the hole index
                 }
             }
     	}	
-    	return player;
+    	
     }
     
     /**
@@ -62,7 +67,7 @@ public class Game {
      */
     public int[] getCurrentPlayer()
     {
-    	return player;
+    	return currentGameLocation;
     }
     
     /**
