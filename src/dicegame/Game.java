@@ -28,6 +28,10 @@ public class Game {
     private int[] player = null;
     private int[] currentLocation = new int[2];
     private int[] nextHole = new int[18];
+    private static int playerOneWins;
+    private static int playerTwoWins;
+    private static int playerThreeWins;
+    private static int playerFourWins;
 
     /**
      * Constructor to ensure that all values are initialized when starting a new
@@ -41,6 +45,166 @@ public class Game {
 //		initializeGameStats(playerCount, 0, gameStats);
 
     }
+    
+    /**
+     * method to add up all strokes for each player
+     * @return sum of specified row
+     */
+    public int strokeSum(int playerNum)
+    {
+    	int sum = 0;
+    	for(int holeIndex = 0; holeIndex < holeCount; holeIndex++) {
+    		sum += gameStats[playerNum][holeIndex];
+    	}
+    	return sum;
+    }
+    /**
+     * increments win count for player(s) that win based on final game score
+     */
+    public void countWin()
+    {
+    	if (strokeSum(0) < strokeSum(1) & strokeSum(0) < strokeSum(2) & strokeSum(0) < strokeSum(3))
+    	{
+    		playerOneWins++;
+    	}
+    	if (strokeSum(1) < strokeSum(0) & strokeSum(1) < strokeSum(2) & strokeSum(1) < strokeSum(3))
+    	{
+    		playerTwoWins++;
+    	}
+    	if (strokeSum(2) < strokeSum(0) & strokeSum(2) < strokeSum(1) & strokeSum(2) < strokeSum(3))
+    	{
+    		playerThreeWins++;
+    	}
+    	if (strokeSum(3) < strokeSum(1) & strokeSum(3) < strokeSum(0) & strokeSum(3) < strokeSum(2))
+    	{
+    		playerFourWins++;
+    	}
+    	
+    	if (strokeSum(0) == strokeSum(1) & strokeSum(0) < strokeSum(3) & strokeSum(2) < strokeSum(0))
+    	{
+    		playerThreeWins++;
+    	}
+    	if (strokeSum(0) == strokeSum(1) & strokeSum(2) < strokeSum(0) & strokeSum(2) > strokeSum(3))
+    	{
+    		playerFourWins++;
+    	}
+    	if (strokeSum(0) == strokeSum(1) & strokeSum(0) < strokeSum(2) & strokeSum(0) < strokeSum(3))
+    	{
+    		playerOneWins++;
+    		playerTwoWins++;
+    	}
+    	
+    	if (strokeSum(0) == strokeSum(2) & strokeSum(0) < strokeSum(1) & strokeSum(0) < strokeSum(3))
+    	{
+    		playerOneWins++;
+    		playerThreeWins++;
+    	}
+    	if (strokeSum(0) == strokeSum(2) & strokeSum(0) < strokeSum(3) & strokeSum(1) < strokeSum(0))
+    	{
+    		playerTwoWins++;
+    	}
+    	if (strokeSum(0) == strokeSum(2) & strokeSum(0) < strokeSum(1) & strokeSum(3) < strokeSum(0))
+    	{
+    		playerFourWins++;
+    	}
+    	
+    	if (strokeSum(1) == strokeSum(2) & strokeSum(1) < strokeSum(3) & strokeSum(1) < strokeSum(0))
+    	{
+    		playerTwoWins++;
+    		playerThreeWins++;
+    	}
+    	if (strokeSum(1) == strokeSum(2) & strokeSum(1) < strokeSum(3) & strokeSum(1) > strokeSum(0))
+    	{
+    		playerOneWins++;
+    	}
+    	if (strokeSum(1) == strokeSum(2) & strokeSum(3) < strokeSum(1) & strokeSum(3) < strokeSum(0))
+    	{
+    		playerThreeWins++;
+    	}
+    	
+    	if (strokeSum(1) == strokeSum(3) & strokeSum(1) < strokeSum(2) & strokeSum(1) < strokeSum(0))
+    	{
+    		playerTwoWins++;
+    		playerFourWins++;
+    	}
+    	if (strokeSum(1) == strokeSum(3) & strokeSum(1) < strokeSum(2) & strokeSum(0) < strokeSum(1))
+    	{
+    		playerOneWins++;
+    	}
+    	if (strokeSum(1) == strokeSum(3) & strokeSum(0) < strokeSum(1) & strokeSum(2) < strokeSum(0))
+    	{
+    		playerThreeWins++;
+    	}
+    	
+    	if (strokeSum(3) == strokeSum(2) & strokeSum(2) < strokeSum(0) & strokeSum(2)  < strokeSum(1))
+    	{
+    		playerThreeWins++;
+    		playerFourWins++;
+    	}
+    	if (strokeSum(3) == strokeSum(2) & strokeSum(2) < strokeSum(0) & strokeSum(1) < strokeSum(2))
+    	{
+    		playerTwoWins++;
+    	}
+    	if (strokeSum(3) == strokeSum(2) & strokeSum(0) < strokeSum(2) & strokeSum(0) < strokeSum(1))
+		{
+			playerOneWins++;
+		}
+    	
+    	if (strokeSum(0) == strokeSum(1) & strokeSum(1) == strokeSum(2) & strokeSum(3) < strokeSum(2))
+    	{
+    		playerFourWins++;
+    	}
+    	if (strokeSum(0) == strokeSum(1) & strokeSum(1) == strokeSum(2) & strokeSum(3) > strokeSum(2))
+    	{
+    		playerOneWins++;
+    		playerTwoWins++;
+    		playerThreeWins++;
+    	}
+    	
+    	if (strokeSum(0) == strokeSum(1) & strokeSum(1) == strokeSum(3) & strokeSum(2) < strokeSum(3))
+    	{
+    		playerThreeWins++;
+    	}
+    	if (strokeSum(0) == strokeSum(1) & strokeSum(1) == strokeSum(3) & strokeSum(2) > strokeSum(3))
+    	{
+    		playerOneWins++;
+    		playerTwoWins++;
+    		playerFourWins++;
+    	}
+    	
+    	if (strokeSum(0) == strokeSum(2) & strokeSum(2) == strokeSum(3) & strokeSum(1) < strokeSum(3))
+    	{
+    		playerTwoWins++;
+    	}
+    	if (strokeSum(0) == strokeSum(2) & strokeSum(2) == strokeSum(3) & strokeSum(1) > strokeSum(3))
+    	{
+    		playerOneWins++;
+    		playerThreeWins++;
+    		playerFourWins++;
+    	}
+    	
+    	if (strokeSum(1) == strokeSum(2) & strokeSum(2) == strokeSum(3) & strokeSum(0) < strokeSum(3))
+    	{
+    		playerOneWins++;
+    	}
+    	if (strokeSum(1) == strokeSum(2) & strokeSum(2) == strokeSum(3) & strokeSum(0) > strokeSum(3))
+    	{
+    		playerTwoWins++;
+    		playerThreeWins++;
+    		playerFourWins++;
+    	}
+    	
+    	if (strokeSum(0) == strokeSum(1) & strokeSum(1) == strokeSum(2) & strokeSum(2) == strokeSum(3))
+    	{
+    		playerOneWins++;
+    		playerTwoWins++;
+    		playerThreeWins++;
+    		playerFourWins++;
+    	}
+    	
+    }
+    
+    
     /**
      *  method to send players to next hole
      */
@@ -447,7 +611,7 @@ public class Game {
     	{
     		for (int holeIndex = 0; holeIndex < temp[playerIndex].length; holeIndex++)
     		{
-    			System.out.print(temp[playerIndex][holeIndex]);;
+    			System.out.print(temp[playerIndex][holeIndex] + "\t");;
     		}
     		System.out.println();
     	}
@@ -538,7 +702,7 @@ public class Game {
 		
 		//creates 2D array that fills up all of first row
 		//fills up first column of second row
-		test.addStroke(0, 0);
+//		test.addStroke(0, 0);
 //		test.addStroke(0, 1);
 //		test.addStroke(0, 2);
 //		test.addStroke(0, 3);
@@ -547,9 +711,9 @@ public class Game {
 //		test.addStroke(0, 6);
 //		test.addStroke(0, 7);
 //		test.addStroke(0, 8);
-		test.addStroke(1, 0);
+//		test.addStroke(1, 0);
 		
-		test.printStats();
+//		test.printStats();
 		
 		//testing currentPlayer() to get current player
 		//based upon above 2D set index values, current
@@ -558,7 +722,44 @@ public class Game {
 		int currentPlayer = test.getCurrentPlayer();
 		
 		System.out.println("\n" + "Current player should be player 1 (from players 0 to 3): ");
-		System.out.print("\n" + "Current player number: " + currentPlayer);
+		System.out.println("\n" + "Current player number: " + currentPlayer);
+		
+		
+		//testing storeWins()
+		test.gameStats[0][1] = 3;
+		test.gameStats[0][3] = 5;
+		test.gameStats[1][1] = 4;
+		test.gameStats[1][3] = 4;
+		test.gameStats[2][1] = 2;
+		test.gameStats[2][3] = 6;
+		test.gameStats[3][1] = 7;
+		test.gameStats[3][3] = 1;
+		
+		test.printStats();
+		
+		//testing strokeSum()
+		int totalOne = test.strokeSum(0);
+		int totalTwo = test.strokeSum(1);
+		int totalThree = test.strokeSum(2);
+		int totalFour = test.strokeSum(3);
+				
+		System.out.println("\n" + "Total for player 1: " + totalOne);
+		System.out.println("Total for player 2: " + totalTwo);
+		System.out.println("Total for player 3: " + totalThree);
+		System.out.println("Total for player 4: " + totalFour);
+		
+//		test.storeWins();
+		
+		test.countWin();
+		int oneWins = playerOneWins;
+		int twoWins = playerTwoWins;
+		int threeWins = playerThreeWins;
+		int fourWins = playerFourWins;
+		
+		System.out.println("\n" + "Total for player 1: " + oneWins);
+		System.out.println("Total for player 2: " + twoWins);
+		System.out.println("Total for player 3: " + threeWins);
+		System.out.println("Total for player 4: " + fourWins);
 		
 		
 	}
