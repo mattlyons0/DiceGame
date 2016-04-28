@@ -21,8 +21,8 @@ public class Game {
     private int randomHoleDistance;
 
     private int playerCount = 0; //does this need to be initialized to 0?
-    private int holeCount;
-    private int[] course = new int[holeCount]; //holds the course distances
+    private static int holeCount;
+    private static int[] course = new int[holeCount]; //holds the course distances
     private int[][] gameStats = new int[playerCount][holeCount]; //holds the stroke counts for each player and hole
     private String[] playerName = new String[4]; //holds player names
     private int[] player = null;
@@ -34,10 +34,10 @@ public class Game {
     private static int playerThreeWins;
     private static int playerFourWins;
 
-    private int[] currentGameLocation = new int[2];//index 0 holds player index, index 1 holds hole index
+    private static int[] currentGameLocation = new int[2];//index 0 holds player index, index 1 holds hole index
     
    
-    private int holeIndex;
+    private static int holeIndex;
     
 
 
@@ -58,7 +58,7 @@ public class Game {
      * gets player one win count
      * @return playeronewin count
      */
-    public int getPlayerOneWins()
+    public int getPlayerOneWins() //works
     {
     	return playerOneWins;
     }
@@ -67,7 +67,7 @@ public class Game {
      * gets player two win count
      * @return playertwowin count
      */
-    public int getPlayerTwoWins()
+    public int getPlayerTwoWins() //works
     {
     	return playerTwoWins;
     }
@@ -76,7 +76,7 @@ public class Game {
      * gets player three win count
      * @return playerthreewin count
      */
-    public int getPlayerThreeWins()
+    public int getPlayerThreeWins() //works
     {
     	return playerThreeWins;
     }
@@ -85,7 +85,7 @@ public class Game {
      * gets player four win count
      * @return playerfourwin count
      */
-    public int getPlayerFourWins()
+    public int getPlayerFourWins() //works
     {
     	return playerFourWins;
     }
@@ -94,7 +94,7 @@ public class Game {
      * method to add up all strokes for each player
      * @return sum of specified row
      */
-    public int strokeSum(int playerNum)
+    public int strokeSum(int playerNum) //works
     {
     	int sum = 0;
     	for(int holeIndex = 0; holeIndex < holeCount; holeIndex++) {
@@ -105,7 +105,7 @@ public class Game {
     /**
      * increments win count for player(s) that win based on final game score
      */
-    public void countWin()
+    public void countWin() //works
     {
     	if (strokeSum(0) < strokeSum(1) & strokeSum(0) < strokeSum(2) & strokeSum(0) < strokeSum(3))
     	{
@@ -252,7 +252,7 @@ public class Game {
      * Move the hole to the next hole in the game. Returns true if moved or false if the last hole.
      * @return boolean move successful
      */
-    public boolean nextHole()
+    public boolean nextHole() //works
     {
     	int currentHole = holeIndex;
     	int maxHole = holeCount;
@@ -273,9 +273,10 @@ public class Game {
      * returns which hole the game is on.
      * @return hole index
      */
-    public int getHoleIndex()
+    public static int getHoleIndex()//works
     {
-    	return holeIndex;
+    	int holeLocation = currentGameLocation[1];
+    	return holeLocation;
     }
     
     
@@ -320,7 +321,7 @@ public class Game {
      * @return game stats
      */
     
-    public int[][] getGameStats()
+    public int[][] getGameStats() //works
     {
     	return gameStats;
     }
@@ -673,84 +674,82 @@ public class Game {
 	{
  		Game test = new Game();
  		
-// 		//creates 100 different random hole values
+ 		//creates 100 different random hole values
 //		for (int i = 0; i < 100; i++)
 //		{
 // 			int distance = test.randomHoleDistancer();
 //	 		System.out.println("Value: " + distance);
 //		}
-//		
-//		//set number of holes and print the number out
-// 		test.setNumberOfHoles(9);
-// 		System.out.println("Number of holes: " + test.getNumberOfHoles() + "\n");
-// 		
-//		//test setting player names
-//		test.createPlayer("George");
-//		test.createPlayer("John");
-//		test.createPlayer("Stephen");
-//		test.createPlayer("Sean");
-//		
-//		//stores address of values into new array
-//		String[] playerName = test.getPlayer();
-//		
-//		//test printing out stored player names
-//		System.out.println("Names of players: " + "\n");
-//		
-//		for (int i = 0; i < 4; i++)
-//		{
-//			System.out.println("Player name: " + playerName[i]);
-//		}
-//		
-//		//Initialize all of matrix indices to 0
-//		//print out current score card
-//		System.out.println("\n" + "Testing 2D array output and manipulations: " + "\n");
-//		test.createGameStats();
-//		test.printStats();
-//		System.out.println();
-//		
-//		//change matrix values with [0][0] to 1
-//		System.out.println("Changed values at [0][0] and [1][8]: " + "\n");
-//		test.gameStats[0][0] = 1;
-//		test.addStroke(1, 8);
-//		test.printStats();
-//		
-//		System.out.println("\n" + "Resetting values back to 0: " + "\n");
-//		//test reset method to set all values back to 0
-//		test.resetStats();
-//		System.out.println();
-//		test.printStats();
-//
-//		
-//		//playerCount starts at 0; each time createPlayer() is used
-//		//playerCount increases by 1; when 4th player is created
-//		//there would be 5 players, because of counter, thus the inclusion of "- 1"
-//		System.out.println("\n" + "Number of players: " + (test.getNumberOfPlayers() - 1));
-//		
-//		int value = 0;
-//		
-//		//testing roll value
-//		value = test.roll();
-//		System.out.println("\n" + "Roll value: " + value + "\n");
-//		
-//		System.out.println("Print out of number of distances equal to roll value: " + "\n");
-//		//output number of random distances based on 'value' number
-//		int[] shotDistances = test.hitTheBall(value);
-//		for(int i = 0; i < value; i++)
-//		{
-//		System.out.println("Distance: " + shotDistances[i]);
-//		}
-//		
-//		test.createCourse();
-//		System.out.println("\n" + "Hole distances: " + "\n");
-//		int courseList [] = test.getCourse();
-//		
-//		for (int i = 0; i < test.getNumberOfHoles(); i++)
-//		{
-//			System.out.println("Hole distance: " + courseList[i] + "\n");
-//		}
-//		
-//		//creates 2D array that fills up all of first row
-//		//fills up first column of second row
+		
+		//set number of holes and print the number out
+ 		test.setNumberOfHoles(9);
+ 		System.out.println("Number of holes: " + test.getNumberOfHoles() + "\n");
+ 		
+		//test setting player names
+		test.createPlayer("George");
+		test.createPlayer("John");
+		test.createPlayer("Stephen");
+		test.createPlayer("Sean");
+		
+		//stores address of values into new array
+		String[] playerName = test.getPlayer();
+		
+		//test printing out stored player names
+		System.out.println("Names of players: " + "\n");
+		
+		for (int i = 0; i < 4; i++)
+		{
+			System.out.println("Player name: " + playerName[i]);
+		}
+		
+		//Initialize all of matrix indices to 0
+		//print out current score card
+		System.out.println("\n" + "Testing 2D array output and manipulations: " + "\n");
+		test.createGameStats();
+		test.printStats();
+		System.out.println();
+		
+		//change matrix values with [0][0] to 1
+		System.out.println("Changed values at [0][0] and [1][8]: " + "\n");
+		test.gameStats[0][0] = 1;
+		test.addStroke(1, 8);
+		test.printStats();
+		
+		System.out.println("\n" + "Resetting values back to 0: " + "\n");
+		//test reset method to set all values back to 0
+		test.resetStats();
+		System.out.println();
+		test.printStats();
+
+		
+		//tests getNumberOfPlayers()
+		System.out.println("\n" + "Number of players: " + (test.getNumberOfPlayers()));
+		
+		int value = 0;
+		
+		//testing roll value
+		value = test.roll();
+		System.out.println("\n" + "Roll value: " + value + "\n");
+		
+		System.out.println("Print out of number of distances equal to roll value: " + "\n");
+		//output number of random distances based on 'value' number
+		int[] shotDistances = test.hitTheBall(value);
+		for(int i = 0; i < value; i++)
+		{
+		System.out.println("Distance: " + shotDistances[i]);
+		}
+		
+		test.createCourse();
+		System.out.println("\n" + "Hole distances: " + "\n");
+		int courseList [] = test.getCourse();
+		
+		for (int i = 0; i < test.getNumberOfHoles(); i++)
+		{
+			System.out.println("Hole distance: " + courseList[i] + "\n");
+		}
+		
+		//creates 2D array that fills up all of first row
+		//fills up first column of second row
 //		test.addStroke(0, 0);
 //		test.addStroke(0, 1);
 //		test.addStroke(0, 2);
@@ -761,85 +760,95 @@ public class Game {
 //		test.addStroke(0, 7);
 //		test.addStroke(0, 8);
 //		test.addStroke(1, 0);
-//		
+		
 //		test.printStats();	
-//		
-//		//testing storeWins()
-//		test.gameStats[0][0] = 3;
-//		test.gameStats[0][1] = 3;
-//		test.gameStats[0][3] = 5;
-//		test.gameStats[1][1] = 4;		
-//		test.gameStats[1][3] = 4;		
-//		test.gameStats[2][1] = 2;
-//		test.gameStats[2][3] = 6;
-//		test.gameStats[3][1] = 7;
-//		test.gameStats[3][3] = 1;
-//		test.gameStats[1][0] = 1;
-//		test.gameStats[2][0] = 1;
-//		test.gameStats[3][0] = 1;
-//		
-//		test.printStats();
-//		
-//		//testing currentPlayer() to get current player
-//		//based upon above 2D set index values, current
-//		//player should be player number 1 (0 to 3)
-//
-//		int currentPlayer = test.getCurrentPlayer();
-//		
-//		System.out.println("\n" + "Current player should be player 1 (from players 0 to 3): ");
-//		System.out.println("\n" + "Current player number: " + currentPlayer + "\n");
-//		
-//		
-//		//testing strokeSum()
-//		int totalOne = test.strokeSum(0);
-//		int totalTwo = test.strokeSum(1);
-//		int totalThree = test.strokeSum(2);
-//		int totalFour = test.strokeSum(3);
-//				
-//		System.out.println("\n" + "Total for player 1: " + totalOne);
-//		System.out.println("Total for player 2: " + totalTwo);
-//		System.out.println("Total for player 3: " + totalThree);
-//		System.out.println("Total for player 4: " + totalFour);
-//		
-//		test.storeWins();
-//		
-//		test.countWin();
-//		int oneWins = playerOneWins;
-//		int twoWins = playerTwoWins;
-//		int threeWins = playerThreeWins;
-//		int fourWins = playerFourWins;
-//		
-//		System.out.println("\n" + "Total for player 1: " + oneWins);
-//		System.out.println("Total for player 2: " + twoWins);
-//		System.out.println("Total for player 3: " + threeWins);
-//		System.out.println("Total for player 4: " + fourWins + "\n");
-//		
-//		System.out.println("Current hole length: " + test.getHoleLength() + "\n");
-//		
-//		test.resetStats();
-//		test.printStats();
-//		System.out.println();
-//		
-//		test.gameStats[0][0] = 5;
-//		test.gameStats[1][0] = 4;		
-//		test.gameStats[2][0] = 4;		
-//		test.gameStats[3][0] = 2;
-//		test.gameStats[0][1] = 6;
-//		test.gameStats[1][1] = 7;
-//		test.gameStats[2][1] = 1;
-//		
-//		test.printStats();
-//		
-//		//testing currentPlayer() to get current player
-//		//based upon above 2D set index values, current
-//		//player should be player number 1 (0 to 3)
-//
-//		int currentPlayer2 = test.getCurrentPlayer();
-//		
-//		System.out.println("\n" + "Current player should be player 1 (from players 0 to 3): ");
-//		System.out.println("\n" + "Current player number: " + currentPlayer2 + "\n");
-//		
-//		System.out.println("Current hole length: " + test.getHoleLength());
+		System.out.println();
+		
+		//testing storeWins()
+		test.gameStats[0][0] = 3;
+		test.gameStats[1][0] = 3;
+		test.gameStats[2][0] = 5;
+		test.gameStats[3][0] = 4;		
+		test.gameStats[0][1] = 4;		
+		test.gameStats[1][1] = 2;
+		test.gameStats[2][1] = 6;
+		test.gameStats[3][1] = 7;
+		test.gameStats[0][2] = 1;
+		test.gameStats[1][2] = 1;
+		test.gameStats[2][2] = 1;
+		test.gameStats[3][2] = 1;
+		test.gameStats[0][3] = 4;
+		
+		test.printStats();
+		
+		//testing currentPlayer() to get current player
+		//based upon above 2D set index values, current
+		//player should be player number 1 (0 to 3)
+
+		int currentPlayer = test.getCurrentPlayer();
+		
+		System.out.println("\n" + "Current player should be player 1 (from players 0 to 3): ");
+		System.out.println("\n" + "Current player number: " + currentPlayer + "\n");
+		
+		//testing getHoleIndex
+		System.out.println("Current hole should be 3.");
+		System.out.println("Current hole being played: " + getHoleIndex());
+		
+		//testing strokeSum()
+		int totalOne = test.strokeSum(0);
+		int totalTwo = test.strokeSum(1);
+		int totalThree = test.strokeSum(2);
+		int totalFour = test.strokeSum(3);
+				
+		System.out.println("\n" + "Total for player 1: " + totalOne);
+		System.out.println("Total for player 2: " + totalTwo);
+		System.out.println("Total for player 3: " + totalThree);
+		System.out.println("Total for player 4: " + totalFour);
+		
+		
+		test.countWin();
+		int oneWins = playerOneWins;
+		int twoWins = playerTwoWins;
+		int threeWins = playerThreeWins;
+		int fourWins = playerFourWins;
+		
+		System.out.println("\n" + "Total for player 1: " + oneWins);
+		System.out.println("Total for player 2: " + twoWins);
+		System.out.println("Total for player 3: " + threeWins);
+		System.out.println("Total for player 4: " + fourWins + "\n");
+		
+		System.out.println("Current hole length: " + test.getHoleLength() + "\n");
+		
+		
+		test.resetStats();
+		test.printStats();
+		System.out.println();
+		
+		test.gameStats[0][0] = 5;
+		test.gameStats[1][0] = 4;		
+		test.gameStats[2][0] = 4;		
+		test.gameStats[3][0] = 2;
+		test.gameStats[0][1] = 6;
+		test.gameStats[1][1] = 7;
+		test.gameStats[2][1] = 1;
+		test.gameStats[3][1] = 5;
+		test.gameStats[0][2] = 7;
+		
+		test.printStats();
+		
+		//testing currentPlayer() to get current player
+		//based upon above 2D set index values, current
+		//player should be player number 1 (0 to 3)
+
+		int currentPlayer2 = test.getCurrentPlayer();
+		
+		System.out.println("\n" + "Current player should be player 1 (from players 0 to 3): ");
+		System.out.println("\n" + "Current player number: " + currentPlayer2 + "\n");
+		
+		System.out.println("Current hole length: " + test.getHoleLength());
+		System.out.println();
+		
+		System.out.println("Current hole being played: " + getHoleIndex());
 	}
 }
 
