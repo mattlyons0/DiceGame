@@ -22,16 +22,24 @@ public class Game {
 
     private int playerCount = 0; //does this need to be initialized to 0?
     private int holeCount;
-    private int[] course = new int[holeCount];
-    private int[][] gameStats = new int[playerCount][holeCount];
-    private String[] playerName = new String[4];
+    private int[] course = new int[holeCount]; //holds the course distances
+    private int[][] gameStats = new int[playerCount][holeCount]; //holds the stroke counts for each player and hole
+    private String[] playerName = new String[4]; //holds player names
     private int[] player = null;
+
     private int[] currentLocation = new int[2];
     private int[] nextHole = new int[18];
     private static int playerOneWins;
     private static int playerTwoWins;
     private static int playerThreeWins;
     private static int playerFourWins;
+
+    private int[] currentGameLocation = new int[2];//index 0 holds player index, index 1 holds hole index
+    
+   
+    private int holeIndex;
+    
+
 
     /**
      * Constructor to ensure that all values are initialized when starting a new
@@ -42,10 +50,12 @@ public class Game {
         numberOfStrokes = 0;
         playerCount = 1;
         holeCount = 1;
+        holeIndex = 1; 
 //		initializeGameStats(playerCount, 0, gameStats);
 
     }
     /**
+<<<<<<< HEAD
      * gets player one win count
      * @return playeronewin count
      */
@@ -240,19 +250,55 @@ public class Game {
     }
     
     /**
+     * Move the hole to the next hole in the game. Returns true if moved or false if the last hole.
+     * @return boolean move successful
+     */
+    public boolean nextHole()
+    {
+    	int currentHole = holeIndex;
+    	int maxHole = holeCount;
+    	boolean moveSuccessful = false;
+    	
+    	//increment only if not on the last hole.
+    	if (currentHole <  maxHole)
+    	{
+    		currentHole++;
+    		moveSuccessful = true;
+    	}
+    	
+    	holeIndex = currentHole;
+    	return moveSuccessful;
+    }
+    
+    /**
+     * returns which hole the game is on.
+     * @return hole index
+     */
+    public int getHoleIndex()
+    {
+    	return holeIndex;
+    }
+    
+    
+    /**
      * method that determines current player
      */
     public void currentPlayer()
     {
-//    	for (int playerIndex = 0; playerIndex < playerCount; playerIndex++) {
-//            for (int holeIndex = 0; holeIndex < holeCount; holeIndex++) {
-    	for(int holeIndex = 0; holeIndex < holeCount; holeIndex++){
-    		for(int playerIndex = 0; playerIndex < playerCount; playerIndex++){
-                if (gameStats[playerIndex][holeIndex] == 0) {
-                	currentLocation[0] = playerIndex;
+    	int[][] temp = gameStats;//pull in the gameStats array
+    	boolean found = false;
+    	for (int playerIndex = 0; playerIndex < playerCount; playerIndex++) //loop through players
+    	{
+            for (int holeIndex = 0; holeIndex < holeCount; holeIndex++) //loop through each hole
+            {
+                if (temp[playerIndex][holeIndex] == 0 && !found) {
+                	currentGameLocation[0] = playerIndex; //mark the player index
+                	currentGameLocation[1] = holeIndex; //mark the hole index
+                	found = true;
                 }
             }
     	}	
+    	
     }
     
     
@@ -261,9 +307,9 @@ public class Game {
      * 
      * @return player number
      */
-    public int getCurrentPlayer()
+    public int[] getCurrentPlayer()
     {
-    	return currentLocation[0];
+    	return currentGameLocation;
     }
     
     /**
@@ -436,6 +482,9 @@ public class Game {
         return playerName;
     }
 
+   
+ 
+
     /**
      * Rolls the dice and returns and number between 1 and 6
      *
@@ -459,7 +508,7 @@ public class Game {
 
     /**
      * Hits the ball for a total of values that were rolled by the multiplier.
-     *
+     *Player
      * @param roll
      * @return array of values rolled
      */
@@ -594,7 +643,7 @@ public class Game {
     private void printStats()
     {
     	int temp[][] = gameStats;
-    	for (int playerIndex = 0; playerIndex < temp.length - 1; playerIndex++)
+    	for (int playerIndex = 0; playerIndex < temp.length; playerIndex++)
     	{
     		for (int holeIndex = 0; holeIndex < temp[playerIndex].length; holeIndex++)
     		{
@@ -706,7 +755,7 @@ public class Game {
 		//based upon above 2D set index values, current
 		//player should be player number 1 (0 to 3)
 		test.currentPlayer();
-		int currentPlayer = test.getCurrentPlayer();
+		int[] currentPlayer = test.getCurrentPlayer();
 		
 		System.out.println("\n" + "Current player should be player 1 (from players 0 to 3): ");
 		System.out.println("\n" + "Current player number: " + currentPlayer);
