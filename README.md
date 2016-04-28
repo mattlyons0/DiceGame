@@ -25,4 +25,8 @@ A Java Golf game where the hole is a defined number of spaces away and you roll 
 * Try to use the least strokes possible.
 
 
-
+## Usernames
+* Matt Lyons: mattlyons0
+* David Lukacs: Dlukacs
+* David McClure: Jambo-Bwana
+* Daniel Kercheski: kerchedj 
