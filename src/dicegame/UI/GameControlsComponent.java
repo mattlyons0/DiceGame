@@ -155,7 +155,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
                 return;
             } else if (((JButton) event.getSource()).getText().equals("Next Hole")) {
                 gameLogic.nextHole();
-                gui.gameplayPanel.animationComp.repaint();
+                gui.gameplayPanel.animationComp.recalculateHole();
                 gui.gameplayPanel.scoreboardComp.newHole();
             }
             updateTurn();
