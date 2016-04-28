@@ -45,6 +45,41 @@ public class Game {
 //		initializeGameStats(playerCount, 0, gameStats);
 
     }
+    /**
+     * gets player one win count
+     * @return playeronewin count
+     */
+    public int getPlayerOneWins()
+    {
+    	return playerOneWins;
+    }
+    
+    /**
+     * gets player two win count
+     * @return playertwowin count
+     */
+    public int getPlayerTwoWins()
+    {
+    	return playerTwoWins;
+    }
+    
+    /**
+     * gets player three win count
+     * @return playerthreewin count
+     */
+    public int getPlayerThreeWins()
+    {
+    	return playerThreeWins;
+    }
+    
+    /**
+     * gets player four win count
+     * @return playerfourwin count
+     */
+    public int getPlayerFourWins()
+    {
+    	return playerFourWins;
+    }
     
     /**
      * method to add up all strokes for each player
@@ -202,54 +237,6 @@ public class Game {
     		playerFourWins++;
     	}
     	
-    }
-    
-    
-    /**
-     *  method to send players to next hole
-     */
-    public void nextHole()
-    {
-    	//Search column[0]; if gameStats[0][column] == 0, then it is 'nextHole'
-    	//otherwise, row[0][column + 1]
-    	
-    	for(int holeIndex = 0; holeIndex < holeCount; holeIndex++) {
-    		if (gameStats[0][holeIndex] == 0) {
-    			nextHole[0] = holeIndex;
-    		}
-    	}
-    }
-    
-    /**
-     *  gets next hole location
-     * @return nextHole
-     */
-    public int getNextHole()
-    {
-    	return nextHole[0];
-    }
-    
-    /**
-     * finds current hole
-     */
-    public void currentHole()
-    {
-    	for(int holeIndex = 0; holeIndex < holeCount; holeIndex++){
-    		for(int playerIndex = 0; playerIndex < playerCount; playerIndex++){
-    			if (gameStats[playerIndex][holeIndex] == 0) {
-    				currentLocation[1] = holeIndex;
-    			}
-    		}
-    	}
-    }
-    
-    /**
-     *  gets current hole
-     * @return hole number
-     */
-    public int getCurrentHole()
-    {
-    	return currentLocation[1];
     }
     
     /**
