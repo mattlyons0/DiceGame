@@ -4,10 +4,12 @@ import dicegame.Game;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
@@ -102,7 +104,12 @@ public class GameAnimationComponent extends JComponent {
         Ellipse2D.Double ball = new Ellipse2D.Double(ballPixels, (int)(holeLocation.height*scaleFactorY), 10, 10);
         animationGraphics.fill(ball);
         
-        
+        //Draw Hole Number
+        animationGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        Font font = new Font("Serif", Font.PLAIN,24);
+        animationGraphics.setColor(Color.white);
+        animationGraphics.setFont(font);
+        animationGraphics.drawString("Hole "+(gameLogic.getHoleIndex()), 25,(int)(60*scaleFactorY));
         
         graphics.drawImage(animationBuffer, 0, 0, this);
     }

@@ -52,7 +52,8 @@ class GameControlsComponent extends JComponent implements ActionListener {
         cons.gridy = 0;
         cons.anchor = GridBagConstraints.NORTH;
 
-        playerTurnLabel = new JLabel("Player 1's Turn");
+        playerTurnLabel = new JLabel();
+        updateTurn();
         add(playerTurnLabel, cons);
 
         cons.gridy++;
@@ -89,6 +90,15 @@ class GameControlsComponent extends JComponent implements ActionListener {
 
         dicePanel.revalidate();
     }
+    
+    private void updateTurn(){
+        gameLogic.currentPlayer();
+        System.out.println(Arrays.toString(gameLogic.getCurrentPlayer()));
+        
+        int playerTurnIndex = gameLogic.getCurrentPlayer()[0];
+        String player = gameLogic.getPlayer()[playerTurnIndex];
+        playerTurnLabel.setText(player+"'s Turn");
+    }
 
     @Override
     public void actionPerformed(ActionEvent event) {
@@ -123,8 +133,11 @@ class GameControlsComponent extends JComponent implements ActionListener {
             
             if(allRolled){
                 String buttonText = "Next Turn";
-                if(gameLogic.getDistanceFromHole() == 0)
+                if(gameLogic.getDistanceFromHole() == 0 && gameLogic.getHoleIndex() == gui.gameplayPanel.TOTAL_HOLES)
                     buttonText = "End Game";
+                else if(gameLogic.getDistanceFromHole() == 0){
+                    buttonText = "Next Hole";
+                }
                 JButton nextTurn = new JButton(buttonText);
                 nextTurn.setActionCommand("NextTurn");
                 nextTurn.addActionListener(this);
@@ -133,10 +146,14 @@ class GameControlsComponent extends JComponent implements ActionListener {
         } else if (event.getActionCommand().equals("NextTurn")){
             if(((JButton)event.getSource()).getText().equals("End Game")){
                 gui.showStartMenu();
-            } else{
-                System.out.println(Arrays.toString(gameLogic.currentPlayer()));
-                diceRollMultiplier();
+                return;
+            } else if(((JButton)event.getSource()).getText().equals("Next Hole")){
+                gameLogic.nextHole();
+                gui.gameplayPanel.animationComp.repaint();
+                gui.gameplayPanel.scoreboardComp.newHole();
             }
+            updateTurn();
+            diceRollMultiplier();
         }
     }
 }

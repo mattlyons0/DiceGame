@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 public class GameplayPanel extends JPanel {
 
     private GUI gui;
+    public final int TOTAL_HOLES;
 
     public GameAnimationComponent animationComp;
     public GameScoreboardComponent scoreboardComp;
@@ -23,12 +24,14 @@ public class GameplayPanel extends JPanel {
      *
      * @param gui GUI object which is used to display this panel
      */
-    public GameplayPanel(GUI gui) {
+    public GameplayPanel(int totalHoles,GUI gui) {
         super();
 
         this.gui = gui;
         gui.maximize();
 
+        TOTAL_HOLES=totalHoles;
+        
         setLayout(new GridBagLayout());
 
         GridBagConstraints cons = new GridBagConstraints();
