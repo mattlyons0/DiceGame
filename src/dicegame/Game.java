@@ -26,6 +26,8 @@ public class Game {
     private int[][] gameStats = new int[playerCount][holeCount];
     private String[] playerName = new String[4];
     private int[] player = null;
+    private int[] currentLocation = new int[2];
+    private int[] nextHole = new int[18];
 
     /**
      * Constructor to ensure that all values are initialized when starting a new
@@ -39,20 +41,67 @@ public class Game {
 //		initializeGameStats(playerCount, 0, gameStats);
 
     }
-
+    /**
+     *  method to send players to next hole
+     */
+    public void nextHole()
+    {
+    	//Search column[0]; if gameStats[0][column] == 0, then it is 'nextHole'
+    	//otherwise, row[0][column + 1]
+    	
+    	for(int holeIndex = 0; holeIndex < holeCount; holeIndex++) {
+    		if (gameStats[0][holeIndex] == 0) {
+    			nextHole[0] = holeIndex;
+    		}
+    	}
+    }
+    
+    /**
+     *  gets next hole location
+     * @return nextHole
+     */
+    public int getNextHole()
+    {
+    	return nextHole[0];
+    }
+    
+    /**
+     * finds current hole
+     */
+    public void currentHole()
+    {
+    	for(int holeIndex = 0; holeIndex < holeCount; holeIndex++){
+    		for(int playerIndex = 0; playerIndex < playerCount; playerIndex++){
+    			if (gameStats[playerIndex][holeIndex] == 0) {
+    				currentLocation[1] = holeIndex;
+    			}
+    		}
+    	}
+    }
+    
+    /**
+     *  gets current hole
+     * @return hole number
+     */
+    public int getCurrentHole()
+    {
+    	return currentLocation[1];
+    }
+    
     /**
      * method that determines current player
      */
-    public int[] currentPlayer()
+    public void currentPlayer()
     {
-    	for (int playerIndex = 0; playerIndex < playerCount; playerIndex++) {
-            for (int holeIndex = 0; holeIndex < holeCount; holeIndex++) {
+//    	for (int playerIndex = 0; playerIndex < playerCount; playerIndex++) {
+//            for (int holeIndex = 0; holeIndex < holeCount; holeIndex++) {
+    	for(int holeIndex = 0; holeIndex < holeCount; holeIndex++){
+    		for(int playerIndex = 0; playerIndex < playerCount; playerIndex++){
                 if (gameStats[playerIndex][holeIndex] == 0) {
-                	player = gameStats[playerIndex];
+                	currentLocation[0] = playerIndex;
                 }
             }
     	}	
-    	return player;
     }
     
     
@@ -61,9 +110,9 @@ public class Game {
      * 
      * @return player number
      */
-    public int[] getCurrentPlayer()
+    public int getCurrentPlayer()
     {
-    	return player;
+    	return currentLocation[0];
     }
     
     /**
@@ -490,14 +539,14 @@ public class Game {
 		//creates 2D array that fills up all of first row
 		//fills up first column of second row
 		test.addStroke(0, 0);
-		test.addStroke(0, 1);
-		test.addStroke(0, 2);
-		test.addStroke(0, 3);
-		test.addStroke(0, 4);
-		test.addStroke(0, 5);
-		test.addStroke(0, 6);
-		test.addStroke(0, 7);
-		test.addStroke(0, 8);
+//		test.addStroke(0, 1);
+//		test.addStroke(0, 2);
+//		test.addStroke(0, 3);
+//		test.addStroke(0, 4);
+//		test.addStroke(0, 5);
+//		test.addStroke(0, 6);
+//		test.addStroke(0, 7);
+//		test.addStroke(0, 8);
 		test.addStroke(1, 0);
 		
 		test.printStats();
@@ -506,14 +555,11 @@ public class Game {
 		//based upon above 2D set index values, current
 		//player should be player number 1 (0 to 3)
 		test.currentPlayer();
-		int[] currentPlayer = test.getCurrentPlayer();
+		int currentPlayer = test.getCurrentPlayer();
 		
 		System.out.println("\n" + "Current player should be player 1 (from players 0 to 3): ");
+		System.out.print("\n" + "Current player number: " + currentPlayer);
 		
-		for(int i = 0; i < 1; i++)
-		{
-			System.out.print("\n" + "Current player number: " + currentPlayer[i]);
-		}
 		
 	}
 }
