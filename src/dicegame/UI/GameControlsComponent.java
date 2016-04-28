@@ -151,7 +151,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
             }
         } else if (event.getActionCommand().equals("NextTurn")) {
             if (((JButton) event.getSource()).getText().equals("End Game")) {
-                gui.showStartMenu();
+                gui.statsView();
                 return;
             } else if (((JButton) event.getSource()).getText().equals("Next Hole")) {
                 gameLogic.nextHole();
