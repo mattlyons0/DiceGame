@@ -24,7 +24,7 @@ public class Game {
     private static int holeCount;
     private static int[] course = new int[holeCount]; //holds the course distances
     public static int[][] gameStats = new int[playerCount][holeCount]; //holds the stroke counts for each player and hole
-    public int[][] distancesRemaining = new int[playerCount][holeCount]; //holds the distances remaining for each player and hole    private String[] playerName = new String[4]; //holds player names
+    public static int[][] distancesRemaining = new int[playerCount][holeCount]; //holds the distances remaining for each player and hole
     private String[] playerName = new String[4]; //holds player names
     private int[] player = null;
 
@@ -116,7 +116,7 @@ public class Game {
      */
     public int getCurrentPlayerDistance(int player, int hole)
     {	
-    	int current = gameStats[getCurrentPlayer()][hole];
+    	int current = distancesRemaining[getCurrentPlayer()][hole];
     	
     	return current;
     }
@@ -677,8 +677,9 @@ public class Game {
      *
      * @return the distance the player is currently from the hole
      */
-    public int getDistanceFromHole() 
+    public int getDistanceFromHole(int hole)
     {
+    	distanceRemaining = distancesRemaining[getCurrentPlayer()][hole];
         return distanceRemaining;
     }
     
@@ -796,6 +797,40 @@ public class Game {
     	holeIndex = 0;
     	return holeIndex;
     }
+    
+    /**
+     * Print the gameStats array for testing
+     */
+    private void printDistanceRemainders()
+    {
+    	int temp[][] = distancesRemaining;
+    	for (int playerIndex = 0; playerIndex < temp.length; playerIndex++)
+    	{
+    		for (int holeIndex = 0; holeIndex < temp[playerIndex].length; holeIndex++)
+    		{
+    			System.out.print(temp[playerIndex][holeIndex] + "\t");;
+    		}
+    		System.out.println();
+    	}
+    }
+    
+    /**
+     * Reset the game stats
+     */
+    public void resetDistancesRemainder() //works
+    {
+    	int temp[][] = distancesRemaining;
+    	
+    	for (int playerIndex = 0; playerIndex < temp.length; playerIndex++)
+    	{
+    		for (int holeIndex = 0; holeIndex < temp[playerIndex].length; holeIndex++)
+    		{
+    			temp[playerIndex][holeIndex] = 0;
+    		}
+    	}
+    	distancesRemaining = temp;
+    }
+    
     
 	public static void main(String[] args) 
 	{
@@ -921,9 +956,9 @@ public class Game {
 		System.out.println("\n" + "Current player should be player 1 (from players 0 to 3): ");
 		System.out.println("\n" + "Current player number: " + currentPlayer + "\n");
 		
-		//testing getHoleIndex
+		//testing holeIndex
 		System.out.println("Current hole should be 3.");
-		//System.out.println("Current hole being played: " + getHoleIndex());
+		System.out.println("Current hole being played: " + holeIndex);
 		
 		//testing strokeSum()
 		int totalOne = test.strokeSum(0);
@@ -1019,6 +1054,9 @@ public class Game {
 		
 		//Testing actual gameplay
 		test.resetStats();
+//		test.resetDistancesRemainder();
+		test.createGameStats();
+//		distancesRemaining = test.getGameStats();
 		test.resetPlayerCount();
 		test.resetHoleCount();
 		test.resetHoleIndex();
@@ -1098,6 +1136,11 @@ public class Game {
 		System.out.println("\n" + "Current distance shot by Player " + test.getCurrentPlayer()
 		+  " is " + test.getCurrentPlayerDistance(test.getCurrentPlayer(), holeIndex));
 		System.out.println();
+		
+		System.out.println("Distances remaining for each hole: " + "\n");
+		test.printDistanceRemainders();
+		
+		System.out.println("Remaining distance: " + test.getDistanceFromHole(holeIndex));
 		
 		
 		//Above test shows dice roll value totals
