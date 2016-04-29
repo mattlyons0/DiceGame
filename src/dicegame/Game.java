@@ -780,6 +780,9 @@ public class Game {
     	}
     }
     
+    //ALL METHODS BELOW THIS LINE ARE FOR TESTING PURPOSES (Use them if they're useful for you)
+    //__________________________________________________________________________________________
+    
     public int resetHoleCount()
     {
     	holeCount = 0;
