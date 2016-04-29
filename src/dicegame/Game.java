@@ -1097,10 +1097,12 @@ public class Game {
 
 		System.out.println("\n" + "Current distance shot by Player " + test.getCurrentPlayer()
 		+  " is " + test.getCurrentPlayerDistance(test.getCurrentPlayer(), holeIndex));
+		System.out.println();
 		
 		
 		//Above test shows dice roll value totals
 		//This array stores the current distance accumulated by each player
+		//and stores them in gameStats; gameStats is supposed to store strokes.
 		
 		
 		//Test needed: Once player reaches total distance for each respective hole
