@@ -138,9 +138,9 @@ class GameControlsComponent extends JComponent implements ActionListener {
 
             if (allRolled) {
                 String buttonText = "Next Turn";
-                if (gameLogic.getDistanceFromHole() == 0 && gameLogic.getHoleIndex() == gui.gameplayPanel.TOTAL_HOLES) {
+                if (gameLogic.getDistanceFromHole(gameLogic.getHoleIndex()) == 0 && gameLogic.getHoleIndex() == gui.gameplayPanel.TOTAL_HOLES) {
                     buttonText = "End Game";
-                } else if (gameLogic.getDistanceFromHole() == 0) {
+                } else if (gameLogic.getDistanceFromHole(gameLogic.getHoleIndex()) == 0) {
                     buttonText = "Next Hole";
                 }
                 JButton nextTurn = new JButton(buttonText);
@@ -149,7 +149,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
                 dicePanel.add(nextTurn);
             }
         } else if (event.getActionCommand().equals("NextTurn")) {
-            System.out.println("DistanceFromHole: "+gameLogic.getDistanceFromHole()+" getCurrentPlayerDistance(0): "+gameLogic.getCurrentPlayerDistance(0,gameLogic.getHoleIndex()));
+            System.out.println("DistanceFromHole: "+gameLogic.getDistanceFromHole(gameLogic.getHoleIndex())+" getCurrentPlayerDistance(0): "+gameLogic.getCurrentPlayerDistance(0,gameLogic.getHoleIndex()));
             if (((JButton) event.getSource()).getText().equals("End Game")) {
                 gameLogic.nextHole(); //Resets game
                 gui.statsView();
