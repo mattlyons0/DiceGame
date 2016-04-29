@@ -20,7 +20,7 @@ import javax.swing.table.TableModel;
  */
 class GameScoreboardComponent extends JComponent {
 
-    private final Game GAMELOGIC;
+    private Game gameLogic;
 
     private JTable table;
 
@@ -33,9 +33,9 @@ class GameScoreboardComponent extends JComponent {
     public GameScoreboardComponent(final GUI gui) {
         super();
 
-        this.GAMELOGIC = gui.gameLogic;
+        this.gameLogic = gui.gameLogic;
 
-        distanceLeft = GAMELOGIC.getHoleLength();
+        distanceLeft = gameLogic.getHoleLength();
         strokes = 0;
 
         setLayout(new GridBagLayout());
@@ -80,7 +80,7 @@ class GameScoreboardComponent extends JComponent {
         AbstractTableModel model = new AbstractTableModel() {
             @Override
             public int getRowCount() {
-                return GAMELOGIC.getNumberOfPlayers();
+                return gameLogic.getNumberOfPlayers();
             }
 
             @Override
@@ -92,7 +92,7 @@ class GameScoreboardComponent extends JComponent {
             public Object getValueAt(int row, int col) {
                 switch (col) {
                     case 0:
-                        return GAMELOGIC.getPlayer()[row];
+                        return gameLogic.getPlayer()[row];
                     case 1:
                         return strokes;
                     case 2:
@@ -123,16 +123,17 @@ class GameScoreboardComponent extends JComponent {
      */
     public void hitBall(int distance) {
         distanceLeft -= distance;
-        strokes = GAMELOGIC.getStrokes();
+        strokes = gameLogic.getStrokes();
         ((AbstractTableModel) table.getModel()).fireTableDataChanged();
     }
     
     public int getBallDistanceLeft(){
+        System.out.println(gameLogic.getDistanceFromHole());
         return distanceLeft;
     }
     public void newHole(){
         strokes = 0;
-        distanceLeft = GAMELOGIC.getDistanceFromHole();
+        distanceLeft = gameLogic.getDistanceFromHole();
         ((AbstractTableModel) table.getModel()).fireTableDataChanged();
     }
 }

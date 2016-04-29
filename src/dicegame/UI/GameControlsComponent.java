@@ -8,7 +8,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -109,7 +108,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         if (event.getActionCommand().equals("MultiplierRoll")) {
             int multiplier = gameLogic.roll();
-            rollValues = gameLogic.hitTheBall(multiplier); //Preroll values and display them as they are clicked
+            rollValues = gameLogic.hitTheBall(multiplier,gameLogic.getCurrentPlayer(),gameLogic.getHoleIndex()); //Preroll values and display them as they are clicked
 
             diceRoll(multiplier); //Update GUI with multiplier
         } else if (event.getActionCommand().startsWith("RollDie")) {
