@@ -206,9 +206,19 @@ public class StatsPanel extends JPanel implements ActionListener {
 				add(holeLabel, cons);
 			}
 		}
-		// Placeholder for gui.gameLogic.getstroke
-		// confused on how to actually get each holes individual stroke
-		// here
+		
+		//Conditional for no players added. Panel only displays backButton and label
+		//telling user to enter player before viewing StatsPanel. 
+		if(gui.gameLogic.getNumberOfPlayers() == 0){
+			removeAll();
+			noPlayers = new JLabel("A player must be entered before viewing Statistics");
+			cons.gridx = 0;
+			cons.gridy = 0;
+			add(backButton, cons);
+			//cons.gridx++;
+			cons.gridy++;
+			add(noPlayers, cons);
+		}
 	}
 
 	/**
