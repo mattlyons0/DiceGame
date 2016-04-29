@@ -1143,7 +1143,7 @@ public class Game {
 		System.out.println("Distances remaining for each hole: " + "\n");
 		test.printDistanceRemainders();
 		
-		System.out.println("Remaining distance: " + test.getDistanceFromHole(holeIndex));
+		System.out.println("Remaining distance for [0][0]: " + test.getDistanceFromHole(holeIndex));
 		
 		
 		//Above test shows dice roll value totals
