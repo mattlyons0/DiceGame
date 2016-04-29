@@ -962,9 +962,12 @@ Game test = new Game();
 		
 		//System.out.println("Current hole being played: " + getHoleIndex());
 		
-		//line 284
+		//line 284 - nextPlayer() not working
 		test.nextPlayer();
 		System.out.println("\n" + "Current player number: " + currentPlayer2 + "\n");
+		test.nextPlayer();
+		System.out.println("\n" + "Current player number: " + currentPlayer2 + "\n");
+		
 		
 		int someDistance = test.getCurrentPlayerDistance(0);
 		System.out.println("\n" + "Current distance shot: " + someDistance);
@@ -978,6 +981,8 @@ Game test = new Game();
 		System.out.println("Current distance shot by Player " + test.getCurrentPlayer()
 		+ " and their current distance: " + playerTwoDistance);
 		
+		
+		//Testing holeIndex is correct and nextHole() shifts hole by 1 each call
 		System.out.println();
 		System.out.println("Current hole: " + holeIndex);
 		System.out.println();
