@@ -23,7 +23,7 @@ public class Game {
     private int playerCount = 0; //does this need to be initialized to 0?
     private static int holeCount;
     private static int[] course = new int[holeCount]; //holds the course distances
-    private int[][] gameStats = new int[playerCount][holeCount]; //holds the stroke counts for each player and hole
+    public int[][] gameStats = new int[playerCount][holeCount]; //holds the stroke counts for each player and hole
     private String[] playerName = new String[4]; //holds player names
     private int[] player = null;
 
@@ -67,16 +67,16 @@ public class Game {
     {
     	int sum = 0;
     	int value = roll();
-    	int player = getCurrentPlayer();
+    	int player = getCurrentPlayer(); //gets current player
     	
     	if (player == 0)
     	{
     		int[] shotDistances = hitTheBall(value);
     		for(int i = 0; i < value; i++)
     		{
-    			sum += shotDistances[i];
+    			sum += shotDistances[i]; //sum adds shotDistances total
     		}
-    		playerOneDistance = sum;
+    		playerOneDistance += sum; //playerOneDistance adds sum to total for hole
     	}
     	if (player == 1)
     	{
@@ -94,7 +94,7 @@ public class Game {
     		{
     			sum += shotDistances[i];
     		}
-    		playerThreeDistance = sum;
+    		playerThreeDistance += sum;
     	}
     	if (player == 3)
     	{
@@ -103,7 +103,7 @@ public class Game {
     		{
     			sum += shotDistances[i];
     		}
-    		playerFourDistance = sum;
+    		playerFourDistance += sum;
     	}
     	
     }
@@ -338,6 +338,10 @@ public class Game {
     	return moveSuccessful;
     }
     
+    /**
+     * Move to the next player in game. Returns true if moved or false if not on same hole
+     * @return boolean move successful
+     */
     public boolean nextPlayer()
     {
     	int currentPlayer = playerIndex;
