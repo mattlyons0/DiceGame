@@ -103,4 +103,11 @@
 - Clicking the "Back" button should return the user back to the start menu. 
 - If there are no players entered, beneath the "Back" button a label should display, "A player must be entered before viewing Statistics".
 -Clicking the Statistics button with players created should display: 1 button. A series of labels: displaying Wins, Losses and Score. 
-- For each player beneath the wins, losses and score labels, should display each players name followed by values for their wins, losses and scores.    
+- For each player beneath the wins, losses and score labels, should display each players name followed by values for their wins, losses and scores.  
+- A ScoreCard label should be displayed beneath all players wins, losses and scores. 
+- Displayed beneath ScoreCard should display a label "Holes: " followed by number labels, "|1|" through the amount of holes entered for the game.
+-Displayed beneath the "Holes: " label, should be a label for each entered players name. Players 1's name, Players 2's name underneath, Players 3's name underneath and Players 4's name underneath. 
+- Displayed followed by Player 1's  names, should be labels for each hole number that places the amount of strokes Players 1 had for that corresponding hole.
+- Displayed followed by Player 2's  names, should be labels for each hole number that places the amount of strokes Players 2 had for that corresponding  hole.
+- Displayed followed by Player 3's  names, should be labels for each hole number that places the amount of strokes Players 3 had for that corresponding hole.
+- Displayed followed by Player 4's  names, should be labels for each hole number that places the amount of strokes Players 4 had for that corresponding hole.    
