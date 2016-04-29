@@ -44,7 +44,7 @@ public class Game {
     private static int[] currentGameLocation = new int[2];//index 0 holds player index, index 1 holds hole index
     
    
-    private int holeIndex;
+    private static int holeIndex;
     private static int playerIndex;
 
 
@@ -363,10 +363,10 @@ public class Game {
      * returns which hole the game is on.
      * @return hole index
      */
-    public int getHoleIndex()//works
+    public int getHoleIndex()
     {
-    	int holeIndexLocation = holeIndex;
-    	return holeIndexLocation;
+    	holeIndex = currentGameLocation[1];
+    	return holeIndex;
     }
     
     /**
@@ -979,14 +979,17 @@ Game test = new Game();
 		+ " and their current distance: " + playerTwoDistance);
 		
 		System.out.println();
-		test.playerShotSum();
-		System.out.println("Current distance shot by Player " + test.getCurrentPlayer()
-		+ " and their current distance: " + playerTwoDistance);
-		
+		System.out.println("Current hole: " + holeIndex);
 		System.out.println();
-		test.playerShotSum();
-		System.out.println("Current distance shot by Player " + test.getCurrentPlayer()
-		+ " and their current distance: " + playerTwoDistance);	
+		test.nextHole();
+		System.out.println("Current hole: " + holeIndex);
+		test.nextHole();
+		System.out.println();
+		System.out.println("Current hole: " + holeIndex);
+		test.nextHole();
+		System.out.println();
+		System.out.println("Current hole: " + holeIndex);
+
 	}
 }
 
