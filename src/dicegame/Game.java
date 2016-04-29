@@ -60,7 +60,9 @@ public class Game {
 //		initializeGameStats(playerCount, 0, gameStats);
 
     }
-    
+    /**
+     * method to store players' shot sums per hole
+     */
     public void playerShotSum()
     {
     	int sum = 0;
