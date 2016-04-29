@@ -116,13 +116,13 @@ public class StartMenuPanel extends JPanel implements ActionListener,KeyListener
      * Validate if the start button should be enabled
      */
     protected void validateStart(){
-        if(gui.gameLogic.getNumberOfPlayers()-1 > 0 && holeCount > 0){
+        if(gui.gameLogic.getNumberOfPlayers() > 0 && holeCount > 0){
             startButton.setEnabled(true);
             startButton.setToolTipText(null);
         } else if(holeCount <= 0){
             startButton.setEnabled(false);
             startButton.setToolTipText("There must be at least 1 hole to play.");
-        } else if(gui.gameLogic.getNumberOfPlayers()-1 <= 0){
+        } else if(gui.gameLogic.getNumberOfPlayers() <= 0){
             startButton.setEnabled(false);
             startButton.setToolTipText("Create at least one player before you can play!");
         }

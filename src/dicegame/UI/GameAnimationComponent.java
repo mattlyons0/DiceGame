@@ -116,7 +116,7 @@ public class GameAnimationComponent extends JComponent {
         double ballPercent = (double) ballLoc / gameLogic.getHoleLength();
         int ballPixels = (int) (((ballPercent * ((holeLocation.width)) + 30) * scaleFactorX));
 
-        animationGraphics.setColor(playerColors[gameLogic.getCurrentPlayer()[0]]);
+        animationGraphics.setColor(playerColors[gameLogic.getCurrentPlayer()]);
 
         Ellipse2D.Double ball = new Ellipse2D.Double(ballPixels, (int) (holeLocation.height * scaleFactorY), 10, 10);
         animationGraphics.fill(ball);
@@ -126,7 +126,7 @@ public class GameAnimationComponent extends JComponent {
         Font font = new Font("Serif", Font.PLAIN, 24);
         animationGraphics.setColor(Color.white);
         animationGraphics.setFont(font);
-        animationGraphics.drawString("Hole " + (gameLogic.getHoleIndex()), 25, (int) (60 * scaleFactorY));
+        animationGraphics.drawString("Hole " + (gameLogic.getHoleIndex()+1), 25, (int) (60 * scaleFactorY));
 
         graphics.drawImage(animationBuffer, 0, 0, this);
     }

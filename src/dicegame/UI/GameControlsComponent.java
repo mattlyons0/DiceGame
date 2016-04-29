@@ -98,9 +98,9 @@ class GameControlsComponent extends JComponent implements ActionListener {
 
     private void updateTurn() {
         gameLogic.currentPlayer();
-        System.out.println(Arrays.toString(gameLogic.getCurrentPlayer()));
+        System.out.println(gameLogic.getCurrentPlayer());
 
-        int playerTurnIndex = gameLogic.getCurrentPlayer()[0];
+        int playerTurnIndex = gameLogic.getCurrentPlayer();
         String player = gameLogic.getPlayer()[playerTurnIndex];
         playerTurnLabel.setText(player + "'s Turn");
     }
