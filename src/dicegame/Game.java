@@ -33,12 +33,18 @@ public class Game {
     private static int playerTwoWins;
     private static int playerThreeWins;
     private static int playerFourWins;
-
+    
+    private int[] currentDistance = new int[4];
+    private static int playerOneDistance;
+    private static int playerTwoDistance;
+    private static int playerThreeDistance;
+    private static int playerFourDistance;
+    
     private static int[] currentGameLocation = new int[2];//index 0 holds player index, index 1 holds hole index
     
    
-    private static int holeIndex;
-    
+    private int holeIndex;
+    private static int playerIndex;
 
 
     /**
@@ -54,7 +60,67 @@ public class Game {
 //		initializeGameStats(playerCount, 0, gameStats);
 
     }
-     
+    
+    public void playerShotSum()
+    {
+    	int sum = 0;
+    	int value = roll();
+    	int player = getCurrentPlayer();
+    	
+    	if (player == 0)
+    	{
+    		int[] shotDistances = hitTheBall(value);
+    		for(int i = 0; i < value; i++)
+    		{
+    			sum += shotDistances[i];
+    		}
+    		playerOneDistance = sum;
+    	}
+    	if (player == 1)
+    	{
+    		int[] shotDistances = hitTheBall(value);
+    		for(int i = 0; i < value; i++)
+    		{
+    			sum += shotDistances[i];
+    		}
+    		playerTwoDistance += sum;
+    	}
+    	if (player == 2)
+    	{
+    		int[] shotDistances = hitTheBall(value);
+    		for(int i = 0; i < value; i++)
+    		{
+    			sum += shotDistances[i];
+    		}
+    		playerThreeDistance = sum;
+    	}
+    	if (player == 3)
+    	{
+    		int[] shotDistances = hitTheBall(value);
+    		for(int i = 0; i < value; i++)
+    		{
+    			sum += shotDistances[i];
+    		}
+    		playerFourDistance = sum;
+    	}
+    	
+    }
+    
+    /**
+     * method that returns distance of specified player at current hole
+     * 
+     * @param player
+     * @return current distance of specified player at current hole
+     */
+    public int getCurrentPlayerDistance(int player)
+    {
+    	int hole = getHoleIndex();
+    	
+    	int current = gameStats[player][hole];
+    	
+    	return current;
+    }
+    
     /**
      * gets player one win count
      * @return playeronewin count
@@ -267,6 +333,22 @@ public class Game {
     	}
     	
     	holeIndex = currentHole;
+    	return moveSuccessful;
+    }
+    
+    public boolean nextPlayer()
+    {
+    	int currentPlayer = playerIndex;
+    	int maxPlayers = playerCount;
+    	boolean moveSuccessful = false;
+    	
+    	//increment to next player until reset to 0
+    	if (currentPlayer < maxPlayers)
+    	{
+    		currentPlayer++;
+    		moveSuccessful = true;
+    	}
+    	playerIndex = currentPlayer;
     	return moveSuccessful;
     }
     
@@ -850,6 +932,19 @@ public class Game {
 		System.out.println();
 		
 		System.out.println("Current hole being played: " + getHoleIndex());
+		
+		//line 284
+		test.nextPlayer();
+		System.out.println("\n" + "Current player number: " + currentPlayer2 + "\n");
+		
+		int someDistance = test.getCurrentPlayerDistance(0);
+		System.out.println("\n" + "Current distance shot: " + someDistance);
+		
+		System.out.println();
+		test.playerShotSum();
+		System.out.println("Current distance shot by Player " + test.getCurrentPlayer()
+		+ " and their current distance: " + playerTwoDistance);
+		
 	}
 }
 
