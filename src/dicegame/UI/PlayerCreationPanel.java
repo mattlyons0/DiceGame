@@ -106,7 +106,7 @@ public class PlayerCreationPanel extends JPanel implements ActionListener {
             } 
             // Conditional for reaching max amount of players of 4. 
             // User is directed to go back to StartMenu.
-            if(gui.gameLogic.getNumberOfPlayers() == 5){
+            if(gui.gameLogic.getNumberOfPlayers() == 4){
             	displayName.setText("Player limit of 4 reached, please return to Start");
             }
             else {

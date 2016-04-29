@@ -128,7 +128,6 @@ class GameScoreboardComponent extends JComponent {
     }
     
     public int getBallDistanceLeft(){
-        System.out.println(gameLogic.getDistanceFromHole());
         return distanceLeft;
     }
     public void newHole(){

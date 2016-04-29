@@ -126,7 +126,7 @@ public class GameAnimationComponent extends JComponent {
         Font font = new Font("Serif", Font.PLAIN, 24);
         animationGraphics.setColor(Color.white);
         animationGraphics.setFont(font);
-        animationGraphics.drawString("Hole " + (gameLogic.getHoleIndex()), 25, (int) (60 * scaleFactorY));
+        animationGraphics.drawString("Hole " + (gameLogic.getHoleIndex()+1), 25, (int) (60 * scaleFactorY));
 
         graphics.drawImage(animationBuffer, 0, 0, this);
     }
