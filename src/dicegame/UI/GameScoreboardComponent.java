@@ -80,7 +80,7 @@ class GameScoreboardComponent extends JComponent {
         AbstractTableModel model = new AbstractTableModel() {
             @Override
             public int getRowCount() {
-                return GAMELOGIC.getNumberOfPlayers()-1;
+                return GAMELOGIC.getNumberOfPlayers();
             }
 
             @Override
