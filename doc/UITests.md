@@ -97,4 +97,10 @@
 
 #### Statistics
 
-- NYI
+- Clicking the Statistics button with no players created should switch the window to: 1 buttons & 1 label. 
+- The window layout should default size, the same as Start Menu screen. 
+- "Back" button should be located on the top of the window.
+- Clicking the "Back" button should return the user back to the start menu. 
+- If there are no players entered, beneath the "Back" button a label should display, "A player must be entered before viewing Statistics".
+-Clicking the Statistics button with players created should display: 1 button. A series of labels: displaying Wins, Losses and Score. 
+- For each player beneath the wins, losses and score labels, should display each players name followed by values for their wins, losses and scores.    
