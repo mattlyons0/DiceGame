@@ -97,7 +97,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
 
     private void updateTurn() {
         gameLogic.currentPlayer();
-        System.out.println(gameLogic.getCurrentPlayer());
+        System.out.println("Current Player: "+gameLogic.getCurrentPlayer());
 
         int playerTurnIndex = gameLogic.getCurrentPlayer();
         String player = gameLogic.getPlayer()[playerTurnIndex];
@@ -149,6 +149,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
                 dicePanel.add(nextTurn);
             }
         } else if (event.getActionCommand().equals("NextTurn")) {
+            System.out.println("DistanceFromHole: "+gameLogic.getDistanceFromHole()+" getCurrentPlayerDistance(0): "+gameLogic.getCurrentPlayerDistance(0));
             if (((JButton) event.getSource()).getText().equals("End Game")) {
                 gui.statsView();
                 return;
