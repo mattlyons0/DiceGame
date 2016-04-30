@@ -25,6 +25,8 @@
 - Upon the bottom of the of the screen there should be a label stating either no players are created or listing the created players
 - Upon creating a new player, this player's name should be added to the list of players at the bottom of the Main Menu screen
 - There should be a comma in between every player's name if there are more than one
+- The players at the bottom should be populated from the last time the application was closed's players if the save file was not deleted
+- In the bottom right corner there should be a 'Remove All' button. Clicking this button should remove all players from the players label and the statistics screen.
 
 #### Game Screen
 
@@ -40,10 +42,12 @@
 
 - At the top left corner there should be a label in white text containing the hole number. This number should increment upon advancing to the next hole.
 - In the center of the screen there should be a Golf Green. This should contain a set of balls at the left.
+- There should be a ball for each player.
 - Each ball should be colored randomly and match the color of the player's Row in the Game Table.
-- The balls may initially overlap one another.
-- There should be a ball for every player.
-- There should be a hole. This hole will be in a randomized location vertically while still remaining on the green.
+- The balls may initially overlap one another, however the player who's turn it is should always be on top.
+- The current player's ball should have a white outline/shadow at all times.
+- All non current player's balls should have a black outline/shadow at all times.
+- There should be a hole. This hole will be in a randomized location vertically while still remaining on the green (light or mid green, but not dark green).
 - The hole will be closer or further in the green depending on how far away the hole is.
 - In each hole played the drawn hole on the course should be in a slightly different location depending on the hole's length and the random variation of height with the hole.
 - Each Player's ball should represent the distance the player is away from the hole.
@@ -64,6 +68,8 @@
 ##### Game Controls
 - The bottom should contain the controls for the game (Roll Dice Multiplier or Dice Roll buttons)
 - There should be a label at the top of stating which player's turn it is. This label should switch in accordance to the logic after each player's turn.
+- The player's turn label should be the same color as the scoreboard text for that player and the player's ball
+- The player's turn label should have a black background if needed for visibility.
 - When Roll Dice Multiplier is clicked 1-6 dice buttons should appear with the label 'Roll'
 - Upon clicking any of these buttons, in any given order, the Distance From Hole should be subtracted by the amount displayed on the die
 - The amount displayed should be a picture of a die with the given roll on it. This roll should be a value of 0-6 inclusive. A zero roll is seen is a missed swing (and visualized with a blank die).

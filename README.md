@@ -21,10 +21,15 @@ A Java Golf game where the hole is a defined number of spaces away and you roll 
 * Once the ball is in the hole, the turns taken (rolls) will be recorded as score.
 
 ## How To Play
-* Compile like any java file into a jar, or [Download a Jar (Sprint 2)](http://mattlyons.net/downloads/school/cse360/DiceGame.jar)
-* Hit Start Game to play!
+* Compile like any java file into a jar, or [Download a Jar (Final Version)](http://mattlyons.net/downloads/school/cse360/DiceGameFinal.jar)
+* Run Jar
+* Assuming this is the first time running at least one player must be created by clicking the 'Create New Player' button. Otherwise players from last session will be loaded upon startup.
+* Hit the 'Start Game' button (modify the holes before clicking if desired)
 * Roll the dice until you make it to the hole.
 * Try to use the least strokes possible.
+* Upon finishing a hole the game will advance to the next hole
+* Upon finishing an entire match the game will show the statistics screen
+* The current game's statistics will be stored in a local directory until another game is started.
 
 
 ## Usernames
