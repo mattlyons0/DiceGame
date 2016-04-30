@@ -1,6 +1,7 @@
 package dicegame.UI;
 
 import dicegame.Game;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -29,6 +30,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
     private Game gameLogic;
     private GUI gui;
     private GameScoreboardComponent scoreboard;
+    private GameAnimationComponent animationComp;
 
     private int[] rollValues;
     private int playerTurnIndex; //Index of the current player
@@ -36,11 +38,12 @@ class GameControlsComponent extends JComponent implements ActionListener {
     /**
      * Create a new GameControlsComponent and all its components.
      */
-    public GameControlsComponent(GUI gui) {
+    public GameControlsComponent(GUI gui, GameAnimationComponent animationComponent) {
         super();
 
         this.gui = gui;
         this.gameLogic = gui.gameLogic;
+        this.animationComp = animationComponent;
 
         setBorder(BorderFactory.createLoweredBevelBorder());
         setLayout(new GridBagLayout());
@@ -97,20 +100,30 @@ class GameControlsComponent extends JComponent implements ActionListener {
     }
 
     private void updateTurn() {
-        System.out.println("Current Player: "+gameLogic.getCurrentPlayer());
-
+        //Update Current Player Label
         playerTurnIndex = gameLogic.getCurrentPlayer();
         String player = gameLogic.getPlayer()[playerTurnIndex];
         playerTurnLabel.setText(player + "'s Turn");
+        
+        //Color Current Player Label
+        Color textColor = animationComp.getPlayerColor(playerTurnIndex);
+        Color backgroundColor = animationComp.getPlayerColorBackground(playerTurnIndex);
+        playerTurnLabel.setForeground(textColor);
+        playerTurnLabel.setBackground(backgroundColor);
     }
 
     @Override
     public void actionPerformed(ActionEvent event) {
+        if(scoreboard == null)
+            this.scoreboard = this.gui.gameplayPanel.scoreboardComp;
+        
         if (event.getActionCommand().equals("MultiplierRoll")) {
+            gameLogic.addStroke(playerTurnIndex, gameLogic.getHoleIndex());
             int multiplier = gameLogic.roll();
             rollValues = gameLogic.hitTheBall(multiplier,gameLogic.getCurrentPlayer(),gameLogic.getHoleIndex()); //Preroll values and display them as they are clicked
 
             diceRoll(multiplier); //Update GUI with multiplier
+            scoreboard.updateTable();
         } else if (event.getActionCommand().startsWith("RollDie")) {
             int diceNum = Integer.parseInt(event.getActionCommand().split(" ")[1]);
 
@@ -121,9 +134,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
             rollButton.setIcon(new ImageIcon(getClass().getResource("/dicegame/Images/Dice" + rollValues[diceNum]
                     + ".png")));
             rollButton.removeActionListener(this);
-            if (scoreboard == null) {
-                this.scoreboard = this.gui.gameplayPanel.scoreboardComp;
-            }
+
             scoreboard.hitBall(rollValues[diceNum],playerTurnIndex);
             gui.gameplayPanel.animationComp.repaint();
 
@@ -145,7 +156,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
                         break;
                     }
                 }
-                if (allPlayersReachedHole && gameLogic.getHoleIndex() == gui.gameplayPanel.TOTAL_HOLES) {
+                if (allPlayersReachedHole && gameLogic.getHoleIndex() == gui.gameplayPanel.TOTAL_HOLES - 1) {
                     buttonText = "End Game";
                 } else if (allPlayersReachedHole) {
                     buttonText = "Next Hole";
@@ -156,9 +167,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
                 dicePanel.add(nextTurn);
             }
         } else if (event.getActionCommand().equals("NextTurn")) {
-            System.out.println("DistanceFromHole: "+gameLogic.getDistanceFromHole(gameLogic.getHoleIndex())+" getCurrentPlayerDistance(0): "+gameLogic.getCurrentPlayerDistance(0,gameLogic.getHoleIndex()));
             if (((JButton) event.getSource()).getText().equals("End Game")) {
-                gameLogic.nextHole(); //Resets game
                 gui.statsView();
                 return;
             } else if (((JButton) event.getSource()).getText().equals("Next Hole")) {

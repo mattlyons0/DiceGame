@@ -133,12 +133,36 @@ public class GameAnimationComponent extends JComponent {
         Font font = new Font("Serif", Font.PLAIN, 24);
         animationGraphics.setColor(Color.white);
         animationGraphics.setFont(font);
-        animationGraphics.drawString("Hole " + (gameLogic.getHoleIndex()), 25, (int) (60 * scaleFactorY));
+        animationGraphics.drawString("Hole " + (gameLogic.getHoleIndex()+1), 25, (int) (60 * scaleFactorY));
 
         graphics.drawImage(animationBuffer, 0, 0, this);
     }
     
+    /**
+     * Returns the generated random color for specified player which will be used in the animation
+     * @param playerIndex index of the player
+     * @return The Color for said player used in the animation
+     */
     public Color getPlayerColor(int playerIndex){
         return playerColors[playerIndex];
+    }
+    
+    /**
+     * Returns the background color needed for the player color to be readable as text.
+     * 
+     * Based on Perceived Luminance from the W3C spec: https://www.w3.org/TR/AERT#color-contrast and
+     * W3C Color Contrast Recommendations https://www.w3.org/TR/WCAG20/
+     * 
+     * @param playerIndex Index of player to evaluate color of
+     * @return either White or Black depending on the color needed for the playerColor to be readable
+     */
+    public Color getPlayerColorBackground(int playerIndex){
+        Color playerColor = getPlayerColor(playerIndex);
+        double luminance = (0.299*(playerColor.getRed()/255) + 0.587*(playerColor.getGreen()/255) + 0.114*(playerColor.getBlue()/255)); 
+        if ((luminance + 0.05) / (0.0 + 0.05) > (1.0 + 0.05) / (luminance + 0.05)){
+            return Color.BLACK;
+        } else {
+            return Color.WHITE;
+        }
     }
 }

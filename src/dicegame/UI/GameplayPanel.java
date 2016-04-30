@@ -56,7 +56,7 @@ public class GameplayPanel extends JPanel {
         //Game Controls
         cons.gridy++;
         cons.weighty = 6;
-        controlsComp = new GameControlsComponent(this.gui);
+        controlsComp = new GameControlsComponent(this.gui, animationComp);
         add(controlsComp, cons);
     }
 

@@ -25,7 +25,6 @@ class GameScoreboardComponent extends JComponent {
     private JTable table;
 
     private int[] distanceLeft;
-    private int[] strokes;
 
     /**
      * Creates a new Game Scoreboard
@@ -40,8 +39,6 @@ class GameScoreboardComponent extends JComponent {
             distanceLeft[index]=gameLogic.getHoleLength();
         }
         
-        strokes = new int[gameLogic.getNumberOfPlayers()];
-
         setLayout(new GridBagLayout());
         GridBagConstraints cons = new GridBagConstraints();
         cons.gridx = 0;
@@ -59,16 +56,8 @@ class GameScoreboardComponent extends JComponent {
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, false, hasFocus, row, column);
                 
-                Color playerColor = gui.gameplayPanel.animationComp.getPlayerColor(row);
-                label.setForeground(playerColor);
-                //Perceived Luminance from the W3C spec: https://www.w3.org/TR/AERT#color-contrast
-                double luminance = (0.299*(playerColor.getRed()/255) + 0.587*(playerColor.getGreen()/255) + 0.114*(playerColor.getBlue()/255)); 
-                //W3C Color Contrast Reccomendations https://www.w3.org/TR/WCAG20/
-                if ((luminance + 0.05) / (0.0 + 0.05) > (1.0 + 0.05) / (luminance + 0.05)){
-                    label.setBackground(Color.BLACK);
-                } else {
-                    label.setBackground(Color.WHITE);
-                }
+                label.setForeground(gui.gameplayPanel.animationComp.getPlayerColor(row));
+                label.setBackground(gui.gameplayPanel.animationComp.getPlayerColorBackground(row));
                 
                 return label;
             }
@@ -98,7 +87,7 @@ class GameScoreboardComponent extends JComponent {
                     case 0:
                         return gameLogic.getPlayer()[row];
                     case 1:
-                        return strokes[row];
+                        return gameLogic.getStrokes(row,gameLogic.getHoleIndex());
                     case 2:
                         return distanceLeft[row];
                     default:
@@ -128,8 +117,7 @@ class GameScoreboardComponent extends JComponent {
      */
     public void hitBall(int distance,int playerIndex) {
         distanceLeft[playerIndex] -= distance;
-        strokes[playerIndex] = gameLogic.getStrokes(playerIndex,gameLogic.getHoleIndex());
-        ((AbstractTableModel) table.getModel()).fireTableDataChanged();
+        updateTable();
     }
     
     /**
@@ -142,10 +130,12 @@ class GameScoreboardComponent extends JComponent {
         return distanceLeft[playerIndex];
     }
     public void newHole(){
-        strokes = new int[gameLogic.getNumberOfPlayers()];
         for(int index = 0; index < distanceLeft.length; index++){
             distanceLeft[index] = gameLogic.getDistanceFromHole(gameLogic.getHoleIndex());
         }
+        updateTable();
+    }
+    public void updateTable(){
         ((AbstractTableModel) table.getModel()).fireTableDataChanged();
     }
 }

@@ -366,29 +366,7 @@ public class Game {
     	int holeIndexLocation = holeIndex;
     	return holeIndexLocation;
     }
-    
-    /**
-     * method that determines current player
-     */
-    public void currentPlayer() 
-    {
-    	int[][] temp = gameStats;//pull in the gameStats array
-    	boolean found = false;
 
-    	for(int holeIndex = 0; holeIndex < holeCount; holeIndex++)
-        {
-    		for (int playerIndex = 0; playerIndex < playerCount; playerIndex++)
-    		{
-                if (temp[playerIndex][holeIndex] == 0 && !found)
-                {
-                	currentGameLocation[0] = playerIndex; //mark the player index
-                	currentGameLocation[1] = holeIndex; //mark the hole index
-                	found = true;
-                }
-            }
-    	}	
-    }
-    
     /**
      * Determines and returns current player based on the player who is furthest away
      * Algorithm is similar to real golf, based on the furthest player away.
@@ -408,7 +386,7 @@ public class Game {
         }
         
         currentGameLocation[0] = highestIndex; //mark the player index
-//        currentGameLocation[1] = holeIndex; //mark the hole index
+        currentGameLocation[1] = holeIndex; //mark the hole index
         
     	return highestIndex;
     }
