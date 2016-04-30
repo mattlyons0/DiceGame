@@ -247,6 +247,7 @@ public class Game {
         int highestIndex = -1;
         for(int playerIndex = 0; playerIndex < getNumberOfPlayers(); playerIndex++){
             int distance = getCurrentPlayerDistance(playerIndex,getHoleIndex());
+            System.out.println(distance);
             if(distance > highestValue){
                 highestValue = distance;
                 highestIndex = playerIndex;

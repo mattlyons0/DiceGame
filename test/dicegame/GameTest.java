@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
  *
  * @authors Matt Lyons, David Lukacs, David McClure, Daniel Kercheski
  */
-public class GameTest2 {
+public class GameTest {
 
     private Game test;
 
@@ -68,7 +68,8 @@ public class GameTest2 {
     	
     	test.createPlayer("Sean");
     	
-    	assertEquals("Sean", test.getPlayer());
+    	assertEquals("Sean", test.getPlayer()[0]);
+        assertEquals(1,test.getNumberOfPlayers());
     }
 
     /**
@@ -469,17 +470,17 @@ public void testCreatePlayer1()
 public void testNextHole() {
 	
 	Game test = new Game();
+        test.setNumberOfHoles(3);
 	
-	int holeIndex = 0;
-	
-	assertEquals(0, holeIndex); //tests to show hole is at 0
+	assertEquals(0, test.getHoleIndex()); //tests to show hole is at 0
 	test.nextHole(); //shifts hole up 1 increment holeIndex should be 1
-	assertEquals(1, holeIndex);
+	assertEquals(1, test.getHoleIndex());
 	test.nextHole();
-	assertEquals(2, holeIndex);
-	holeIndex = 5;
+	assertEquals(2, test.getHoleIndex());
 	test.nextHole();
-	assertEquals(6, holeIndex);
+	assertEquals(3, test.getHoleIndex());
+        test.nextHole();
+        assertEquals(3,test.getHoleIndex());
 	
 }
 
@@ -538,7 +539,13 @@ public void testGetCurrentPlayer() {
 	test.setNumberOfHoles(5);
 	test.createCourse();
 	
-	assertEquals(0, test.getCurrentPlayer());//current player should be at index 0
+	assertEquals(-1, test.getCurrentPlayer());//current player doesnt exist
+        
+        test = new Game();
+        test.createPlayer("Sean");
+        test.createGameStats();
+        test.createCourse();
+        assertEquals(0,test.getCurrentPlayer());
 }
 //
 //@Test
@@ -668,14 +675,13 @@ public void testGetHoleLength() {
 @Test
 	public void testResetStats() {
 		Game game = new Game();
+                game.createPlayer("test");
 		game.createGameStats();
-		int gameStats[][] = new int[2][2];
-		gameStats[0][0] = 1;
-        gameStats[0][1] = 2;
-        assertEquals(gameStats[0][0], 1);
-        game.resetStats();
-        assertEquals(gameStats[0][0], 0);
-	}
+		game.createCourse();
+                game.addStroke(0, 0);
+                assertEquals(1,game.getStrokes(0, 0));
+                game.resetStats();
+                assertEquals(0,game.getStrokes(0,0));
 //
 //@Test
 //public void testAddStroke() {
