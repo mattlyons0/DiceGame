@@ -62,7 +62,8 @@ public class Game {
     }
     
     /**
-     * Constructor to auto load the previous game
+     * Constructor to auto load the previous game.
+     * @param loadGame
      */
     public Game(boolean loadGame) {
     	//This will load the game stats, player count, and hole count
