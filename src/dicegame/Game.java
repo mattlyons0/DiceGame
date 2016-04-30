@@ -57,7 +57,7 @@ public class Game {
         numberOfStrokes = 0;
         playerCount = 0;
         holeCount = 1;
-        holeIndex = 1; 
+        holeIndex = 0; 
 //		initializeGameStats(playerCount, 0, gameStats);
     }
     
@@ -708,9 +708,6 @@ public class Game {
     	}
     	
     	distancesRemaining = tempDistances;
-    	
-    	
-    	
     }
     
     /**
