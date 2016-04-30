@@ -64,8 +64,7 @@ class GameScoreboardComponent extends JComponent {
             }
         });
 
-        JScrollPane scroll = new JScrollPane(table);
-        add(scroll, cons);
+        add(table, cons);
     }
 
     private TableModel getTableModel() {
