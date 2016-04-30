@@ -27,7 +27,7 @@ public class StatsPanel extends JPanel implements ActionListener {
 
 	/**
 	 *  Creates a StatsPanel to be used in the GUI to view Statistics
-     *
+     * 
      * @param gui GUI object which is used to display this panel
 	 */
 	public StatsPanel(GUI gui) {
