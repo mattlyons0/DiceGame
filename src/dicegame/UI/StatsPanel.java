@@ -25,7 +25,11 @@ public class StatsPanel extends JPanel implements ActionListener {
 	private JLabel noPlayers;
 	private JButton backButton;
 
-	// Calls JPanel constructor
+	/**
+	 *  Creates a StatsPanel to be used in the GUI to view Statistics
+     *
+     * @param gui GUI object which is used to display this panel
+	 */
 	public StatsPanel(GUI gui) {
 		super();
 
@@ -72,7 +76,7 @@ public class StatsPanel extends JPanel implements ActionListener {
 		int totalWins = gui.gameLogic.getPlayerOneWins() + gui.gameLogic.getPlayerTwoWins()
 				+ gui.gameLogic.getPlayerThreeWins() + gui.gameLogic.getPlayerFourWins();
 		gui.gameLogic.getGameStats();
-		gui.gameLogic.loadGameStats();
+		//gui.gameLogic.loadGameStats();
 		//int gameStats[][] = new int[playersNum][holeNum];
 		
 		// Testing with rows and columns here.
@@ -193,7 +197,7 @@ public class StatsPanel extends JPanel implements ActionListener {
 			holeLabel = new JLabel("|" + (index + 1) + "|");
 			add(holeLabel, cons);
 		}
-		// Creating labels for players on scorecard
+		// Creating labels for players on ScoreCard
 		for (int index = 0; index < playersNum; index++) {
 			cons.gridy++;
 			cons.gridx = 0;
