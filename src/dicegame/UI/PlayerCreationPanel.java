@@ -114,6 +114,8 @@ public class PlayerCreationPanel extends JPanel implements ActionListener {
                     gui.startMenuPanel.addPlayer(name);
                     // removing panel
                     gui.showStartMenu();
+                    
+                    gui.gameLogic.saveGameStats();
                 }
             }
 

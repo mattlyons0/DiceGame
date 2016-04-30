@@ -286,7 +286,7 @@ public class Game {
     	}
     	catch(Exception e)
     	{
-    		System.out.println("Error saving file");
+    		System.err.println("Error saving file");
     	}
     }
     
@@ -309,8 +309,7 @@ public class Game {
     		playerCount = (int) saved.readObject();
     		holeCount = (int) saved.readObject();
                 playerName = (String[]) saved.readObject();
-    		
-    		
+                
     		//close the file
     		saved.close();
     	}

@@ -105,8 +105,17 @@ public class StartMenuPanel extends JPanel implements ActionListener, KeyListene
         add(removePlayersButton, cons);
 
         for(int playerIndex = 0; playerIndex < gui.gameLogic.getNumberOfPlayers(); playerIndex++){
-            addPlayer(gui.gameLogic.getPlayer()[playerIndex]);
+            updatePlayersLabel(gui.gameLogic.getPlayer()[playerIndex]);
         }
+    }
+    
+    private void updatePlayersLabel(String playerName){
+        if (playersLabel.getText().equals("No Players Created")) {
+            playersLabel.setText("Players: " + playerName);
+        } else {
+            playersLabel.setText(playersLabel.getText() + ", " + playerName);
+        }
+        validateStart();
     }
 
     /**
@@ -115,15 +124,9 @@ public class StartMenuPanel extends JPanel implements ActionListener, KeyListene
      * @param playerName String of players name
      */
     public void addPlayer(String playerName) {
-        if (playersLabel.getText().equals("No Players Created")) {
-            playersLabel.setText("Players: " + playerName);
-        } else {
-            playersLabel.setText(playersLabel.getText() + ", " + playerName);
-        }
         gui.gameLogic.createPlayer(playerName);
-        validateStart();
-
-        gui.gameLogic.saveGameStats();
+        
+        updatePlayersLabel(playerName);
     }
 
     private void removeAllPlayers() {
