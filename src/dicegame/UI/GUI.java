@@ -45,7 +45,7 @@ public class GUI extends JFrame {
     private void initGui() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Exit Java Application when the window is closed
 
-        setSize(300, 500);
+        setSize(600, 500);
         setVisible(true);
     }
 

@@ -150,7 +150,7 @@ public class Game {
                     lowestIndex = pIndex;
                 }
             }
-            if(lowestIndex == playerIndex)
+            if(lowestIndex == playerIndex && lowestScore != 0)
                 wins++;
         }
         
@@ -163,6 +163,8 @@ public class Game {
      * @return the number of holes this player lost
      */
     public int getLosses(int playerIndex){
+        if(strokeSum(playerIndex) == 0)
+            return 0;
         return getNumberOfHoles() - getWins(playerIndex);
     }
     

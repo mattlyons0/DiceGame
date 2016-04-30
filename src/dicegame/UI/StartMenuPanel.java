@@ -90,18 +90,17 @@ public class StartMenuPanel extends JPanel implements ActionListener, KeyListene
         add(quitButton, cons);
 
         playersLabel = new JLabel("No Players Created");
-        cons.gridwidth = 2;
+        cons.gridwidth = 1;
         cons.gridy++;
         cons.anchor = GridBagConstraints.SOUTH;
         cons.weighty = 100;
         add(playersLabel, cons);
 
-        removePlayersButton = new JButton("Remove All Players");
+        removePlayersButton = new JButton("Remove All");
         removePlayersButton.addActionListener(this);
-        cons.gridwidth = 1;
         cons.gridx++;
+        cons.weightx=1;
         cons.anchor = GridBagConstraints.SOUTHEAST;
-        cons.weightx = 1;
         add(removePlayersButton, cons);
 
         for(int playerIndex = 0; playerIndex < gui.gameLogic.getNumberOfPlayers(); playerIndex++){
