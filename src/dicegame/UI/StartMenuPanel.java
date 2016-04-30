@@ -95,15 +95,18 @@ public class StartMenuPanel extends JPanel implements ActionListener, KeyListene
         cons.anchor = GridBagConstraints.SOUTH;
         cons.weighty = 100;
         add(playersLabel, cons);
-        
+
         removePlayersButton = new JButton("Remove All Players");
         removePlayersButton.addActionListener(this);
         cons.gridwidth = 1;
         cons.gridx++;
-        cons.anchor=GridBagConstraints.SOUTHEAST;
-        cons.weightx=1;
-        add(removePlayersButton,cons);
+        cons.anchor = GridBagConstraints.SOUTHEAST;
+        cons.weightx = 1;
+        add(removePlayersButton, cons);
 
+        for(int playerIndex = 0; playerIndex < gui.gameLogic.getNumberOfPlayers(); playerIndex++){
+            addPlayer(gui.gameLogic.getPlayer()[playerIndex]);
+        }
     }
 
     /**
@@ -119,11 +122,11 @@ public class StartMenuPanel extends JPanel implements ActionListener, KeyListene
         }
         gui.gameLogic.createPlayer(playerName);
         validateStart();
-        
+
         gui.gameLogic.saveGameStats();
     }
-    
-    private void removeAllPlayers(){
+
+    private void removeAllPlayers() {
         playersLabel.setText("No Players Created");
         validateStart();
     }
@@ -154,11 +157,11 @@ public class StartMenuPanel extends JPanel implements ActionListener, KeyListene
             gui.statsView();
         } else if (event.getSource() == quitButton) {
             System.exit(0);
-        } else if(event.getSource() == removePlayersButton){
+        } else if (event.getSource() == removePlayersButton) {
             gui.gameLogic.resetPlayers();
             gui.gameLogic.resetStats();
             gui.gameLogic.saveGameStats();
-            
+
             removeAllPlayers();
         }
     }
