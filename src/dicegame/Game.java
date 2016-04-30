@@ -4,13 +4,13 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
  * Handle the game play logic and statistics
  *
  * @authors David McClure, Daniel Kercheski, Matt Lyons
- * Project
  */
 public class Game {
 
@@ -30,19 +30,17 @@ public class Game {
 
     private int[] currentLocation = new int[2];
     private int[] nextHole = new int[18];
-    
+
     private int[] currentDistance = new int[4];
     private static int playerOneDistance;
     private static int playerTwoDistance;
     private static int playerThreeDistance;
     private static int playerFourDistance;
-    
+
     private static int[] currentGameLocation = new int[2];//index 0 holds player index, index 1 holds hole index
-    
-   
+
     private static int holeIndex;
     private static int playerIndex;
-
 
     /**
      * Constructor to ensure that all values are initialized when starting a new
@@ -53,351 +51,276 @@ public class Game {
         numberOfStrokes = 0;
         playerCount = 0;
         holeCount = 1;
-        holeIndex = 0; 
+        holeIndex = 0;
 //		initializeGameStats(playerCount, 0, gameStats);
     }
-    
+
     /**
      * Constructor to auto load the previous game.
-     * @param loadGame
+     *
+     * @param loadGame determines if the current game file will be loaded upon startup
      */
     public Game(boolean loadGame) {
-    	//This will load the game stats, player count, and hole count
-    	if(loadGame)
-    	{
-    		loadGameStats();
-    		numberOfStrokes = 0;
-    		holeIndex = 0;
-    	}
-    	
+        //This will load the game stats, player count, and hole count
+        if (loadGame) {
+            loadGameStats();
+            numberOfStrokes = 0;
+            holeIndex = 0;
+        }
+
     }
-    
-    /**
-     * method to store players' shot sums per hole
-     */
-    public void playerShotSum()
-    {
-    	int sum = 0;
-    	int value = roll();
-    	int player = getCurrentPlayer(); //gets current player
-    	
-    	if (player == 0)
-    	{
-    		int[] shotDistances = hitTheBall(value, 0 , holeIndex);
-    		for(int i = 0; i < value; i++)
-    		{
-    			sum += shotDistances[i]; //sum adds shotDistances total
-    		}
-    		playerOneDistance += sum; //playerOneDistance adds sum to total for hole
-    	}
-    	if (player == 1)
-    	{
-    		int[] shotDistances = hitTheBall(value, 1 , holeIndex);
-    		for(int i = 0; i < value; i++)
-    		{
-    			sum += shotDistances[i];
-    		}
-    		playerTwoDistance += sum;
-    	}
-    	if (player == 2)
-    	{
-    		int[] shotDistances = hitTheBall(value, 2, holeIndex);
-    		for(int i = 0; i < value; i++)
-    		{
-    			sum += shotDistances[i];
-    		}
-    		playerThreeDistance += sum;
-    	}
-    	if (player == 3)
-    	{
-    		int[] shotDistances = hitTheBall(value, 3, holeIndex);
-    		for(int i = 0; i < value; i++)
-    		{
-    			sum += shotDistances[i];
-    		}
-    		playerFourDistance += sum;
-    	}
-    }
-    
+
     /**
      * method that returns distance of specified player at current hole
-     * 
-     * @param player
+     *
+     * @param player index of specified player
+     * @param hole index of specified hole
      * @return current distance of specified player at current hole
      */
-    public int getCurrentPlayerDistance(int player, int hole)
-    {	
-    	int current = distancesRemaining[player][hole];
-    	
-    	return current;
+    public int getCurrentPlayerDistance(int player, int hole) {
+        int current = distancesRemaining[player][hole];
+
+        return current;
     }
-    
+
     /**
-     * Calculate the number of times a certain player has one (1 win = least strokes on a hole)
+     * Calculate the number of times a certain player has one (1 win = least
+     * strokes on a hole)
+     *
      * @param playerIndex index of player to check wins on
      * @return the number of times said player has won
      */
-    public int getWins(int playerIndex){
+    public int getWins(int playerIndex) {
         int wins = 0;
-        
-        for(int holeIndex = 0; holeIndex < getNumberOfHoles(); holeIndex++){
+
+        for (int holeIndex = 0; holeIndex < getNumberOfHoles(); holeIndex++) {
             int lowestScore = Integer.MAX_VALUE;
-            int lowestIndex = -1;
-            for(int pIndex = 0; pIndex < getNumberOfPlayers(); pIndex++){
-                if(getStrokes(pIndex,holeIndex) < lowestScore){
-                    lowestScore = getStrokes(pIndex,holeIndex);
-                    lowestIndex = pIndex;
+            ArrayList<Integer> lowestIndex = new ArrayList();
+            for (int pIndex = 0; pIndex < getNumberOfPlayers(); pIndex++) {
+                if (getStrokes(pIndex, holeIndex) < lowestScore) {
+                    lowestScore = getStrokes(pIndex, holeIndex);
+                    lowestIndex.clear();
+                    lowestIndex.add(0, pIndex);
+                } else if(getStrokes(pIndex,holeIndex) == lowestScore){
+                    lowestIndex.add(pIndex);
                 }
             }
-            if(lowestIndex == playerIndex && lowestScore != 0)
+            if (lowestIndex.contains(playerIndex) && lowestScore != 0) {
                 wins++;
+            }
         }
-        
+
         return wins;
     }
-    
+
     /**
      * Calculate the number of games the player has not won
+     *
      * @param playerIndex index of the player to calculate from
      * @return the number of holes this player lost
      */
-    public int getLosses(int playerIndex){
-        if(strokeSum(playerIndex) == 0)
+    public int getLosses(int playerIndex) {
+        if (strokeSum(playerIndex) == 0) {
             return 0;
+        }
         return getNumberOfHoles() - getWins(playerIndex);
     }
-    
+
     /**
      * method to add up all strokes for each player
+     *
+     * @param playerNum index of the player to add up strokes for
      * @return sum of specified row
      */
     public int strokeSum(int playerNum) //works
     {
-    	int sum = 0;
-    	for(int holeIndex = 0; holeIndex < holeCount; holeIndex++)
-    	{
-    		sum += getStrokes(playerNum,holeIndex);
-    	}
-    	return sum;
-    }
-    
-    /**
-     * Move the hole to the next hole in the game. Returns true if moved or false if the last hole.
-     * @return boolean move successful
-     */
-    public boolean nextHole()
-    {
-    	int currentHole = holeIndex;
-    	int maxHole = holeCount;
-    	boolean moveSuccessful = false;
-    	
-    	//increment only if not on the last hole.
-    	if (currentHole <  maxHole)
-    	{
-    		currentHole++;
-    		moveSuccessful = true;
-    	}
-    	
-    	
-    	saveGameStats();
-    	
-    	holeIndex = currentHole;
-    	return moveSuccessful;
-    }
-    
-    /**
-     * Move to the next player in game. Returns true if moved or false if not on same hole
-     * @return boolean move successful
-     */
-    public boolean nextPlayer()
-    {
-    	int currentPlayer = playerIndex;
-    	int maxPlayers = playerCount;
-    	boolean moveSuccessful = false;
-    	
-    	//increment to next player until reset to 0
-    	if (currentPlayer < maxPlayers)
-    	{
-    		currentPlayer++;
-    		moveSuccessful = true;
-    	}
-    	playerIndex = currentPlayer;
-    	return moveSuccessful;
-    }
-    
-    /**
-     * returns which hole the game is on.
-     * @return hole index
-     */
-    public int getHoleIndex()
-    {
-    	int holeIndexLocation = holeIndex;
-    	return holeIndexLocation;
+        int sum = 0;
+        for (int holeIndex = 0; holeIndex < holeCount; holeIndex++) {
+            sum += getStrokes(playerNum, holeIndex);
+        }
+        return sum;
     }
 
     /**
-     * Determines and returns current player based on the player who is furthest away
-     * Algorithm is similar to real golf, based on the furthest player away.
-     * 
+     * Move the hole to the next hole in the game. Returns true if moved or
+     * false if the last hole.
+     *
+     * @return boolean move successful
+     */
+    public boolean nextHole() {
+        int currentHole = holeIndex;
+        int maxHole = holeCount;
+        boolean moveSuccessful = false;
+
+        //increment only if not on the last hole.
+        if (currentHole < maxHole) {
+            currentHole++;
+            moveSuccessful = true;
+        }
+
+        saveGameStats();
+
+        holeIndex = currentHole;
+        return moveSuccessful;
+    }
+
+    /**
+     * returns which hole the game is on.
+     *
+     * @return hole index
+     */
+    public int getHoleIndex() {
+        int holeIndexLocation = holeIndex;
+        return holeIndexLocation;
+    }
+
+    /**
+     * Determines and returns current player based on the player who is furthest
+     * away Algorithm is similar to real golf, based on the furthest player
+     * away.
+     *
      * @return the index of the player who should be
      */
     public int getCurrentPlayer()//works
     {
         int highestValue = -1;
         int highestIndex = -1;
-        for(int playerIndex = 0; playerIndex < getNumberOfPlayers(); playerIndex++){
-            int distance = getCurrentPlayerDistance(playerIndex,getHoleIndex());
-            System.out.println(distance);
-            if(distance > highestValue){
+        for (int playerIndex = 0; playerIndex < getNumberOfPlayers(); playerIndex++) {
+            int distance = getCurrentPlayerDistance(playerIndex, getHoleIndex());
+            if (distance > highestValue) {
                 highestValue = distance;
                 highestIndex = playerIndex;
             }
         }
-        
+
         currentGameLocation[0] = highestIndex; //mark the player index
         currentGameLocation[1] = holeIndex; //mark the hole index
-        
-    	return highestIndex;
+
+        return highestIndex;
     }
-    
+
     /**
      * Give the game stats as a 2d array.
+     *
      * @return game stats
      */
     public int[][] getGameStats() //works
     {
-    	return gameStats;
+        return gameStats;
     }
-    
+
     /**
      * Save the game data to a file named savedGameStats.sav
      */
-    public void saveGameStats()
-    {
-    	int oldStats[][] = gameStats;
-    	int numberOfPlayers = playerCount;
-    	int numberOfHoles = holeCount;
+    public void saveGameStats() {
+        int oldStats[][] = gameStats;
+        int numberOfPlayers = playerCount;
+        int numberOfHoles = holeCount;
         String[] players = playerName;
-    	
-    	try
-    	{
-    		//create a file
-    		FileOutputStream savedFile = new FileOutputStream("savedGameStats.sav");
-    		ObjectOutputStream saved = new ObjectOutputStream(savedFile);
-    		
-    		//put the array in the file
-    		saved.writeObject(oldStats);
-    		saved.writeObject(numberOfPlayers);
-    		saved.writeObject(numberOfHoles);
-                saved.writeObject(players);
-    		
-    		
-    		//close the file
-    		saved.close();
-    	}
-    	catch(Exception e)
-    	{
-    		System.err.println("Error saving file");
-    	}
+
+        try {
+            //create a file
+            FileOutputStream savedFile = new FileOutputStream("savedGameStats.sav");
+            ObjectOutputStream saved = new ObjectOutputStream(savedFile);
+
+            //put the array in the file
+            saved.writeObject(oldStats);
+            saved.writeObject(numberOfPlayers);
+            saved.writeObject(numberOfHoles);
+            saved.writeObject(players);
+
+            //close the file
+            saved.close();
+        } catch (Exception e) {
+            System.err.println("Error saving file");
+        }
     }
-    
-    
+
     /**
      * Load the game stats from the file savedGameStats.sav
      */
-    public void loadGameStats()
-    {
-    	try
-    	{
-    		
-    		//load the file
-    		FileInputStream savedFile = new FileInputStream("savedGameStats.sav");
-    		
-    		ObjectInputStream saved = new ObjectInputStream(savedFile);
-    		
-    		//put the array back into the game
-    		gameStats = (int[][]) saved.readObject();
-    		playerCount = (int) saved.readObject();
-    		holeCount = (int) saved.readObject();
-                playerName = (String[]) saved.readObject();
-                
-    		//close the file
-    		saved.close();
-    	}
-    	catch(Exception e)
-    	{
-    		System.out.println("Error: file does not exist yet");
-    	}
+    public void loadGameStats() {
+        try {
+
+            //load the file
+            FileInputStream savedFile = new FileInputStream("savedGameStats.sav");
+
+            ObjectInputStream saved = new ObjectInputStream(savedFile);
+
+            //put the array back into the game
+            gameStats = (int[][]) saved.readObject();
+            playerCount = (int) saved.readObject();
+            holeCount = (int) saved.readObject();
+            playerName = (String[]) saved.readObject();
+
+            //close the file
+            saved.close();
+        } catch (Exception e) {
+            System.err.println("Error: file does not exist yet");
+        }
     }
-    
+
     /**
      * Returns the amount of holes.
      *
      * @return hole count
      */
     public int getNumberOfHoles() //works
-    { 
+    {
         return holeCount;
     }
-    
+
     /**
      * Inputs the amount of holes
+     *
+     * @param numberOfHoles number of holes to set the logic to
      */
     public void setNumberOfHoles(int numberOfHoles) //works
     {
         holeCount = numberOfHoles;
     }
-    
+
     /**
-     * function that returns randomHoleDistance that ranges between
-     * a given high and low value
-     * 
-     * @return
+     * function that returns randomHoleDistance that ranges between a given high
+     * and low value
+     *
+     * @return a random value 15-100
      */
     public int randomHoleDistancer() //works
     {
-    	int high = 100;
-    	int low = 15;
-    	
-    	Random rollTheDice = new Random();
-    	
-    	randomHoleDistance = rollTheDice.nextInt(high - low) + low; //result is between 15 and 100
-    	
-    	return randomHoleDistance;
+        int high = 100;
+        int low = 15;
+
+        Random rollTheDice = new Random();
+
+        randomHoleDistance = rollTheDice.nextInt(high - low) + low; //result is between 15 and 100
+
+        return randomHoleDistance;
     }
-    
+
     /**
-     * Creates the course by putting a random number created by the randomHoleDistancer method into 
-     * a global array.
+     * Creates the course by putting a random number created by the
+     * randomHoleDistancer method into a global array.
      */
     public void createCourse()//works
     {
-    	int tempCourse[] = new int[holeCount]; //temporary storage for the course creation
-    	for (int holeIndex = 0; holeIndex < holeCount; holeIndex++)
-    	{
-    		tempCourse[holeIndex] = randomHoleDistancer();//place each distance into the array
-    	}
-    	
-    	course = tempCourse;//put all distances into the global array
+        int tempCourse[] = new int[holeCount]; //temporary storage for the course creation
+        for (int holeIndex = 0; holeIndex < holeCount; holeIndex++) {
+            tempCourse[holeIndex] = randomHoleDistancer();//place each distance into the array
+        }
+
+        course = tempCourse;//put all distances into the global array
     }
-    
+
     /**
      * Returns the hole distance for each hole
-     * @return course 
+     *
+     * @return course
      */
     public int[] getCourse()//works
     {
-    	createCourse();
-    	return course;
-    }
-    
-    
-    /**
-     * Once a putt is completed the distance remaining will reset to the full
-     * distance
-     */
-    private void resetDistance() {
-        distanceRemaining = holeDistance;
+        createCourse();
+        return course;
     }
 
     /**
@@ -423,12 +346,11 @@ public class Game {
     /**
      * Create a player and put their name in the string array.
      *
-     * @param name
+     * @param newPlayer name of the new player to add
      */
-    public void createPlayer(String newPlayer) 
-    {
-    	playerName[playerCount] = newPlayer; 	// Put new player in next available spot.
-    	playerCount++;  						// And increment playerCt to count the new player.
+    public void createPlayer(String newPlayer) {
+        playerName[playerCount] = newPlayer; 	// Put new player in next available spot.
+        playerCount++;  						// And increment playerCt to count the new player.
     }
 
     /**
@@ -446,14 +368,12 @@ public class Game {
      *
      * @return rolled value
      */
-    public int roll() 
-    {
+    public int roll() {
         int rolled = 0;
         Random rollTheDice = new Random();
 
         //rollTheDice has the possibility of returning a 0, this prevents returning a 0 roll
-        while (rolled == 0) 
-        {
+        while (rolled == 0) {
             rolled = rollTheDice.nextInt(diceSize);
         }
 
@@ -465,24 +385,25 @@ public class Game {
     }
 
     /**
-     * Hits the ball for a total of values that were rolled by the multiplier. Automatically 
-     * 	updates the array of distance remaining values.
-     * @param roll
-     * @param playerIndex
-     * @param holeIndex
-     * @return
+     * Hits the ball for a total of values that were rolled by the multiplier.
+     * Automatically updates the array of distance remaining values.
+     *
+     * @param roll the number of dice to roll
+     * @param playerIndex the index of the player rolling
+     * @param holeIndex the index of the hole the player is rolling for
+     * @return an array of the values rolled with a length of roll
      */
     public int[] hitTheBall(int roll, int playerIndex, int holeIndex) {
         //boolean to tell if putt is required
         boolean putt = true;
-        
+
         //array to hold each value added to the stroke distance
         int distances[] = new int[roll];
 
         int sumOfStroke = 0; //value to store how far the ball is going to go
         int addToStroke = 0;
         Random rollTheDice = new Random();
-        
+
         int remainingDistance = distancesRemaining[playerIndex][holeIndex];
 
         //(distanceRemaining >= diceSize - 1) stops sumOfStroke from going over the hole
@@ -516,7 +437,7 @@ public class Game {
             remainingDistance = 0;
 //            resetDistance(); //This also breaks tests since it resets before it can even be detected it was 0.
         }
-        
+
         distancesRemaining[playerIndex][holeIndex] = remainingDistance;
         return distances;
     }
@@ -524,525 +445,117 @@ public class Game {
     /**
      * Returns number of strokes from each roll() function
      *
+     * @param player index of player to roll for
+     * @param hole index of hole to roll for
      * @return number of strokes
      */
-    public int getStrokes(int player, int hole) 
-    {
-        if(player < gameStats.length && hole < gameStats[player].length){
+    public int getStrokes(int player, int hole) {
+        if (player < gameStats.length && hole < gameStats[player].length) {
             numberOfStrokes = gameStats[player][hole];
             return numberOfStrokes;
-        } else{
+        } else {
             return 0;
         }
     }
 
     /**
      * Returns distance of the hole from where the ball starts
-     * 
+     *
      * @return the distance of the hole from where the ball starts
      */
     public int getHoleLength() //works
-    { 
-    	int holeLocation = currentGameLocation[1];
-    	return course[holeLocation];
+    {
+        int holeLocation = getHoleIndex();
+        return course[holeLocation];
     }
 
     /**
      * Returns the distance the player is currently from the hole
      *
+     * @param hole index of hole to get distance from
      * @return the distance the player is currently from the hole
      */
-    public int getDistanceFromHole(int hole)
-    {
-    	distanceRemaining = distancesRemaining[getCurrentPlayer()][hole];
+    public int getDistanceFromHole(int hole) {
+        distanceRemaining = distancesRemaining[getCurrentPlayer()][hole];
         return distanceRemaining;
     }
-    
-    
+
     /**
-     * create a new gameStats and initialize the course  
+     * create a new gameStats and initialize the course
      */
     public void createGameStats() //works
     {
-    	int players = playerCount;
-    	int holes = holeCount;
-    	
-    	int temp[][] = new int[players][holes];
-    	gameStats = temp;
-    	
-    	int tempDistances[][] = new int[players][holes]; //creates a template to store distances remaining for each hole and player
-    	createCourse();
-    	
-    	for(int playerIndex = 0; playerIndex < playerCount; playerIndex++)
-    	{
-    		for (int holeIndex = 0; holeIndex < holeCount; holeIndex++)
-    		{
-    			tempDistances[playerIndex][holeIndex] = course[holeIndex];
-    		}
-    	}
-    	
-    	distancesRemaining = tempDistances;
+        int players = playerCount;
+        int holes = holeCount;
+
+        int temp[][] = new int[players][holes];
+        gameStats = temp;
+
+        int tempDistances[][] = new int[players][holes]; //creates a template to store distances remaining for each hole and player
+        createCourse();
+
+        for (int playerIndex = 0; playerIndex < playerCount; playerIndex++) {
+            for (int holeIndex = 0; holeIndex < holeCount; holeIndex++) {
+                tempDistances[playerIndex][holeIndex] = course[holeIndex];
+            }
+        }
+
+        distancesRemaining = tempDistances;
     }
-    
+
     /**
      * Reset the game stats
      */
     public void resetStats() //works
     {
-    	for (int playerIndex = 0; playerIndex < gameStats.length; playerIndex++)
-    	{
-    		for (int holeIndex = 0; holeIndex < gameStats[playerIndex].length; holeIndex++)
-    		{
-    			gameStats[playerIndex][holeIndex] = 0;
-    		}
-    	}
+        for (int playerIndex = 0; playerIndex < gameStats.length; playerIndex++) {
+            for (int holeIndex = 0; holeIndex < gameStats[playerIndex].length; holeIndex++) {
+                gameStats[playerIndex][holeIndex] = 0;
+            }
+        }
     }
-    
+
     /**
      * Add a stroke for the specified player and hole
-     * @param player
-     * @param hole
+     *
+     * @param player index of player to add stroke to
+     * @param hole index of hole to add stroke to
      */
     public void addStroke(int player, int hole) //works
     {
-    	try
-    	{
-    		gameStats[player][hole]++;
-    	}
-    	catch(Exception e)
-    	{
-    		System.err.println("Error: incorrect player number or hole number");
-    	}
-        
+        try {
+            gameStats[player][hole]++;
+        } catch (Exception e) {
+            System.err.println("Error: incorrect player number or hole number");
+        }
+
     }
-    
+
     /**
-     * Print the gameStats array for testing
+     * Resets the player count to zero
+     *
+     * @return zero
      */
-    private void printStats() //works
-    {
-    	int temp[][] = gameStats;
-    	for (int playerIndex = 0; playerIndex < temp.length; playerIndex++)
-    	{
-    		for (int holeIndex = 0; holeIndex < temp[playerIndex].length; holeIndex++)
-    		{
-    			System.out.print(temp[playerIndex][holeIndex] + "\t");;
-    		}
-    		System.out.println();
-    	}
+    public int resetPlayerCount() {
+        playerCount = 0;
+        return playerCount;
     }
-    
+
     /**
-     * Print the hole distances remaining for testing
+     * Resets the names of the players in the game logic to null
      */
-    
-    private void printDistanceRemaining()
-    {
-    	int temp[][] = distancesRemaining;
-    	for (int playerIndex = 0; playerIndex < temp.length; playerIndex++)
-    	{
-    		for (int holeIndex = 0; holeIndex < temp[playerIndex].length; holeIndex++)
-    		{
-    			System.out.print(temp[playerIndex][holeIndex] + "\t");;
-    		}
-    		System.out.println();
-    	}
-    }
-    
-    //ALL METHODS BELOW THIS LINE ARE FOR TESTING PURPOSES (Use them if they're useful for you)
-    //__________________________________________________________________________________________
-    
-    public int resetHoleCount()
-    {
-    	holeCount = 0;
-    	return holeCount;
-    }
-    
-    public int resetPlayerCount()
-    {
-    	playerCount = 0;
-    	return playerCount;
-    }
-    
-    public void resetPlayers(){
+    public void resetPlayers() {
         resetPlayerCount();
         playerName = new String[4];
     }
-    
-    public int resetHoleIndex()
-    {
-    	holeIndex = 0;
-    	return holeIndex;
-    }
-    
+
     /**
-     * Print the gameStats array for testing
+     * Resets the hole index in the game logic
+     *
+     * @return zero
      */
-    private void printDistanceRemainders()
-    {
-    	int temp[][] = distancesRemaining;
-    	for (int playerIndex = 0; playerIndex < temp.length; playerIndex++)
-    	{
-    		for (int holeIndex = 0; holeIndex < temp[playerIndex].length; holeIndex++)
-    		{
-    			System.out.print(temp[playerIndex][holeIndex] + "\t");;
-    		}
-    		System.out.println();
-    	}
+    public int resetHoleIndex() {
+        holeIndex = 0;
+        return holeIndex;
     }
-    
-    /**
-     * Reset the game stats
-     */
-    public void resetDistancesRemainder() //works
-    {
-    	int temp[][] = distancesRemaining;
-    	
-    	for (int playerIndex = 0; playerIndex < temp.length; playerIndex++)
-    	{
-    		for (int holeIndex = 0; holeIndex < temp[playerIndex].length; holeIndex++)
-    		{
-    			temp[playerIndex][holeIndex] = 0;
-    		}
-    	}
-    	distancesRemaining = temp;
-    }
-    
-    
-	public static void main(String[] args) 
-	{
-		Game test = new Game();
- 		
- 		//creates 100 different random hole values
-//		for (int i = 0; i < 100; i++)
-//		{
-// 			int distance = test.randomHoleDistancer();
-//	 		System.out.println("Value: " + distance);
-//		}
-		
-		//set number of holes and print the number out
- 		test.setNumberOfHoles(9);
- 		System.out.println("Number of holes: " + test.getNumberOfHoles() + "\n");
- 		test.resetHoleCount();
- 		System.out.println("Number of holes: " + test.getNumberOfHoles() + "\n");
- 		test.setNumberOfHoles(12);
- 		System.out.println("Number of holes: " + test.getNumberOfHoles() + "\n");
- 		
-		//test setting player names
-		test.createPlayer("George");
-		test.createPlayer("John");
-		test.createPlayer("Stephen");
-		test.createPlayer("Sean");
-		
-		//stores address of values into new array
-		String[] playerName = test.getPlayer();
-		
-		//test printing out stored player names
-		System.out.println("Names of players: " + "\n");
-		
-		for (int i = 0; i < 4; i++)
-		{
-			System.out.println("Player name: " + playerName[i]);
-		}
-		
-		//Initialize all of matrix indices to 0
-		//print out current score card
-		System.out.println("\n" + "Testing 2D array output and manipulations: " + "\n");
-		test.createGameStats();
-		test.printStats();
-		System.out.println();
-		
-		//change matrix values with [0][0] to 1
-		System.out.println("Changed values at [0][0] and [1][8]: " + "\n");
-		test.gameStats[0][0] = 1;
-		test.addStroke(1, 8);
-		test.printStats();
-		
-		System.out.println("\n" + "Resetting values back to 0: " + "\n");
-		//test reset method to set all values back to 0
-		test.resetStats();
-		System.out.println();
-		test.printStats();
-
-		
-		//tests getNumberOfPlayers()
-		System.out.println("\n" + "Number of players: " + (test.getNumberOfPlayers()));
-		
-		int value = 0;
-		
-		//testing roll value
-		value = test.roll();
-		System.out.println("\n" + "Roll value: " + value + "\n");
-		
-		System.out.println("Print out of number of distances equal to roll value: " + "\n");
-		//output number of random distances based on 'value' number
-		//int[] shotDistances = test.hitTheBall(value);
-		for(int i = 0; i < value; i++)
-		{
-		//System.out.println("Distance: " + shotDistances[i]);
-		}
-		
-		test.createCourse();
-		System.out.println("\n" + "Hole distances: " + "\n");
-		int courseList [] = test.getCourse();
-		
-		for (int i = 0; i < test.getNumberOfHoles(); i++)
-		{
-			System.out.println("Hole distance: " + courseList[i] + "\n");
-		}
-		
-		//creates 2D array that fills up all of first row
-		//fills up first column of second row
-		test.addStroke(0, 0);
-		test.addStroke(0, 1);
-		test.addStroke(0, 2);
-		test.addStroke(0, 3);
-		test.addStroke(0, 4);
-		test.addStroke(0, 5);
-		test.addStroke(0, 6);
-		test.addStroke(0, 7);
-		test.addStroke(0, 8);
-		test.addStroke(1, 0);
-		
-		test.printStats();	
-		System.out.println();
-		
-		//testing storeWins()
-		test.gameStats[0][0] = 3;
-		test.gameStats[1][0] = 3;
-		test.gameStats[2][0] = 5;
-		test.gameStats[3][0] = 4;		
-		test.gameStats[0][1] = 4;		
-		test.gameStats[1][1] = 2;
-		test.gameStats[2][1] = 6;
-		test.gameStats[3][1] = 7;
-		test.gameStats[0][2] = 1;
-		test.gameStats[1][2] = 1;
-		test.gameStats[2][2] = 1;
-		test.gameStats[3][2] = 1;
-		test.gameStats[0][3] = 4;
-		
-		test.printStats();
-		
-		//testing currentPlayer() to get current player
-		//based upon above 2D set index values, current
-		//player should be player number 1 (0 to 3)
-
-		int currentPlayer = test.getCurrentPlayer();
-		
-		System.out.println("\n" + "Current player should be player 1 (from players 0 to 3): ");
-		System.out.println("\n" + "Current player number: " + currentPlayer + "\n");
-		
-		//testing holeIndex
-		System.out.println("Current hole should be 3.");
-		System.out.println("Current hole being played: " + holeIndex);
-		
-		//testing strokeSum()
-		int totalOne = test.strokeSum(0);
-		int totalTwo = test.strokeSum(1);
-		int totalThree = test.strokeSum(2);
-		int totalFour = test.strokeSum(3);
-				
-		System.out.println("\n" + "Total for player 1: " + totalOne);
-		System.out.println("Total for player 2: " + totalTwo);
-		System.out.println("Total for player 3: " + totalThree);
-		System.out.println("Total for player 4: " + totalFour);
-		
-//		
-//		test.countWin();
-//		int oneWins = playerOneWins;
-//		int twoWins = playerTwoWins;
-//		int threeWins = playerThreeWins;
-//		int fourWins = playerFourWins;
-		
-//		System.out.println("\n" + "Total for player 1: " + oneWins);
-//		System.out.println("Total for player 2: " + twoWins);
-//		System.out.println("Total for player 3: " + threeWins);
-//		System.out.println("Total for player 4: " + fourWins + "\n");
-		
-		System.out.println("Current hole length: " + test.getHoleLength() + "\n");
-		
-		
-		test.resetStats();
-		test.printStats();
-		System.out.println();
-		
-		test.gameStats[0][0] = 5;
-		test.gameStats[1][0] = 4;		
-		test.gameStats[2][0] = 4;		
-		test.gameStats[3][0] = 2;
-		test.gameStats[0][1] = 6;
-		test.gameStats[1][1] = 7;
-		test.gameStats[2][1] = 1;
-		test.gameStats[3][1] = 5;
-		test.gameStats[0][2] = 7;
-		
-		test.printStats();
-		
-		//testing currentPlayer() to get current player
-		//based upon above 2D set index values, current
-		//player should be player number 1 (0 to 3)
-
-		int currentPlayer2 = test.getCurrentPlayer();
-		
-		System.out.println("\n" + "Current player should be player 1 (from players 0 to 3): ");
-		System.out.println("\n" + "Current player number: " + currentPlayer2 + "\n");
-		
-		System.out.println("Current hole length: " + test.getHoleLength());
-		System.out.println();
-		
-		//System.out.println("Current hole being played: " + getHoleIndex());
-		
-		//line 284 - nextPlayer() not working
-		test.nextPlayer();
-		System.out.println("\n" + "Current player number: " + currentPlayer2 + "\n");
-		test.nextPlayer();
-		System.out.println("\n" + "Current player number: " + currentPlayer2 + "\n");
-		
-		
-		int someDistance = test.getCurrentPlayerDistance(0, holeIndex);
-		System.out.println("\n" + "Current distance shot: " + someDistance);
-		
-		//testing playerShotSum() to see if playerTwoDistance counter
-		//increases total distance
-		//
-		// ISSUE: DOES NOT APPEAR TO CORRECTLY ADD SUM AS DESIRED
-		System.out.println();
-		test.playerShotSum();
-		System.out.println("Current distance shot by Player " + test.getCurrentPlayer()
-		+ " and their current distance: " + playerTwoDistance);
-		
-		
-		//Testing holeIndex is correct and nextHole() shifts hole by 1 each call
-		System.out.println();
-		System.out.println("Current hole: " + holeIndex);
-		System.out.println();
-		test.nextHole();
-		System.out.println("Current hole: " + holeIndex);
-		test.nextHole();
-		System.out.println();
-		System.out.println("Current hole: " + holeIndex);
-		test.nextHole();
-		System.out.println();
-		System.out.println("Current hole: " + holeIndex);
-
-
-		
-		
-		//Testing actual gameplay
-		test.resetStats();
-//		test.resetDistancesRemainder();
-		test.createGameStats();
-//		distancesRemaining = test.getGameStats();
-		test.resetPlayerCount();
-		test.resetHoleCount();
-		test.resetHoleIndex();
-		test.setNumberOfHoles(5);
-		
-		System.out.println("\n\n\n" + "Welcome to the game!" + "\n");
-		System.out.println("Number of holes: " + test.getNumberOfHoles() + "\n");
-		System.out.println("\n" + "Starting hole distances: " + "\n");
-		int courseList1 [] = test.getCourse();
-		
-		for (int i = 0; i < test.getNumberOfHoles(); i++)
-		{
-			System.out.println("Hole " + (i + 1) + " : " + courseList1[i]);
-			
-		}
-		
-		//test setting player names
-		test.createPlayer("George");
-		test.createPlayer("John");
-		test.createPlayer("Stephen");
-		test.createPlayer("Sean");
-				
-		//stores address of values into new array
-		String[] playerName1 = test.getPlayer();
-				
-		//test printing out stored player names
-		System.out.println();
-		System.out.println("Names of players: " + "\n");
-				
-		for (int i = 0; i < 4; i++)
-		{
-			System.out.println("Player " + (i + 1) + ": " + playerName1[i]);
-		}
-		
-		System.out.println();
-		System.out.println("Number of players: " + playerCount);
-		
-		//Problem 1: createCourse() does not create 5 holes, but instead makes 18
-		test.createCourse();
-		System.out.println();
-		System.out.println("Starting score card: " + "\n");
-		test.printStats();
-		
-		System.out.println();
-		System.out.println("Current player: " + test.getCurrentPlayer());
-		System.out.println("Current hole : " + holeIndex);
-		System.out.println("Current distance: " + test.getHoleLength());
-		System.out.println();
-		System.out.println("Player " + test.getCurrentPlayer() + " first shot: ");
-		//player 1 hits
-		test.playerShotSum();
-		gameStats[0][0] = playerOneDistance;
-		System.out.println();
-		test.printStats();
-		//player 2 hits
-		test.playerShotSum();
-		gameStats[1][0] = playerTwoDistance;
-		System.out.println();
-		test.printStats();
-		//player 3 hits
-		test.playerShotSum();
-		gameStats[2][0] = playerThreeDistance;
-		System.out.println();
-		test.printStats();
-		//player 4 hits
-		test.playerShotSum();
-		gameStats[3][0] = playerFourDistance;
-		System.out.println();
-		test.printStats();
-		//Player 1 hits again and adds to the current distance total
-		test.playerShotSum();
-		gameStats[0][0] = playerOneDistance;
-		System.out.println();
-		test.printStats();
-		test.playerShotSum();
-		gameStats[0][1] = playerOneDistance;
-		System.out.println();
-		test.printStats();
-//
-//		System.out.println("\n" + "Current distance shot by Player " + test.getCurrentPlayer()
-//		+  " is " + test.getCurrentPlayerDistance(test.getCurrentPlayer(), holeIndex));
-//		System.out.println();
-//		
-//		System.out.println("Distances remaining for each hole: " + "\n");
-//		test.printDistanceRemainders();
-//		System.out.println();
-//		System.out.println("Remaining distance for [0][0]: " + test.getDistanceFromHole(holeIndex));
-//		System.out.println();
-//		test.printStats();
-		
-		//Above test shows dice roll value totals
-		//This array stores the current distance accumulated by each player
-		//and stores them in gameStats; gameStats is supposed to store strokes.
-		
-		
-		//Test needed: Once player reaches total distance for each respective hole
-		//there should be a method that prints out the 2D array showing
-		//the number of strokes that each player accumulated for each hole completed
-		
-		//Test Below:
-		
-//		 public void createPlayer(String newPlayer) 
-//		    {
-//		    	playerName[playerCount] = newPlayer; 	// Put new player in next available spot.
-//		    	playerCount++;  						// And increment playerCt to count the new player.
-//		    }
-//		 
-//		 test.createPlayer("Roger");
-		 
-	}
 }
-
