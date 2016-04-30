@@ -31,6 +31,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
     private GameScoreboardComponent scoreboard;
 
     private int[] rollValues;
+    private int playerTurnIndex; //Index of the current player
 
     /**
      * Create a new GameControlsComponent and all its components.
@@ -96,10 +97,9 @@ class GameControlsComponent extends JComponent implements ActionListener {
     }
 
     private void updateTurn() {
-        gameLogic.currentPlayer();
         System.out.println("Current Player: "+gameLogic.getCurrentPlayer());
 
-        int playerTurnIndex = gameLogic.getCurrentPlayer();
+        playerTurnIndex = gameLogic.getCurrentPlayer();
         String player = gameLogic.getPlayer()[playerTurnIndex];
         playerTurnLabel.setText(player + "'s Turn");
     }
@@ -124,7 +124,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
             if (scoreboard == null) {
                 this.scoreboard = this.gui.gameplayPanel.scoreboardComp;
             }
-            scoreboard.hitBall(rollValues[diceNum]);
+            scoreboard.hitBall(rollValues[diceNum],playerTurnIndex);
             gui.gameplayPanel.animationComp.repaint();
 
             rollValues[diceNum] = -1; //Dice has been rolled and roll has been used
@@ -138,9 +138,16 @@ class GameControlsComponent extends JComponent implements ActionListener {
 
             if (allRolled) {
                 String buttonText = "Next Turn";
-                if (gameLogic.getDistanceFromHole(gameLogic.getHoleIndex()) == 0 && gameLogic.getHoleIndex() == gui.gameplayPanel.TOTAL_HOLES) {
+                boolean allPlayersReachedHole = true;
+                for(int playerIndex = 0; playerIndex < gameLogic.getNumberOfPlayers(); playerIndex++){
+                    if(gameLogic.getCurrentPlayerDistance(playerIndex, gameLogic.getHoleIndex()) != 0){
+                        allPlayersReachedHole = false;
+                        break;
+                    }
+                }
+                if (allPlayersReachedHole && gameLogic.getHoleIndex() == gui.gameplayPanel.TOTAL_HOLES) {
                     buttonText = "End Game";
-                } else if (gameLogic.getDistanceFromHole(gameLogic.getHoleIndex()) == 0) {
+                } else if (allPlayersReachedHole) {
                     buttonText = "Next Hole";
                 }
                 JButton nextTurn = new JButton(buttonText);

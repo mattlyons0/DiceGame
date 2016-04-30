@@ -22,6 +22,7 @@ public class GameplayPanel extends JPanel {
     /**
      * Create a StartMenuPanel to be used in the GUI
      *
+     * @param totalHoles the number of holes for which this game will be played up to
      * @param gui GUI object which is used to display this panel
      */
     public GameplayPanel(int totalHoles,GUI gui) {

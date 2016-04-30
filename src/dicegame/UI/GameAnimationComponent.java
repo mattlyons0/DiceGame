@@ -52,8 +52,8 @@ public class GameAnimationComponent extends JComponent {
         setLayout(new FlowLayout());
 
         Dimension maxSize = Toolkit.getDefaultToolkit().getScreenSize();
-        playerColors = new Color[gameLogic.getPlayer().length];
-        for(int playerIndex=0;playerIndex<gameLogic.getPlayer().length;playerIndex++){
+        playerColors = new Color[gameLogic.getNumberOfPlayers()];
+        for(int playerIndex=0;playerIndex<gameLogic.getNumberOfPlayers();playerIndex++){
             Random rand = new Random();
             playerColors[playerIndex]=new Color(rand.nextInt(256),rand.nextInt(256),rand.nextInt(256));
         }
@@ -111,15 +111,22 @@ public class GameAnimationComponent extends JComponent {
             //Display hole in randomized location based on how far away the hole is
             animationGraphics.drawImage(holeImage, (int) (((holeLocation.width) + 30) * scaleFactorX), (int) (holeLocation.height * scaleFactorY), null);
         }
+        
+        for(int playerIndex = 0; playerIndex < gameLogic.getNumberOfPlayers(); playerIndex++){
+            int ballLoc = gameLogic.getHoleLength() - scoreboardComp.getBallDistanceLeft(playerIndex);
+            double ballPercent = (double) ballLoc / gameLogic.getHoleLength();
+            int ballPixels = (int) (((ballPercent * ((holeLocation.width)) + 30) * scaleFactorX));
 
-        int ballLoc = gameLogic.getHoleLength() - scoreboardComp.getBallDistanceLeft();
-        double ballPercent = (double) ballLoc / gameLogic.getHoleLength();
-        int ballPixels = (int) (((ballPercent * ((holeLocation.width)) + 30) * scaleFactorX));
-
-        animationGraphics.setColor(playerColors[gameLogic.getCurrentPlayer()]);
-
-        Ellipse2D.Double ball = new Ellipse2D.Double(ballPixels, (int) (holeLocation.height * scaleFactorY), 10, 10);
-        animationGraphics.fill(ball);
+            //Draw ball outline/shadow
+            animationGraphics.setColor(Color.BLACK);
+            Ellipse2D.Double ball = new Ellipse2D.Double(ballPixels, (int) (holeLocation.height * scaleFactorY), 11, 11);
+            animationGraphics.fill(ball);
+            
+            //Draw player's ball
+            animationGraphics.setColor(playerColors[playerIndex]);
+            ball = new Ellipse2D.Double(ballPixels, (int) (holeLocation.height * scaleFactorY), 10, 10);
+            animationGraphics.fill(ball);
+        }
 
         //Draw Hole Number
         animationGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

@@ -24,8 +24,8 @@ class GameScoreboardComponent extends JComponent {
 
     private JTable table;
 
-    private int distanceLeft;
-    private int strokes;
+    private int[] distanceLeft;
+    private int[] strokes;
 
     /**
      * Creates a new Game Scoreboard
@@ -35,8 +35,12 @@ class GameScoreboardComponent extends JComponent {
 
         this.gameLogic = gui.gameLogic;
 
-        distanceLeft = gameLogic.getHoleLength();
-        strokes = 0;
+        distanceLeft = new int[gameLogic.getNumberOfPlayers()];
+        for(int index = 0; index < distanceLeft.length; index++){
+            distanceLeft[index]=gameLogic.getHoleLength();
+        }
+        
+        strokes = new int[gameLogic.getNumberOfPlayers()];
 
         setLayout(new GridBagLayout());
         GridBagConstraints cons = new GridBagConstraints();
@@ -94,9 +98,9 @@ class GameScoreboardComponent extends JComponent {
                     case 0:
                         return gameLogic.getPlayer()[row];
                     case 1:
-                        return strokes;
+                        return strokes[row];
                     case 2:
-                        return distanceLeft;
+                        return distanceLeft[row];
                     default:
                         return "";
                 }
@@ -120,19 +124,28 @@ class GameScoreboardComponent extends JComponent {
      * Update Scoreboard by subtracting distance hit from distance remaining
      *
      * @param distance the distance the ball was just hit
+     * @param playerIndex the index of the player who hit the ball
      */
-    public void hitBall(int distance) {
-        distanceLeft -= distance;
-        strokes = gameLogic.getStrokes();
+    public void hitBall(int distance,int playerIndex) {
+        distanceLeft[playerIndex] -= distance;
+        strokes[playerIndex] = gameLogic.getStrokes(playerIndex,gameLogic.getHoleIndex());
         ((AbstractTableModel) table.getModel()).fireTableDataChanged();
     }
     
-    public int getBallDistanceLeft(){
-        return distanceLeft;
+    /**
+     * Get the current distance of specified player as displayed on the UI.
+     * Note this value can vary from the value in gameLogic as it reflects each individual dice roll instead of all of them at once.
+     * @param playerIndex index of the player to get the distance of
+     * @return the distance in units the current player is away from the hole
+     */
+    public int getBallDistanceLeft(int playerIndex){
+        return distanceLeft[playerIndex];
     }
     public void newHole(){
-        strokes = 0;
-        distanceLeft = gameLogic.getDistanceFromHole(gameLogic.getHoleIndex());
+        strokes = new int[gameLogic.getNumberOfPlayers()];
+        for(int index = 0; index < distanceLeft.length; index++){
+            distanceLeft[index] = gameLogic.getDistanceFromHole(gameLogic.getHoleIndex());
+        }
         ((AbstractTableModel) table.getModel()).fireTableDataChanged();
     }
 }
