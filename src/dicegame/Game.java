@@ -116,7 +116,7 @@ public class Game {
      */
     public int getCurrentPlayerDistance(int player, int hole)
     {	
-    	int current = distancesRemaining[getCurrentPlayer()][hole];
+    	int current = distancesRemaining[player][hole];
     	
     	return current;
     }
@@ -331,9 +331,9 @@ public class Game {
     	{
     		currentHole++;
     		moveSuccessful = true;
+                holeIndex = currentHole;
     	}
     	
-    	holeIndex = currentHole;
     	return moveSuccessful;
     }
     
@@ -390,14 +390,27 @@ public class Game {
     }
     
     /**
-     * returns current player
+     * Determines and returns current player based on the player who is furthest away
+     * Algorithm is similar to real golf, based on the furthest player away.
      * 
-     * @return player number
+     * @return the index of the player who should be
      */
     public int getCurrentPlayer()//works
     {
-    	currentPlayer(); //this way GUI team does not have to call two methods instead of 1
-    	return currentGameLocation[0];
+        int highestValue = -1;
+        int highestIndex = -1;
+        for(int playerIndex = 0; playerIndex < getNumberOfPlayers(); playerIndex++){
+            int distance = getCurrentPlayerDistance(playerIndex,getHoleIndex());
+            if(distance > highestValue){
+                highestValue = distance;
+                highestIndex = playerIndex;
+            }
+        }
+        
+        currentGameLocation[0] = highestIndex; //mark the player index
+//        currentGameLocation[1] = holeIndex; //mark the hole index
+        
+    	return highestIndex;
     }
     
     /**
