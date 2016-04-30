@@ -266,6 +266,7 @@ public class Game {
     	int oldStats[][] = gameStats;
     	int numberOfPlayers = playerCount;
     	int numberOfHoles = holeCount;
+        String[] players = playerName;
     	
     	try
     	{
@@ -277,6 +278,7 @@ public class Game {
     		saved.writeObject(oldStats);
     		saved.writeObject(numberOfPlayers);
     		saved.writeObject(numberOfHoles);
+                saved.writeObject(players);
     		
     		
     		//close the file
@@ -306,6 +308,7 @@ public class Game {
     		gameStats = (int[][]) saved.readObject();
     		playerCount = (int) saved.readObject();
     		holeCount = (int) saved.readObject();
+                playerName = (String[]) saved.readObject();
     		
     		
     		//close the file
