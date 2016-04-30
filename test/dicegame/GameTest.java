@@ -219,164 +219,177 @@ public void testCreatePlayer(String name)
 }
 
 @Test
-public void testPlayerShotSum()
-{
-	
+public void testGetPlayerOneWins() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testGetCurrentPlayerDistance()
-{
-	
+public void testGetPlayerTwoWins() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testGetPlayerOneWins()
-{
-	
+public void testGetPlayerThreeWins() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testGetPlayerTwoWins()
-{
-	
+public void testGetPlayerFourWins() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testGetPlayerThreeWins()
-{
-	
+public void testStrokeSum() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testGetPlayerFourWins()
-{
-	
+public void testCountWin() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testStrokeSum()
-{
-	
+public void testNextHole() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testCountWin()
-{
-	
+public void testNextPlayer() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testGetHole()
-{
-	
+public void testGetHoleIndex() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testGetHoleIndex()
-{
-	
+public void testCurrentPlayer() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testCurrentPlayer()
-{
-	
+public void testGetCurrentPlayer() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testGetCurrentPlayer()
-{
-	
+public void testGetGameStats() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testGetGameStats()
-{
-	
+public void testSaveGameStats() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testSaveGameStats()
-{
-	
+public void testLoadGameStats() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testLoadGameStats()
-{
-	
+public void testGetNumberOfHoles() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testGetNumberOfHoles()
-{
-	
+public void testSetNumberOfHoles() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testSetNumberOfHoles()
-{
-	
+public void testRandomHoleDistancer() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testRandomHoleDistancer()
-{
-	
+public void testCreateCourse() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testGreateCourse()
-{
-	
+public void testGetCourse() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testGetCourse()
-{
-	
+public void testSetNumberOfPlayers() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testResetDistance()
-{
-	
+public void testGetNumberOfPlayers() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testGetDistanceFromHol()
-{
-	
+public void testCreatePlayer() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testCreateGameStats()
-{
-	
+public void testGetPlayer() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testResetStats()
-{
-	
+public void testRoll() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testAddStroke()
-{
-	
+public void testHitTheBall() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testPrintStats()
-{
-	
+public void testGetStrokes() {
+	fail("Not yet implemented");
 }
 
 @Test
-public void testPrintDistanceRemaining()
-{
-	
+public void testGetHoleLength() {
+	fail("Not yet implemented");
+}
+
+@Test
+public void testGetDistanceFromHole() {
+	fail("Not yet implemented");
+}
+
+@Test
+public void testCreateGameStats() {
+	fail("Not yet implemented");
+}
+
+@Test
+public void testResetStats() {
+	fail("Not yet implemented");
+}
+
+@Test
+public void testAddStroke() {
+	fail("Not yet implemented");
+}
+
+@Test
+public void testResetHoleCount() {
+	fail("Not yet implemented");
+}
+
+@Test
+public void testResetPlayerCount() {
+	fail("Not yet implemented");
+}
+
+@Test
+public void testResetHoleIndex() {
+	fail("Not yet implemented");
+}
+
+@Test
+public void testResetDistancesRemainder() {
+	fail("Not yet implemented");
 }
 }
