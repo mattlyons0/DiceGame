@@ -722,7 +722,27 @@ public void testResetStats() {
 
 @Test
 public void testAddStroke() {
-	fail("Not yet implemented");
+	
+	Game test = new Game();
+	
+	test.createGameStats();
+	test.setNumberOfHoles(9);
+	test.createCourse();
+	
+	test.addStroke(0, 0);
+	test.addStroke(0, 1);
+	test.addStroke(0, 2);
+	test.addStroke(0, 3);
+	test.addStroke(0, 4);	//Example Output of 2D array:					
+	test.addStroke(0, 5);	//_________________________________						
+	test.addStroke(0, 6);	//	1	 1	1	1	1	1	1	1	1
+	test.addStroke(0, 7);	//	1	 0	0	0	0	0	0	0	0			
+	test.addStroke(0, 8);	//	0	 0	0	0	0	0	0	0	0				
+	test.addStroke(1, 0);	//	0	 0	0	0	0	0	0	0	0
+	
+	assertEquals(1, gameStats[0][0]);
+	assertEquals(1, gameStats[1][0]);
+	assertEquals(0, gameStats[1][1]);
 }
 
 @Test
