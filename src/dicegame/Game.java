@@ -70,7 +70,7 @@ public class Game {
     	{
     		loadGameStats();
     		numberOfStrokes = 0;
-    		holeIndex = 1;
+    		holeIndex = 0;
     	}
     	
     }
