@@ -9,7 +9,7 @@ import java.util.Random;
 /**
  * Handle the game play logic and statistics
  *
- * @authors Matt Lyons, David Lukacs, David McClure, Daniel Kercheski Team
+ * @authors David McClure, Daniel Kercheski, Matt Lyons
  * Project
  */
 public class Game {
@@ -30,10 +30,6 @@ public class Game {
 
     private int[] currentLocation = new int[2];
     private int[] nextHole = new int[18];
-    private static int playerOneWins;
-    private static int playerTwoWins;
-    private static int playerThreeWins;
-    private static int playerFourWins;
     
     private int[] currentDistance = new int[4];
     private static int playerOneDistance;
@@ -137,39 +133,28 @@ public class Game {
     }
     
     /**
-     * gets player one win count
-     * @return playeronewin count
+     * Calculate the number of times a certain player has one (1 win = least strokes on a hole)
+     * @param playerIndex index of player to check wins on
+     * @return the number of times said player has won
      */
-    public int getPlayerOneWins() //works
-    {
-    	return playerOneWins;
-    }
-    
-    /**
-     * gets player two win count
-     * @return playertwowin count
-     */
-    public int getPlayerTwoWins() //works
-    {
-    	return playerTwoWins;
-    }
-    
-    /**
-     * gets player three win count
-     * @return playerthreewin count
-     */
-    public int getPlayerThreeWins() //works
-    {
-    	return playerThreeWins;
-    }
-    
-    /**
-     * gets player four win count
-     * @return playerfourwin count
-     */
-    public int getPlayerFourWins() //works
-    {
-    	return playerFourWins;
+    public int getWins(int playerIndex){
+        int totalHoles = getNumberOfHoles();
+        
+        int wins = 0;
+        for(int holeIndex = 0; holeIndex < totalHoles; holeIndex++){
+            int lowestScore = Integer.MAX_VALUE;
+            int lowestIndex = -1;
+            for(int pIndex = 0; pIndex < getNumberOfPlayers(); pIndex++){
+                if(strokeSum(pIndex) < lowestScore){
+                    lowestScore = strokeSum(pIndex);
+                    lowestIndex = pIndex;
+                }
+            }
+            if(lowestIndex == playerIndex)
+                wins++;
+        }
+        
+        return wins;
     }
     
     /**
@@ -184,151 +169,6 @@ public class Game {
     		sum += gameStats[playerNum][holeIndex];
     	}
     	return sum;
-    }
-    
-    /**
-     * increments win count for player(s) that win based on final game score
-     */
-    public void countWin() //works
-    {
-    	if (strokeSum(0) < strokeSum(1) & strokeSum(0) < strokeSum(2) & strokeSum(0) < strokeSum(3))
-    	{
-    		playerOneWins++;
-    	}
-    	if (strokeSum(1) < strokeSum(0) & strokeSum(1) < strokeSum(2) & strokeSum(1) < strokeSum(3))
-    	{
-    		playerTwoWins++;
-    	}
-    	if (strokeSum(2) < strokeSum(0) & strokeSum(2) < strokeSum(1) & strokeSum(2) < strokeSum(3))
-    	{
-    		playerThreeWins++;
-    	}
-    	if (strokeSum(3) < strokeSum(1) & strokeSum(3) < strokeSum(0) & strokeSum(3) < strokeSum(2))
-    	{
-    		playerFourWins++;
-    	}
-    	
-    	if (strokeSum(0) == strokeSum(1) & strokeSum(0) < strokeSum(3) & strokeSum(2) < strokeSum(0))
-    	{
-    		playerThreeWins++;
-    	}
-    	if (strokeSum(0) == strokeSum(1) & strokeSum(2) < strokeSum(0) & strokeSum(2) > strokeSum(3))
-    	{
-    		playerFourWins++;
-    	}
-    	if (strokeSum(0) == strokeSum(1) & strokeSum(0) < strokeSum(2) & strokeSum(0) < strokeSum(3))
-    	{
-    		playerOneWins++;
-    		playerTwoWins++;
-    	}
-    	
-    	if (strokeSum(0) == strokeSum(2) & strokeSum(0) < strokeSum(1) & strokeSum(0) < strokeSum(3))
-    	{
-    		playerOneWins++;
-    		playerThreeWins++;
-    	}
-    	if (strokeSum(0) == strokeSum(2) & strokeSum(0) < strokeSum(3) & strokeSum(1) < strokeSum(0))
-    	{
-    		playerTwoWins++;
-    	}
-    	if (strokeSum(0) == strokeSum(2) & strokeSum(0) < strokeSum(1) & strokeSum(3) < strokeSum(0))
-    	{
-    		playerFourWins++;
-    	}
-    	
-    	if (strokeSum(1) == strokeSum(2) & strokeSum(1) < strokeSum(3) & strokeSum(1) < strokeSum(0))
-    	{
-    		playerTwoWins++;
-    		playerThreeWins++;
-    	}
-    	if (strokeSum(1) == strokeSum(2) & strokeSum(1) < strokeSum(3) & strokeSum(1) > strokeSum(0))
-    	{
-    		playerOneWins++;
-    	}
-    	if (strokeSum(1) == strokeSum(2) & strokeSum(3) < strokeSum(1) & strokeSum(3) < strokeSum(0))
-    	{
-    		playerThreeWins++;
-    	}
-    	
-    	if (strokeSum(1) == strokeSum(3) & strokeSum(1) < strokeSum(2) & strokeSum(1) < strokeSum(0))
-    	{
-    		playerTwoWins++;
-    		playerFourWins++;
-    	}
-    	if (strokeSum(1) == strokeSum(3) & strokeSum(1) < strokeSum(2) & strokeSum(0) < strokeSum(1))
-    	{
-    		playerOneWins++;
-    	}
-    	if (strokeSum(1) == strokeSum(3) & strokeSum(0) < strokeSum(1) & strokeSum(2) < strokeSum(0))
-    	{
-    		playerThreeWins++;
-    	}
-    	
-    	if (strokeSum(3) == strokeSum(2) & strokeSum(2) < strokeSum(0) & strokeSum(2)  < strokeSum(1))
-    	{
-    		playerThreeWins++;
-    		playerFourWins++;
-    	}
-    	if (strokeSum(3) == strokeSum(2) & strokeSum(2) < strokeSum(0) & strokeSum(1) < strokeSum(2))
-    	{
-    		playerTwoWins++;
-    	}
-    	if (strokeSum(3) == strokeSum(2) & strokeSum(0) < strokeSum(2) & strokeSum(0) < strokeSum(1))
-		{
-			playerOneWins++;
-		}
-    	
-    	if (strokeSum(0) == strokeSum(1) & strokeSum(1) == strokeSum(2) & strokeSum(3) < strokeSum(2))
-    	{
-    		playerFourWins++;
-    	}
-    	if (strokeSum(0) == strokeSum(1) & strokeSum(1) == strokeSum(2) & strokeSum(3) > strokeSum(2))
-    	{
-    		playerOneWins++;
-    		playerTwoWins++;
-    		playerThreeWins++;
-    	}
-    	
-    	if (strokeSum(0) == strokeSum(1) & strokeSum(1) == strokeSum(3) & strokeSum(2) < strokeSum(3))
-    	{
-    		playerThreeWins++;
-    	}
-    	if (strokeSum(0) == strokeSum(1) & strokeSum(1) == strokeSum(3) & strokeSum(2) > strokeSum(3))
-    	{
-    		playerOneWins++;
-    		playerTwoWins++;
-    		playerFourWins++;
-    	}
-    	
-    	if (strokeSum(0) == strokeSum(2) & strokeSum(2) == strokeSum(3) & strokeSum(1) < strokeSum(3))
-    	{
-    		playerTwoWins++;
-    	}
-    	if (strokeSum(0) == strokeSum(2) & strokeSum(2) == strokeSum(3) & strokeSum(1) > strokeSum(3))
-    	{
-    		playerOneWins++;
-    		playerThreeWins++;
-    		playerFourWins++;
-    	}
-    	
-    	if (strokeSum(1) == strokeSum(2) & strokeSum(2) == strokeSum(3) & strokeSum(0) < strokeSum(3))
-    	{
-    		playerOneWins++;
-    	}
-    	if (strokeSum(1) == strokeSum(2) & strokeSum(2) == strokeSum(3) & strokeSum(0) > strokeSum(3))
-    	{
-    		playerTwoWins++;
-    		playerThreeWins++;
-    		playerFourWins++;
-    	}
-    	
-    	if (strokeSum(0) == strokeSum(1) & strokeSum(1) == strokeSum(2) & strokeSum(2) == strokeSum(3))
-    	{
-    		playerOneWins++;
-    		playerTwoWins++;
-    		playerThreeWins++;
-    		playerFourWins++;
-    	}
     }
     
     /**
