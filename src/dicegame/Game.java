@@ -138,10 +138,9 @@ public class Game {
      * @return the number of times said player has won
      */
     public int getWins(int playerIndex){
-        int totalHoles = getNumberOfHoles();
-        
         int wins = 0;
-        for(int holeIndex = 0; holeIndex < totalHoles; holeIndex++){
+        
+        for(int holeIndex = 0; holeIndex < getNumberOfHoles(); holeIndex++){
             int lowestScore = Integer.MAX_VALUE;
             int lowestIndex = -1;
             for(int pIndex = 0; pIndex < getNumberOfPlayers(); pIndex++){
@@ -177,7 +176,7 @@ public class Game {
     	int sum = 0;
     	for(int holeIndex = 0; holeIndex < holeCount; holeIndex++)
     	{
-    		sum += gameStats[playerNum][holeIndex];
+    		sum += getStrokes(playerNum,holeIndex);
     	}
     	return sum;
     }
@@ -528,8 +527,12 @@ public class Game {
      */
     public int getStrokes(int player, int hole) 
     {
-    	numberOfStrokes = gameStats[player][hole];
-        return numberOfStrokes;
+        if(player < gameStats.length && hole < gameStats[player].length){
+            numberOfStrokes = gameStats[player][hole];
+            return numberOfStrokes;
+        } else{
+            return 0;
+        }
     }
 
     /**
