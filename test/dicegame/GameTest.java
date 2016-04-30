@@ -33,19 +33,29 @@ public class GameTest {
     }
 
     /**
-     * Test of setNumberOfPlayers method, of class Game.
+     * Test of setNumberOfPlayers method, of class Game
+     * Test method to show that number of players created
+     * matches number of players in game
      */
     @Test
-    public void testSetNumberOfPlayers() {
-        //TODO in next sprint
+    public void testSetNumberOfPlayers(int numberOfPlayers)
+    {
+    	test.setNumberOfPlayers(3);
+    	int numberOfPlayers = test.getNumberOfPlayers();
+    	assertEquals(numberOfPlayers, 3);
     }
 
     /**
-     * Test of getNumberOfPlayers method, of class Game.
+     * Test of getNumberOfPlayers method, of class Game
+     * Test method to show that set number of players value
+     * can be extracted from game
      */
     @Test
-    public void testGetNumberOfPlayers() {
-        //TODO in next sprint
+    public void testGetNumberOfPlayers()
+    {
+    	test.setNumberOfPlayers(3);
+    	int numberOfPlayers = test.getNumberOfPlayers();
+    	assertEquals(numberOfPlayers, 3);
     }
 
     /**
@@ -227,58 +237,336 @@ public void testCreatePlayer(String name)
 }
 
 @Test
-public void testGetPlayerOneWins() {
-	fail("Not yet implemented");
+public void testGetPlayerOneWins()
+{
+	Game test = new Game();
+	
+			//inputs values into 2D array
+										//EXAMPLE ARRAY:
+	                                    //______________
+			test.gameStats[0][0] = 3;	//3	4 1  P1 = 8  -- P1 should win
+			test.gameStats[1][0] = 3;	//3	2 6  P2 = 11
+			test.gameStats[2][0] = 5;	//5	6 2  P3 = 13
+			test.gameStats[3][0] = 4;	//4	7 1  P4 = 12
+			test.gameStats[0][1] = 4;					
+			test.gameStats[1][1] = 2;
+			test.gameStats[2][1] = 6;
+			test.gameStats[3][1] = 7;
+			test.gameStats[0][2] = 1;
+			test.gameStats[1][2] = 6;
+			test.gameStats[2][2] = 2;
+			test.gameStats[3][2] = 1;
+	
+			//strokeSum() totals all of each players' stroke counts
+			int totalOne = test.strokeSum(0);
+			int totalTwo = test.strokeSum(1);
+			int totalThree = test.strokeSum(2);
+			int totalFour = test.strokeSum(3);
+					
+			test.countWin();//compares the strokeSum() totals
+							//increments player[number]Wins by 1 if they have lowest score
+			
+			int oneWins = playerOneWins;
+			int twoWins = playerTwoWins;
+			int threeWins = playerThreeWins;
+			int fourWins = playerFourWins;
+			
+			assertEquals(1, playerOneWins); //winner increments total by 1; P1 should have 1
+			assertEquals(0, playerTwoWins); //losers do not increment; P2 - P4 should have 0
+			assertEquals(0, playerThreeWins);
+			assertEquals(0, playerFourWins);
 }
 
 @Test
 public void testGetPlayerTwoWins() {
-	fail("Not yet implemented");
+	Game test = new Game();
+	
+	//inputs values into 2D array
+								//EXAMPLE ARRAY:
+                                //______________
+	test.gameStats[0][0] = 9;	//9	4 1  P1 = 14 
+	test.gameStats[1][0] = 3;	//3	2 6  P2 = 11
+	test.gameStats[2][0] = 5;	//5	6 2  P3 = 13
+	test.gameStats[3][0] = 4;	//4	7 1  P4 = 12
+	test.gameStats[0][1] = 4;					
+	test.gameStats[1][1] = 2;
+	test.gameStats[2][1] = 6;
+	test.gameStats[3][1] = 7;
+	test.gameStats[0][2] = 1;
+	test.gameStats[1][2] = 6;
+	test.gameStats[2][2] = 2;
+	test.gameStats[3][2] = 1;
+
+	//strokeSum() totals all of each players' stroke counts
+	int totalOne = test.strokeSum(0);
+	int totalTwo = test.strokeSum(1);
+	int totalThree = test.strokeSum(2);
+	int totalFour = test.strokeSum(3);
+			
+	test.countWin();//compares the strokeSum() totals
+					//increments player[number]Wins by 1 if they have lowest score
+	
+	int oneWins = playerOneWins;
+	int twoWins = playerTwoWins;
+	int threeWins = playerThreeWins;
+	int fourWins = playerFourWins;
+	
+	assertEquals(0, playerOneWins); //winner increments total by 1; P2 should have 1
+	assertEquals(1, playerTwoWins); 
+	assertEquals(0, playerThreeWins);
+	assertEquals(0, playerFourWins);
 }
 
 @Test
 public void testGetPlayerThreeWins() {
-	fail("Not yet implemented");
+	Game test = new Game();
+	
+	//inputs values into 2D array
+								//EXAMPLE ARRAY:
+                                //______________
+	test.gameStats[0][0] = 7;	//7	4 1  P1 = 12
+	test.gameStats[1][0] = 3;	//3	2 6  P2 = 11
+	test.gameStats[2][0] = 1;	//1	6 2  P3 = 9
+	test.gameStats[3][0] = 4;	//4	7 1  P4 = 12
+	test.gameStats[0][1] = 4;					
+	test.gameStats[1][1] = 2;
+	test.gameStats[2][1] = 6;
+	test.gameStats[3][1] = 7;
+	test.gameStats[0][2] = 1;
+	test.gameStats[1][2] = 6;
+	test.gameStats[2][2] = 2;
+	test.gameStats[3][2] = 1;
+
+	//strokeSum() totals all of each players' stroke counts
+	int totalOne = test.strokeSum(0);
+	int totalTwo = test.strokeSum(1);
+	int totalThree = test.strokeSum(2);
+	int totalFour = test.strokeSum(3);
+			
+	test.countWin();//compares the strokeSum() totals
+					//increments player[number]Wins by 1 if they have lowest score
+	
+	int oneWins = playerOneWins;
+	int twoWins = playerTwoWins;
+	int threeWins = playerThreeWins;
+	int fourWins = playerFourWins;
+	
+	assertEquals(0, playerOneWins); //winner increments total by 1
+	assertEquals(0, playerTwoWins); 
+	assertEquals(1, playerThreeWins);
+	assertEquals(0, playerFourWins);
 }
 
 @Test
 public void testGetPlayerFourWins() {
-	fail("Not yet implemented");
+	Game test = new Game();
+	
+	//inputs values into 2D array
+								//EXAMPLE ARRAY:
+                                //______________
+	test.gameStats[0][0] = 3;	//3	4 1  P1 = 8 
+	test.gameStats[1][0] = 3;	//3	2 6  P2 = 11
+	test.gameStats[2][0] = 5;	//5	6 2  P3 = 13
+	test.gameStats[3][0] = 4;	//4	1 1  P4 = 6
+	test.gameStats[0][1] = 4;					
+	test.gameStats[1][1] = 2;
+	test.gameStats[2][1] = 6;
+	test.gameStats[3][1] = 1;
+	test.gameStats[0][2] = 1;
+	test.gameStats[1][2] = 6;
+	test.gameStats[2][2] = 2;
+	test.gameStats[3][2] = 1;
+
+	//strokeSum() totals all of each players' stroke counts
+	int totalOne = test.strokeSum(0);
+	int totalTwo = test.strokeSum(1);
+	int totalThree = test.strokeSum(2);
+	int totalFour = test.strokeSum(3);
+			
+	test.countWin();//compares the strokeSum() totals
+					//increments player[number]Wins by 1 if they have lowest score
+	
+	int oneWins = playerOneWins;
+	int twoWins = playerTwoWins;
+	int threeWins = playerThreeWins;
+	int fourWins = playerFourWins;
+	
+	assertEquals(0, playerOneWins); //winner increments total by 1
+	assertEquals(0, playerTwoWins); //losers do not increment
+	assertEquals(0, playerThreeWins);
+	assertEquals(1, playerFourWins);
 }
 
 @Test
 public void testStrokeSum() {
-	fail("Not yet implemented");
+	
+	Game test = new Game();
+	
+	//inputs values into 2D array
+								//EXAMPLE ARRAY:
+                                //______________
+	test.gameStats[0][0] = 3;	//3	4 1  P1 = 8 
+	test.gameStats[1][0] = 3;	//3	2 6  P2 = 11
+	test.gameStats[2][0] = 5;	//5	6 2  P3 = 13
+	test.gameStats[3][0] = 4;	//4	1 1  P4 = 6
+	test.gameStats[0][1] = 4;					
+	test.gameStats[1][1] = 2;
+	test.gameStats[2][1] = 6;
+	test.gameStats[3][1] = 1;
+	test.gameStats[0][2] = 1;
+	test.gameStats[1][2] = 6;
+	test.gameStats[2][2] = 2;
+	test.gameStats[3][2] = 1;
+
+	//strokeSum() totals all of each players' stroke counts
+	int totalOne = test.strokeSum(0);
+	int totalTwo = test.strokeSum(1);
+	int totalThree = test.strokeSum(2);
+	int totalFour = test.strokeSum(3);
+	
+	assertEquals(8, totalOne);
+	assertEquals(11, totalTwo);
+	assertEquals(13, totalThree);
+	assertEquals(6, totalFour);
 }
 
 @Test
 public void testCountWin() {
-	fail("Not yet implemented");
+Game test = new Game();
+	
+	//inputs values into 2D array
+								//EXAMPLE ARRAY:
+                                //______________
+	test.gameStats[0][0] = 3;	//3	4 1  P1 = 8 
+	test.gameStats[1][0] = 3;	//3	2 6  P2 = 11
+	test.gameStats[2][0] = 5;	//5	6 2  P3 = 13
+	test.gameStats[3][0] = 4;	//4	1 1  P4 = 6
+	test.gameStats[0][1] = 4;					
+	test.gameStats[1][1] = 2;
+	test.gameStats[2][1] = 6;
+	test.gameStats[3][1] = 1;
+	test.gameStats[0][2] = 1;
+	test.gameStats[1][2] = 6;
+	test.gameStats[2][2] = 2;
+	test.gameStats[3][2] = 1;
+
+	//strokeSum() totals all of each players' stroke counts
+	int totalOne = test.strokeSum(0);
+	int totalTwo = test.strokeSum(1);
+	int totalThree = test.strokeSum(2);
+	int totalFour = test.strokeSum(3);
+			
+	test.countWin();//compares the strokeSum() totals
+					//increments player[number]Wins by 1 if they have lowest score
+	
+	int oneWins = playerOneWins; //player[Number]Wins are global variables
+	int twoWins = playerTwoWins; //that store the increment values
+	int threeWins = playerThreeWins;
+	int fourWins = playerFourWins;
+	
+	//if values added correctly, then player 1 should have lowest score and win 1 increment
+	assertEquals(1, playerOneWins);
 }
 
 @Test
 public void testNextHole() {
-	fail("Not yet implemented");
+	
+	Game test = new Game();
+	
+	int currentHole = holeIndex;
+	
+	assertEquals(0, holeIndex); //tests to show hole is at 0
+	test.nextHole(); //shifts hole up 1 increment holeIndex should be 1
+	assertEquals(1, holeIndex);
+	test.nextHole();
+	assertEquals(2, holeIndex);
+	holeIndex = 5;
+	test.nextHole();
+	assertEquals(6, holeIndex);
+	
+	
 }
 
 @Test
-public void testNextPlayer() {
-	fail("Not yet implemented");
+public void testNextPlayer() {	//I dont believe that we use this method at all
+	fail("Not yet implemented");//might need to delete
 }
 
 @Test
 public void testGetHoleIndex() {
-	fail("Not yet implemented");
+	
+	Game test = new Game();
+	
+	test.createGameStats();
+	test.setNumberOfHoles(5);
+	test.createCourse();
+	
+	assertEquals(0, getHoleIndex());//current hole should be at index 0
+	
+			//player 1 hits
+			test.playerShotSum();
+			gameStats[0][0] = playerOneDistance;
+			
+			//player 2 hits
+			test.playerShotSum();
+			gameStats[1][0] = playerTwoDistance;
+
+			//player 3 hits
+			test.playerShotSum();
+			gameStats[2][0] = playerThreeDistance;
+
+			//player 4 hits
+			test.playerShotSum();
+			gameStats[3][0] = playerFourDistance;
+
+			//Player 1 hits again and adds to the current distance total
+			test.playerShotSum();
+			gameStats[0][0] = playerOneDistance;
+			
+			//Should be on second hole now : Index 1
+			assertEquals(1, test.getHoleIndex());
+
 }
 
 @Test
-public void testCurrentPlayer() {
+public void testCurrentPlayer() { //Appears at though method was deleted from Game.java
 	fail("Not yet implemented");
 }
 
 @Test
 public void testGetCurrentPlayer() {
-	fail("Not yet implemented");
+	
+	Game test = new Game();
+	
+	test.createGameStats();
+	test.setNumberOfHoles(5);
+	test.createCourse();
+	
+	assertEquals(0, getCurrentPlayer());//current player should be at index 0
+	
+	//player 1 hits
+	test.playerShotSum();
+	gameStats[0][0] = playerOneDistance;
+	
+	//player 2 hits
+	test.playerShotSum();
+	gameStats[1][0] = playerTwoDistance;
+
+	//player 3 hits
+	test.playerShotSum();
+	gameStats[2][0] = playerThreeDistance;
+
+	//player 4 hits
+	test.playerShotSum();
+	gameStats[3][0] = playerFourDistance;
+
+	//Player 1 hits again and adds to the current distance total
+	test.playerShotSum();
+	gameStats[0][0] = playerOneDistance;
+	
+	//Player 2 (index 1) should be up to play
+	assertEquals(1, getCurrentPlayer());
+	
 }
 
 @Test
@@ -298,17 +586,38 @@ public void testLoadGameStats() {
 
 @Test
 public void testGetNumberOfHoles() {
-	fail("Not yet implemented");
+	
+	Game test = new Game();
+	
+	test.setNumberOfHoles(12);
+	
+	assertEquals(12, test.getNumberOfHoles());
+	holeCount = 0; //this might not be needed or might not work
+				   //using this to basically reset current number of holes to 0
+	test.setNumberOfHoles(10);
+	assertEquals(10, test.getNumberOfHoles());
 }
 
 @Test
 public void testSetNumberOfHoles() {
-	fail("Not yet implemented");
+	
+	Game test = new Game();
+	
+	test.setNumberOfHoles(5);
+	assertEquals(5, getNumberOfHoles);
 }
 
 @Test
 public void testRandomHoleDistancer() {
-	fail("Not yet implemented");
+	int high = 100;
+    int low = 15;
+
+    //Runs 100 attempts of random value assignment to ensure value is between 0 and 6
+    for (int index = 0; index < 100; index++) {
+        int value = test.randomHoleDistancer();
+        assertTrue("Error, random is too high", high >= value);
+        assertTrue("Error, random is too low", low <= value);
+        //System.out.println("Test passed: " + value + " is within " + high + " and " + low);
 }
 
 @Test
@@ -323,27 +632,52 @@ public void testGetCourse() {
 
 @Test
 public void testSetNumberOfPlayers() {
-	fail("Not yet implemented");
+	
+	Game test = new Game();
+	
+	playerCount = 0; //global variable value
+	
+	assertEquals(0, test.getNumberOfPlayers());
+	test.setNumberOfPlayers(3);
+	assertEquals(3, test.getNumberOfPlayers());
 }
 
 @Test
 public void testGetNumberOfPlayers() {
-	fail("Not yet implemented");
+	
+	Game test = new Game();
+	
+	playerCount = 0; //global variable value
+	
+	assertEquals(0, test.getNumberOfPlayers());
+	test.setNumberOfPlayers(3);
+	assertEquals(3, test.getNumberOfPlayers());
 }
 
 @Test
 public void testCreatePlayer() {
-	fail("Not yet implemented");
+	
+	Game test = new Game();
+	
+	test.createPlayer("Sean"); //creates a player named Sean
+	String[] playerNames = test.getPlayer();
+	
+	assertEquals("Sean", playerNames[0]);
+	test.createPlayer("Freddy"); //creates a player named Freddy
+	assertEquals("Freddy", playerNames[1]);
 }
 
 @Test
 public void testGetPlayer() {
-	fail("Not yet implemented");
-}
-
-@Test
-public void testRoll() {
-	fail("Not yet implemented");
+	
+	Game test = new Game();
+	
+	test.createPlayer("Sean");
+	String[] playerNames = test.getPlayer(); //gets players and stores them into String array
+	
+	assertEquals("Sean", playerNames[0]);
+	test.createPlayer("Freddy");
+	assertEquals("Freddy", playerNames[1]);
 }
 
 @Test

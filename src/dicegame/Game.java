@@ -1149,6 +1149,15 @@ public class Game {
 		//the number of strokes that each player accumulated for each hole completed
 		
 		//Test Below:
+		
+		 public void createPlayer(String newPlayer) 
+		    {
+		    	playerName[playerCount] = newPlayer; 	// Put new player in next available spot.
+		    	playerCount++;  						// And increment playerCt to count the new player.
+		    }
+		 
+		 test.createPlayer("Roger");
+		 
 	}
 }
 
