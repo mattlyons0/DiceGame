@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 /**
  * Create JFrame window and add panels to it based on the current view.
  *
- * @author Matt Lyons, David Lukacs, Daniel Kercheski, David McClure
+ * @author Matt Lyons, David Lukacs
  */
 public class GUI extends JFrame {
 
@@ -15,7 +15,7 @@ public class GUI extends JFrame {
     public StartMenuPanel startMenuPanel;
     public PlayerCreationPanel playerCreationPanel;
     public GameplayPanel gameplayPanel;
-    public StatsPanel statsPanel; 
+    public StatsPanel statsPanel;
 
     //Store Current Panel so it can be easilly removed
     private JPanel currentPanel;
@@ -27,7 +27,7 @@ public class GUI extends JFrame {
      * Create a JFrame with the start menu view.
      */
     public GUI() {
-        super("Dice Golf");
+        super("Dice Golf"); //Window Title
 
         gameLogic = new Game();
 
@@ -59,6 +59,7 @@ public class GUI extends JFrame {
 
     /**
      * Switch to the gameplay view.
+     *
      * @param holeCount number of holes to be played
      */
     public void startGame(int holeCount) {
@@ -66,9 +67,9 @@ public class GUI extends JFrame {
         gameLogic.setNumberOfHoles(holeCount);
         gameLogic.createCourse();
         gameLogic.createGameStats();
-        
+
         //Prepare and show UI
-        gameplayPanel = new GameplayPanel(holeCount,this);
+        gameplayPanel = new GameplayPanel(holeCount, this);
         switchPanel(gameplayPanel);
     }
 
@@ -78,15 +79,15 @@ public class GUI extends JFrame {
     public void showStartMenu() {
         switchPanel(startMenuPanel);
     }
-    
+
     /**
-     *  Switch to the statistics view.
+     * Switch to the statistics view.
      */
-    public void statsView(){
-    	statsPanel = new StatsPanel(this);
-    	switchPanel(statsPanel);
-    	}
-    
+    public void statsView() {
+        statsPanel = new StatsPanel(this);
+        switchPanel(statsPanel);
+    }
+
     /**
      * Remove the current panel (if it exists), and add the new panel
      *
@@ -107,10 +108,7 @@ public class GUI extends JFrame {
      * Maximize this JFrame
      */
     public void maximize() {
-//        DisplayMode display = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode();
-//        setLocation(0,20);
-//        setSize(display.getWidth(),display.getHeight());
         setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
-    
+
 }
