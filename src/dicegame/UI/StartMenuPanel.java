@@ -119,6 +119,8 @@ public class StartMenuPanel extends JPanel implements ActionListener, KeyListene
         }
         gui.gameLogic.createPlayer(playerName);
         validateStart();
+        
+        gui.gameLogic.saveGameStats();
     }
     
     private void removeAllPlayers(){
@@ -155,6 +157,7 @@ public class StartMenuPanel extends JPanel implements ActionListener, KeyListene
         } else if(event.getSource() == removePlayersButton){
             gui.gameLogic.resetPlayers();
             gui.gameLogic.resetStats();
+            gui.gameLogic.saveGameStats();
             
             removeAllPlayers();
         }
