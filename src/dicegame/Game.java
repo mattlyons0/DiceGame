@@ -1136,17 +1136,17 @@ public class Game {
 		gameStats[0][1] = playerOneDistance;
 		System.out.println();
 		test.printStats();
-
-		System.out.println("\n" + "Current distance shot by Player " + test.getCurrentPlayer()
-		+  " is " + test.getCurrentPlayerDistance(test.getCurrentPlayer(), holeIndex));
-		System.out.println();
-		
-		System.out.println("Distances remaining for each hole: " + "\n");
-		test.printDistanceRemainders();
-		System.out.println();
-		System.out.println("Remaining distance for [0][0]: " + test.getDistanceFromHole(holeIndex));
-		System.out.println();
-		test.printStats();
+//
+//		System.out.println("\n" + "Current distance shot by Player " + test.getCurrentPlayer()
+//		+  " is " + test.getCurrentPlayerDistance(test.getCurrentPlayer(), holeIndex));
+//		System.out.println();
+//		
+//		System.out.println("Distances remaining for each hole: " + "\n");
+//		test.printDistanceRemainders();
+//		System.out.println();
+//		System.out.println("Remaining distance for [0][0]: " + test.getDistanceFromHole(holeIndex));
+//		System.out.println();
+//		test.printStats();
 		
 		//Above test shows dice roll value totals
 		//This array stores the current distance accumulated by each player
