@@ -1,7 +1,6 @@
 package dicegame.UI;
 
 import dicegame.Game;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -14,7 +13,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
 /**
- * Handles displaying the Scoreboard of the current game
+ * Handles displaying the Scoreboard of the current game. Stores its own
+ * instance of the distanceLeft in order to simulate individual dice rolls.
  *
  * @author Matt Lyons
  */
@@ -28,6 +28,7 @@ class GameScoreboardComponent extends JComponent {
 
     /**
      * Creates a new Game Scoreboard
+     * @param gui The parent instance of GUI
      */
     public GameScoreboardComponent(final GUI gui) {
         super();
@@ -35,10 +36,10 @@ class GameScoreboardComponent extends JComponent {
         this.gameLogic = gui.gameLogic;
 
         distanceLeft = new int[gameLogic.getNumberOfPlayers()];
-        for(int index = 0; index < distanceLeft.length; index++){
-            distanceLeft[index]=gameLogic.getHoleLength();
+        for (int index = 0; index < distanceLeft.length; index++) {
+            distanceLeft[index] = gameLogic.getHoleLength();
         }
-        
+
         setLayout(new GridBagLayout());
         GridBagConstraints cons = new GridBagConstraints();
         cons.gridx = 0;
@@ -51,14 +52,14 @@ class GameScoreboardComponent extends JComponent {
         table.setRowSelectionAllowed(false);
         table.setColumnSelectionAllowed(false);
         table.getTableHeader().setReorderingAllowed(false);
-        table.setDefaultRenderer(table.getColumnClass(0), new DefaultTableCellRenderer(){
+        table.setDefaultRenderer(table.getColumnClass(0), new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, false, hasFocus, row, column);
-                
+
                 label.setForeground(gui.gameplayPanel.animationComp.getPlayerColor(row));
                 label.setBackground(gui.gameplayPanel.animationComp.getPlayerColorBackground(row));
-                
+
                 return label;
             }
         });
@@ -87,7 +88,7 @@ class GameScoreboardComponent extends JComponent {
                     case 0:
                         return gameLogic.getPlayer()[row];
                     case 1:
-                        return gameLogic.getStrokes(row,gameLogic.getHoleIndex());
+                        return gameLogic.getStrokes(row, gameLogic.getHoleIndex());
                     case 2:
                         return distanceLeft[row];
                     default:
@@ -115,27 +116,37 @@ class GameScoreboardComponent extends JComponent {
      * @param distance the distance the ball was just hit
      * @param playerIndex the index of the player who hit the ball
      */
-    public void hitBall(int distance,int playerIndex) {
+    public void hitBall(int distance, int playerIndex) {
         distanceLeft[playerIndex] -= distance;
         updateTable();
     }
-    
+
     /**
-     * Get the current distance of specified player as displayed on the UI.
-     * Note this value can vary from the value in gameLogic as it reflects each individual dice roll instead of all of them at once.
+     * Get the current distance of specified player as displayed on the UI. Note
+     * this value can vary from the value in gameLogic as it reflects each
+     * individual dice roll instead of all of them at once.
+     *
      * @param playerIndex index of the player to get the distance of
      * @return the distance in units the current player is away from the hole
      */
-    public int getBallDistanceLeft(int playerIndex){
+    public int getBallDistanceLeft(int playerIndex) {
         return distanceLeft[playerIndex];
     }
-    public void newHole(){
-        for(int index = 0; index < distanceLeft.length; index++){
+
+    /**
+     * Resets scoreboard values to prepare for a new hole
+     */
+    public void newHole() {
+        for (int index = 0; index < distanceLeft.length; index++) {
             distanceLeft[index] = gameLogic.getDistanceFromHole(gameLogic.getHoleIndex());
         }
         updateTable();
     }
-    public void updateTable(){
+
+    /**
+     * Fire an event to update the table model
+     */
+    public void updateTable() {
         ((AbstractTableModel) table.getModel()).fireTableDataChanged();
     }
 }

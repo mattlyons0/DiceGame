@@ -19,9 +19,9 @@ import javax.swing.UIManager;
  * Contains all the UI in the Start Menu and methods to modify the data
  * displayed
  *
- * @author Matt Lyons
+ * @author Matt Lyons, David Lukacs
  */
-public class StartMenuPanel extends JPanel implements ActionListener,KeyListener {
+public class StartMenuPanel extends JPanel implements ActionListener, KeyListener {
 
     private GUI gui;
     private int holeCount;
@@ -54,29 +54,28 @@ public class StartMenuPanel extends JPanel implements ActionListener,KeyListener
         cons.gridy = 0; //Use Grid cell 0,0
         cons.weightx = 100;
         cons.weighty = 1;
-        cons.anchor=GridBagConstraints.EAST;
+        cons.anchor = GridBagConstraints.EAST;
         cons.insets = new Insets(5, 5, 5, 5); //Add 5px all around of padding
         add(startButton, cons);
-        
+
         JPanel comp = new JPanel();
         comp.setLayout(new FlowLayout());
         holesCount = new JTextField(2);
         holesCount.setText("3");
         holesCount.addKeyListener(this);
-        keyReleased(new KeyEvent(holesCount,0,0,0,0,'0'));
+        keyReleased(new KeyEvent(holesCount, 0, 0, 0, 0, '0'));
         comp.add(holesCount);
         comp.add(new JLabel("Holes"));
         cons.gridx++;
-        cons.anchor=GridBagConstraints.WEST;
-        add(comp,cons);
-        
+        cons.anchor = GridBagConstraints.WEST;
+        add(comp, cons);
 
         createPlayerButton = new JButton("Create New Player");
         createPlayerButton.addActionListener(this);
         cons.gridy++;
-        cons.anchor=GridBagConstraints.CENTER;
-        cons.gridx=0;
-        cons.gridwidth=3;
+        cons.anchor = GridBagConstraints.CENTER;
+        cons.gridx = 0;
+        cons.gridwidth = 3;
         add(createPlayerButton, cons);
 
         cons.gridy++;
@@ -111,18 +110,18 @@ public class StartMenuPanel extends JPanel implements ActionListener,KeyListener
         gui.gameLogic.createPlayer(playerName);
         validateStart();
     }
-    
+
     /**
      * Validate if the start button should be enabled
      */
-    protected void validateStart(){
-        if(gui.gameLogic.getNumberOfPlayers() > 0 && holeCount > 0){
+    protected void validateStart() {
+        if (gui.gameLogic.getNumberOfPlayers() > 0 && holeCount > 0) {
             startButton.setEnabled(true);
             startButton.setToolTipText(null);
-        } else if(holeCount <= 0){
+        } else if (holeCount <= 0) {
             startButton.setEnabled(false);
             startButton.setToolTipText("There must be at least 1 hole to play.");
-        } else if(gui.gameLogic.getNumberOfPlayers() <= 0){
+        } else if (gui.gameLogic.getNumberOfPlayers() <= 0) {
             startButton.setEnabled(false);
             startButton.setToolTipText("Create at least one player before you can play!");
         }
@@ -151,14 +150,14 @@ public class StartMenuPanel extends JPanel implements ActionListener,KeyListener
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if(e.getSource().equals(holesCount)){
+        if (e.getSource().equals(holesCount)) {
             JTextField field = (JTextField) e.getSource();
-            try{
+            try {
                 int num = Integer.parseInt(field.getText());
                 holesCount.setForeground(UIManager.getColor("Panel.foreground"));
                 holesCount.setToolTipText(null);
                 holeCount = num;
-            } catch(NumberFormatException exception){
+            } catch (NumberFormatException exception) {
                 holesCount.setForeground(Color.red);
                 holesCount.setToolTipText("Holes must be a number!");
                 holeCount = -1;

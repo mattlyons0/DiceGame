@@ -62,6 +62,20 @@ public class Game {
     }
     
     /**
+     * Constructor to auto load the previous game
+     */
+    public Game(boolean loadGame) {
+    	//This will load the game stats, player count, and hole count
+    	if(loadGame)
+    	{
+    		loadGameStats();
+    		numberOfStrokes = 0;
+    		holeIndex = 1;
+    	}
+    	
+    }
+    
+    /**
      * method to store players' shot sums per hole
      */
     public void playerShotSum()
@@ -331,9 +345,12 @@ public class Game {
     	{
     		currentHole++;
     		moveSuccessful = true;
-                holeIndex = currentHole;
     	}
     	
+    	
+    	saveGameStats();
+    	
+    	holeIndex = currentHole;
     	return moveSuccessful;
     }
     
@@ -406,6 +423,8 @@ public class Game {
     public void saveGameStats()
     {
     	int oldStats[][] = gameStats;
+    	int numberOfPlayers = playerCount;
+    	int numberOfHoles = holeCount;
     	
     	try
     	{
@@ -415,6 +434,8 @@ public class Game {
     		
     		//put the array in the file
     		saved.writeObject(oldStats);
+    		saved.writeObject(numberOfPlayers);
+    		saved.writeObject(numberOfHoles);
     		
     		
     		//close the file
@@ -434,12 +455,16 @@ public class Game {
     {
     	try
     	{
+    		
     		//load the file
     		FileInputStream savedFile = new FileInputStream("savedGameStats.sav");
+    		
     		ObjectInputStream saved = new ObjectInputStream(savedFile);
     		
     		//put the array back into the game
     		gameStats = (int[][]) saved.readObject();
+    		playerCount = (int) saved.readObject();
+    		holeCount = (int) saved.readObject();
     		
     		
     		//close the file
@@ -447,7 +472,7 @@ public class Game {
     	}
     	catch(Exception e)
     	{
-    		System.out.println("Error loading the file");
+    		System.out.println("Error: file does not exist yet");
     	}
     }
     

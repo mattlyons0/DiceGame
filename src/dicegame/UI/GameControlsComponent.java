@@ -37,6 +37,10 @@ class GameControlsComponent extends JComponent implements ActionListener {
 
     /**
      * Create a new GameControlsComponent and all its components.
+     *
+     * @param gui the parent GUI object
+     * @param animationComponent the animationComponent which has been created
+     * for this game
      */
     public GameControlsComponent(GUI gui, GameAnimationComponent animationComponent) {
         super();
@@ -66,7 +70,6 @@ class GameControlsComponent extends JComponent implements ActionListener {
         dicePanel.setLayout(new FlowLayout());
         diceRollMultiplier();
         add(dicePanel, cons);
-
     }
 
     private void diceRollMultiplier() { //Display multiplier UI
@@ -91,8 +94,8 @@ class GameControlsComponent extends JComponent implements ActionListener {
                 die.setActionCommand("RollDie " + number);
                 die.addActionListener(this);
                 dicePanel.add(die);
-            } else{
-                rollValues[number]=-1;
+            } else {
+                rollValues[number] = -1;
             }
         }
 
@@ -104,23 +107,27 @@ class GameControlsComponent extends JComponent implements ActionListener {
         playerTurnIndex = gameLogic.getCurrentPlayer();
         String player = gameLogic.getPlayer()[playerTurnIndex];
         playerTurnLabel.setText(player + "'s Turn");
-        
+
         //Color Current Player Label
         Color textColor = animationComp.getPlayerColor(playerTurnIndex);
         Color backgroundColor = animationComp.getPlayerColorBackground(playerTurnIndex);
         playerTurnLabel.setForeground(textColor);
         playerTurnLabel.setBackground(backgroundColor);
+
+        //Update the animation to select the current player's ball
+        animationComp.update(playerTurnIndex);
     }
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if(scoreboard == null)
+        if (scoreboard == null) {
             this.scoreboard = this.gui.gameplayPanel.scoreboardComp;
-        
+        }
+
         if (event.getActionCommand().equals("MultiplierRoll")) {
             gameLogic.addStroke(playerTurnIndex, gameLogic.getHoleIndex());
             int multiplier = gameLogic.roll();
-            rollValues = gameLogic.hitTheBall(multiplier,gameLogic.getCurrentPlayer(),gameLogic.getHoleIndex()); //Preroll values and display them as they are clicked
+            rollValues = gameLogic.hitTheBall(multiplier, gameLogic.getCurrentPlayer(), gameLogic.getHoleIndex()); //Preroll values and display them as they are clicked
 
             diceRoll(multiplier); //Update GUI with multiplier
             scoreboard.updateTable();
@@ -135,8 +142,8 @@ class GameControlsComponent extends JComponent implements ActionListener {
                     + ".png")));
             rollButton.removeActionListener(this);
 
-            scoreboard.hitBall(rollValues[diceNum],playerTurnIndex);
-            gui.gameplayPanel.animationComp.repaint();
+            scoreboard.hitBall(rollValues[diceNum], playerTurnIndex);
+            animationComp.update(playerTurnIndex);
 
             rollValues[diceNum] = -1; //Dice has been rolled and roll has been used
 
@@ -150,15 +157,20 @@ class GameControlsComponent extends JComponent implements ActionListener {
             if (allRolled) {
                 String buttonText = "Next Turn";
                 boolean allPlayersReachedHole = true;
-                for(int playerIndex = 0; playerIndex < gameLogic.getNumberOfPlayers(); playerIndex++){
-                    if(gameLogic.getCurrentPlayerDistance(playerIndex, gameLogic.getHoleIndex()) != 0){
+                for (int playerIndex = 0; playerIndex < gameLogic.getNumberOfPlayers(); playerIndex++) {
+                    if (gameLogic.getCurrentPlayerDistance(playerIndex, gameLogic.getHoleIndex()) != 0) {
                         allPlayersReachedHole = false;
                         break;
                     }
                 }
+                JButton nextTurnSpacer = new JButton("Next Turn");
+                nextTurnSpacer.setEnabled(false);
+
                 if (allPlayersReachedHole && gameLogic.getHoleIndex() == gui.gameplayPanel.TOTAL_HOLES - 1) {
+                    dicePanel.add(nextTurnSpacer);
                     buttonText = "End Game";
                 } else if (allPlayersReachedHole) {
+                    dicePanel.add(nextTurnSpacer);
                     buttonText = "Next Hole";
                 }
                 JButton nextTurn = new JButton(buttonText);
@@ -172,9 +184,10 @@ class GameControlsComponent extends JComponent implements ActionListener {
                 return;
             } else if (((JButton) event.getSource()).getText().equals("Next Hole")) {
                 gameLogic.nextHole();
-                gui.gameplayPanel.animationComp.recalculateHole();
+                animationComp.recalculateHole();
                 gui.gameplayPanel.scoreboardComp.newHole();
             }
+
             updateTurn();
             diceRollMultiplier();
         }
