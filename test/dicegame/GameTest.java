@@ -692,7 +692,17 @@ public void testGetStrokes() {
 
 @Test
 public void testGetHoleLength() {
-	fail("Not yet implemented");
+	
+	Game test = new Game();
+	
+	test.createGameStats();
+	test.setNumberOfHoles(5);
+	int courseList [] = test.getCourse();
+	
+	//first value should be set for first hole
+	//getHoleLength() should be on first hole; therefore same distance
+	assertEquals(courseList[0], test.getHoleLength());
+	
 }
 
 @Test
