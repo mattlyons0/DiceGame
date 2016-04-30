@@ -3,6 +3,8 @@ package dicegame;
 import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
+
+import dicegame.Game;
 import static org.junit.Assert.*;
 
 /**
@@ -200,12 +202,18 @@ public class GameTest {
     }
 
 }
-
-@Test
-public void testSetNumberOfPlayers(int numberOfPlayers)
-{
-	
-}
+	/**
+	 * Test that setting the number of players matches the number of players
+	 * in the game.
+	 */
+	@Test
+	public void testSetNumberOfPlayers(int numberOfPlayers)
+	{
+		Game testing = new Game();
+		testing.setNumberOfPlayers(3);
+		int numberOfPlayers = testing.getNumberOfPlayers();
+		assertEquals(numberOfPlayers, 3);
+	}
 
 @Test
 public void testCreatePlayer(String name)
