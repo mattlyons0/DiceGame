@@ -103,17 +103,18 @@ public class PlayerCreationPanel extends JPanel implements ActionListener {
             // conditional for non-text being entered.
             if (name.trim().equals("")) {
                 displayName.setText("A name must be entered.");
-            } 
-            // Conditional for reaching max amount of players of 4. 
-            // User is directed to go back to StartMenu.
-            if(gui.gameLogic.getNumberOfPlayers() == 4){
-            	displayName.setText("Player limit of 4 reached, please return to Start");
-            }
-            else {
-                // adding players to game.
-                gui.startMenuPanel.addPlayer(name);
-                // removing panel
-                gui.showStartMenu();
+            }  else {
+                // Conditional for reaching max amount of players of 4. 
+                // User is directed to go back to StartMenu.
+                if(gui.gameLogic.getNumberOfPlayers() == 4){
+                    displayName.setText("Player limit of 4 reached, please return to Start");
+                }
+                else {
+                    // adding players to game.
+                    gui.startMenuPanel.addPlayer(name);
+                    // removing panel
+                    gui.showStartMenu();
+                }
             }
 
         }
