@@ -39,10 +39,11 @@ public class GameplayPanel extends JPanel {
         GridBagConstraints cons = new GridBagConstraints();
         cons.gridx = 0;
         cons.gridy = 0;
-        cons.weightx = 1;
+        cons.weightx = 10;
         cons.weighty = 70;
+        cons.gridheight = 1;
+        cons.gridwidth = 1;
         cons.fill = GridBagConstraints.BOTH; //Stretch components to fill space
-        cons.insets = new Insets(5, 5, 5, 5); //Add some padding to components
 
         //Animation Part
         animationComp = new GameAnimationComponent(this.gui);
@@ -51,6 +52,7 @@ public class GameplayPanel extends JPanel {
         //Scoreboard Part
         cons.gridy++;
         cons.weighty = 1;
+        cons.insets = new Insets(5, 5, 5, 5); //Add some padding to components
         scoreboardComp = new GameScoreboardComponent(this.gui);
         add(scoreboardComp, cons);
 

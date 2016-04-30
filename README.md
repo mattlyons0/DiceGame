@@ -2,6 +2,8 @@
 
 A Java Golf game where the hole is a defined number of spaces away and you roll dice in order determine the distance you hit the ball.
 
+![Screenshot](Screenshot.png)
+
 [Trello](https://trello.com/b/rMvKnNd1/dicegame-project)
 
 ## Definitions
