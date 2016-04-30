@@ -145,8 +145,8 @@ public class Game {
             int lowestScore = Integer.MAX_VALUE;
             int lowestIndex = -1;
             for(int pIndex = 0; pIndex < getNumberOfPlayers(); pIndex++){
-                if(strokeSum(pIndex) < lowestScore){
-                    lowestScore = strokeSum(pIndex);
+                if(getStrokes(pIndex,holeIndex) < lowestScore){
+                    lowestScore = getStrokes(pIndex,holeIndex);
                     lowestIndex = pIndex;
                 }
             }
@@ -155,6 +155,15 @@ public class Game {
         }
         
         return wins;
+    }
+    
+    /**
+     * Calculate the number of games the player has not won
+     * @param playerIndex index of the player to calculate from
+     * @return the number of holes this player lost
+     */
+    public int getLosses(int playerIndex){
+        return getNumberOfHoles() - getWins(playerIndex);
     }
     
     /**
@@ -574,16 +583,13 @@ public class Game {
      */
     public void resetStats() //works
     {
-    	int temp[][] = gameStats;
-    	
-    	for (int playerIndex = 0; playerIndex < temp.length; playerIndex++)
+    	for (int playerIndex = 0; playerIndex < gameStats.length; playerIndex++)
     	{
-    		for (int holeIndex = 0; holeIndex < temp[playerIndex].length; holeIndex++)
+    		for (int holeIndex = 0; holeIndex < gameStats[playerIndex].length; holeIndex++)
     		{
-    			temp[playerIndex][holeIndex] = 0;
+    			gameStats[playerIndex][holeIndex] = 0;
     		}
     	}
-    	gameStats = temp;
     }
     
     /**
@@ -593,15 +599,15 @@ public class Game {
      */
     public void addStroke(int player, int hole) //works
     {
-    	int temp[][] = gameStats;
     	try
     	{
-    		temp[player][hole]++;
+    		gameStats[player][hole]++;
     	}
     	catch(Exception e)
     	{
-    		System.out.println("Error: incorrect player number or hole number");
+    		System.err.println("Error: incorrect player number or hole number");
     	}
+        
     }
     
     /**
@@ -836,17 +842,17 @@ public class Game {
 		System.out.println("Total for player 3: " + totalThree);
 		System.out.println("Total for player 4: " + totalFour);
 		
+//		
+//		test.countWin();
+//		int oneWins = playerOneWins;
+//		int twoWins = playerTwoWins;
+//		int threeWins = playerThreeWins;
+//		int fourWins = playerFourWins;
 		
-		test.countWin();
-		int oneWins = playerOneWins;
-		int twoWins = playerTwoWins;
-		int threeWins = playerThreeWins;
-		int fourWins = playerFourWins;
-		
-		System.out.println("\n" + "Total for player 1: " + oneWins);
-		System.out.println("Total for player 2: " + twoWins);
-		System.out.println("Total for player 3: " + threeWins);
-		System.out.println("Total for player 4: " + fourWins + "\n");
+//		System.out.println("\n" + "Total for player 1: " + oneWins);
+//		System.out.println("Total for player 2: " + twoWins);
+//		System.out.println("Total for player 3: " + threeWins);
+//		System.out.println("Total for player 4: " + fourWins + "\n");
 		
 		System.out.println("Current hole length: " + test.getHoleLength() + "\n");
 		
