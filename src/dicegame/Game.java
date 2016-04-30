@@ -363,8 +363,8 @@ public class Game {
      */
     public int getHoleIndex()
     {
-    	holeIndex = currentGameLocation[1];
-    	return holeIndex;
+    	int holeIndexLocation = holeIndex;
+    	return holeIndexLocation;
     }
     
     /**

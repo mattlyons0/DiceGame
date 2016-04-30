@@ -132,7 +132,7 @@ class GameScoreboardComponent extends JComponent {
     }
     public void newHole(){
         strokes = 0;
-        distanceLeft = gameLogic.getDistanceFromHole();
+        distanceLeft = gameLogic.getDistanceFromHole(gameLogic.getHoleIndex());
         ((AbstractTableModel) table.getModel()).fireTableDataChanged();
     }
 }
