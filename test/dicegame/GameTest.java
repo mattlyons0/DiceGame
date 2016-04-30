@@ -739,6 +739,7 @@ public void testGetHoleLength() {
 		game.resetHoleIndex();
 		assertEquals(0,0);
 	}
+}
 //@Test
 //public void testResetDistancesRemainder() {
 //	fail("Not yet implemented");
