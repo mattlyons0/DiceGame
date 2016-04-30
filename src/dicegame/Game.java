@@ -656,8 +656,9 @@ public class Game {
      *
      * @return number of strokes
      */
-    public int getStrokes() 
+    public int getStrokes(int player, int hole) 
     {
+    	numberOfStrokes = gameStats[player][hole];
         return numberOfStrokes;
     }
 
