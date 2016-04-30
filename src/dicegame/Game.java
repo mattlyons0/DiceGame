@@ -320,7 +320,7 @@ public class Game {
      * Move the hole to the next hole in the game. Returns true if moved or false if the last hole.
      * @return boolean move successful
      */
-    public boolean nextHole() //works
+    public boolean nextHole()
     {
     	int currentHole = holeIndex;
     	int maxHole = holeCount;
@@ -1135,6 +1135,9 @@ public class Game {
 		System.out.println();
 		test.printStats();
 		test.playerShotSum();
+		gameStats[0][1] = playerOneDistance;
+		System.out.println();
+		test.printStats();
 
 		System.out.println("\n" + "Current distance shot by Player " + test.getCurrentPlayer()
 		+  " is " + test.getCurrentPlayerDistance(test.getCurrentPlayer(), holeIndex));
@@ -1142,9 +1145,10 @@ public class Game {
 		
 		System.out.println("Distances remaining for each hole: " + "\n");
 		test.printDistanceRemainders();
-		
+		System.out.println();
 		System.out.println("Remaining distance for [0][0]: " + test.getDistanceFromHole(holeIndex));
-		
+		System.out.println();
+		test.printStats();
 		
 		//Above test shows dice roll value totals
 		//This array stores the current distance accumulated by each player

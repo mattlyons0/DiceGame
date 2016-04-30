@@ -201,19 +201,182 @@ public class GameTest {
 
 }
 
-//	@Test
-//	public void setNumberOfPlayers(int numberOfPlayers)
-//	@Test
-//	public void getNumberOfPlayers()
-//	@Test
-//	public void getPlayer()
-//	@Test
-//	public void createPlayer(String name)
-//	{
-//		Game test = new Game();
-//		
-//		test.createPlayer("Tom");
-//		
-//		System.out.println("Names of players: " + test.getPlayer());
-//		
-//	}
+@Test
+public void testSetNumberOfPlayers(int numberOfPlayers)
+{
+	
+}
+
+@Test
+public void testCreatePlayer(String name)
+{
+	Game test = new Game();
+	
+	test.createPlayer("Tom");
+	
+	System.out.println("Names of players: " + test.getPlayer());
+	
+}
+
+@Test
+public void testPlayerShotSum()
+{
+	
+}
+
+@Test
+public void testGetCurrentPlayerDistance()
+{
+	
+}
+
+@Test
+public void testGetPlayerOneWins()
+{
+	
+}
+
+@Test
+public void testGetPlayerTwoWins()
+{
+	
+}
+
+@Test
+public void testGetPlayerThreeWins()
+{
+	
+}
+
+@Test
+public void testGetPlayerFourWins()
+{
+	
+}
+
+@Test
+public void testStrokeSum()
+{
+	
+}
+
+@Test
+public void testCountWin()
+{
+	
+}
+
+@Test
+public void testGetHole()
+{
+	
+}
+
+@Test
+public void testGetHoleIndex()
+{
+	
+}
+
+@Test
+public void testCurrentPlayer()
+{
+	
+}
+
+@Test
+public void testGetCurrentPlayer()
+{
+	
+}
+
+@Test
+public void testGetGameStats()
+{
+	
+}
+
+@Test
+public void testSaveGameStats()
+{
+	
+}
+
+@Test
+public void testLoadGameStats()
+{
+	
+}
+
+@Test
+public void testGetNumberOfHoles()
+{
+	
+}
+
+@Test
+public void testSetNumberOfHoles()
+{
+	
+}
+
+@Test
+public void testRandomHoleDistancer()
+{
+	
+}
+
+@Test
+public void testGreateCourse()
+{
+	
+}
+
+@Test
+public void testGetCourse()
+{
+	
+}
+
+@Test
+public void testResetDistance()
+{
+	
+}
+
+@Test
+public void testGetDistanceFromHol()
+{
+	
+}
+
+@Test
+public void testCreateGameStats()
+{
+	
+}
+
+@Test
+public void testResetStats()
+{
+	
+}
+
+@Test
+public void testAddStroke()
+{
+	
+}
+
+@Test
+public void testPrintStats()
+{
+	
+}
+
+@Test
+public void testPrintDistanceRemaining()
+{
+	
+}
+}
