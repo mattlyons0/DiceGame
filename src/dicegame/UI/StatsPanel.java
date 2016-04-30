@@ -71,13 +71,14 @@ public class StatsPanel extends JPanel implements ActionListener {
 		String[] playerName = gui.gameLogic.getPlayer();
 		int totalWins = gui.gameLogic.getPlayerOneWins() + gui.gameLogic.getPlayerTwoWins()
 				+ gui.gameLogic.getPlayerThreeWins() + gui.gameLogic.getPlayerFourWins();
-		int gameStats[][] = new int[playersNum][holeNum];
-		int hole = 0;
-
+		gui.gameLogic.getGameStats();
+		gui.gameLogic.loadGameStats();
+		//int gameStats[][] = new int[playersNum][holeNum];
+		
 		// Testing with rows and columns here.
 		// playersNum = 8;
 		// holeNum = 3;
-
+		
 		// Creating PlayerLabels for each player with wins, losses and scores
 		for (int index = 0; index < playersNum; index++) {
 			cons.gridy++;
@@ -94,19 +95,19 @@ public class StatsPanel extends JPanel implements ActionListener {
 				add(winLabel, cons);
 			}
 
-			// Adding player 1 winning label and checking for wins.
+			// Adding player 2 winning label and checking for wins.
 			if (index == 1) {
 				winLabel = new JLabel("" + gui.gameLogic.getPlayerTwoWins());
 				add(winLabel, cons);
 			}
 
-			// Adding player 1 winning label and checking for wins.
+			// Adding player 3 winning label and checking for wins.
 			if (index == 2) {
 				winLabel = new JLabel("" + gui.gameLogic.getPlayerThreeWins());
 				add(winLabel, cons);
 			}
 
-			// Adding player 1 winning label and checking for wins.
+			// Adding player 4 winning label and checking for wins.
 			if (index == 3) {
 				winLabel = new JLabel("" + gui.gameLogic.getPlayerFourWins());
 				add(winLabel, cons);
@@ -201,8 +202,9 @@ public class StatsPanel extends JPanel implements ActionListener {
 			add(playerLabel, cons);
 			for (int index2 = 0; index2 < holeNum; index2++) {
 				cons.gridx++;
-				// gameStat traversal done here
-				holeLabel = new JLabel("" + gameStats[index][index2]);
+				// gameStat traversal done here for labels of each players hole value.
+				// works with getStrokes(player, hole) or gameStats();
+				holeLabel = new JLabel("" + gui.gameLogic.getStrokes(index, index2));//getStrokes(playerNum, holeNum);
 				add(holeLabel, cons);
 			}
 		}
@@ -220,7 +222,7 @@ public class StatsPanel extends JPanel implements ActionListener {
 			add(noPlayers, cons);
 		}
 	}
-
+	
 	/**
 	 * ActionPerformed for JButton to return back to StartMenu
 	 */
