@@ -810,6 +810,11 @@ public class Game {
     	return playerCount;
     }
     
+    public void resetPlayers(){
+        resetPlayerCount();
+        playerName = new String[4];
+    }
+    
     public int resetHoleIndex()
     {
     	holeIndex = 0;

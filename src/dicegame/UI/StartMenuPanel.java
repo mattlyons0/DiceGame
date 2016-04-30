@@ -32,6 +32,7 @@ public class StartMenuPanel extends JPanel implements ActionListener, KeyListene
     private JButton statisticsButton;
     private JButton quitButton;
     private JTextField holesCount;
+    private JButton removePlayersButton;
 
     /**
      * Create a StartMenuPanel to be used in the GUI
@@ -89,10 +90,19 @@ public class StartMenuPanel extends JPanel implements ActionListener, KeyListene
         add(quitButton, cons);
 
         playersLabel = new JLabel("No Players Created");
+        cons.gridwidth = 2;
         cons.gridy++;
         cons.anchor = GridBagConstraints.SOUTH;
         cons.weighty = 100;
         add(playersLabel, cons);
+        
+        removePlayersButton = new JButton("Remove All Players");
+        removePlayersButton.addActionListener(this);
+        cons.gridwidth = 1;
+        cons.gridx++;
+        cons.anchor=GridBagConstraints.SOUTHEAST;
+        cons.weightx=1;
+        add(removePlayersButton,cons);
 
     }
 
@@ -108,6 +118,11 @@ public class StartMenuPanel extends JPanel implements ActionListener, KeyListene
             playersLabel.setText(playersLabel.getText() + ", " + playerName);
         }
         gui.gameLogic.createPlayer(playerName);
+        validateStart();
+    }
+    
+    private void removeAllPlayers(){
+        playersLabel.setText("No Players Created");
         validateStart();
     }
 
@@ -137,6 +152,11 @@ public class StartMenuPanel extends JPanel implements ActionListener, KeyListene
             gui.statsView();
         } else if (event.getSource() == quitButton) {
             System.exit(0);
+        } else if(event.getSource() == removePlayersButton){
+            gui.gameLogic.resetPlayers();
+            gui.gameLogic.resetStats();
+            
+            removeAllPlayers();
         }
     }
 
