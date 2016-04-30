@@ -110,6 +110,9 @@ class GameControlsComponent extends JComponent implements ActionListener {
         Color backgroundColor = animationComp.getPlayerColorBackground(playerTurnIndex);
         playerTurnLabel.setForeground(textColor);
         playerTurnLabel.setBackground(backgroundColor);
+        
+        //Update the animation to select the current player's ball
+        animationComp.update(playerTurnIndex);
     }
 
     @Override
@@ -136,7 +139,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
             rollButton.removeActionListener(this);
 
             scoreboard.hitBall(rollValues[diceNum],playerTurnIndex);
-            gui.gameplayPanel.animationComp.repaint();
+            animationComp.update(playerTurnIndex);
 
             rollValues[diceNum] = -1; //Dice has been rolled and roll has been used
 
@@ -172,7 +175,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
                 return;
             } else if (((JButton) event.getSource()).getText().equals("Next Hole")) {
                 gameLogic.nextHole();
-                gui.gameplayPanel.animationComp.recalculateHole();
+                animationComp.recalculateHole();
                 gui.gameplayPanel.scoreboardComp.newHole();
             }
             updateTurn();

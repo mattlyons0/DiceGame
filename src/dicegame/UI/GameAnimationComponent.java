@@ -39,6 +39,8 @@ public class GameAnimationComponent extends JComponent {
     private Dimension holeLocation;
     private Color[] playerColors;
     
+    private int playerIndexOnTop;
+    
     /**
      * Creates a new Game Animation Component
      */
@@ -47,6 +49,8 @@ public class GameAnimationComponent extends JComponent {
 
         this.gui = gui;
         this.gameLogic = gui.gameLogic;
+        
+        playerIndexOnTop = 0;
 
         setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         setLayout(new FlowLayout());
@@ -90,6 +94,12 @@ public class GameAnimationComponent extends JComponent {
         
         repaint();
     }
+    
+    
+    public void update(int playerIndex){
+        playerIndexOnTop = playerIndex;
+        this.repaint();
+    }
 
     @Override
     public void paint(Graphics graphics) {
@@ -112,13 +122,22 @@ public class GameAnimationComponent extends JComponent {
             animationGraphics.drawImage(holeImage, (int) (((holeLocation.width) + 30) * scaleFactorX), (int) (holeLocation.height * scaleFactorY), null);
         }
         
-        for(int playerIndex = 0; playerIndex < gameLogic.getNumberOfPlayers(); playerIndex++){
+        //Draw player balls (in an order where the most recently moved ball is always rendered last (on top))
+        int playersDrawnCount = 0;
+        int startPlayer = playerIndexOnTop+1;
+        if(startPlayer == gameLogic.getNumberOfPlayers())
+            startPlayer = 0;
+        
+        for(int playerIndex = startPlayer; playersDrawnCount < gameLogic.getNumberOfPlayers(); playerIndex++){
             int ballLoc = gameLogic.getHoleLength() - scoreboardComp.getBallDistanceLeft(playerIndex);
             double ballPercent = (double) ballLoc / gameLogic.getHoleLength();
             int ballPixels = (int) (((ballPercent * ((holeLocation.width)) + 30) * scaleFactorX));
 
             //Draw ball outline/shadow
-            animationGraphics.setColor(Color.BLACK);
+            if(playerIndexOnTop == playerIndex)
+                animationGraphics.setColor(Color.WHITE); //Highlight in white the current player's ball
+            else
+                animationGraphics.setColor(Color.BLACK);
             Ellipse2D.Double ball = new Ellipse2D.Double(ballPixels, (int) (holeLocation.height * scaleFactorY), 11, 11);
             animationGraphics.fill(ball);
             
@@ -126,6 +145,10 @@ public class GameAnimationComponent extends JComponent {
             animationGraphics.setColor(playerColors[playerIndex]);
             ball = new Ellipse2D.Double(ballPixels, (int) (holeLocation.height * scaleFactorY), 10, 10);
             animationGraphics.fill(ball);
+            
+            if(playerIndex == gameLogic.getNumberOfPlayers() - 1)
+                playerIndex = -1;
+            playersDrawnCount++;
         }
 
         //Draw Hole Number
