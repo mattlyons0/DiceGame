@@ -10,6 +10,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -159,9 +160,14 @@ class GameControlsComponent extends JComponent implements ActionListener {
                         break;
                     }
                 }
+                JButton nextTurnSpacer = new JButton("Next Turn");
+                nextTurnSpacer.setEnabled(false);
+                    
                 if (allPlayersReachedHole && gameLogic.getHoleIndex() == gui.gameplayPanel.TOTAL_HOLES - 1) {
+                    dicePanel.add(nextTurnSpacer);
                     buttonText = "End Game";
                 } else if (allPlayersReachedHole) {
+                    dicePanel.add(nextTurnSpacer);
                     buttonText = "Next Hole";
                 }
                 JButton nextTurn = new JButton(buttonText);
@@ -178,6 +184,7 @@ class GameControlsComponent extends JComponent implements ActionListener {
                 animationComp.recalculateHole();
                 gui.gameplayPanel.scoreboardComp.newHole();
             }
+            
             updateTurn();
             diceRollMultiplier();
         }
