@@ -665,10 +665,17 @@ public void testGetHoleLength() {
 //	fail("Not yet implemented");
 //}
 //
-//@Test
-//public void testResetStats() {
-//	fail("Not yet implemented");
-//}
+@Test
+	public void testResetStats() {
+		Game game = new Game();
+		game.createGameStats();
+		int gameStats[][] = new int[2][2];
+		gameStats[0][0] = 1;
+        gameStats[0][1] = 2;
+        assertEquals(gameStats[0][0], 1);
+        game.resetStats();
+        assertEquals(gameStats[0][0], 0);
+	}
 //
 //@Test
 //public void testAddStroke() {
@@ -700,16 +707,32 @@ public void testGetHoleLength() {
 //	fail("Not yet implemented");
 //}
 //
-//@Test
-//public void testResetPlayerCount() {
-//	fail("Not yet implemented");
-//}
-//
-//@Test
-//public void testResetHoleIndex() {
-//	fail("Not yet implemented");
-//}
-//
+/**
+	 * Testing resetPlayerCount(): Creating 2 players and checking that 2 players have been created. 
+	 * Then resetting the player count and checking that the player count is 0.
+	 */
+	@Test
+	public void testResetPlayerCount() {
+		Game game = new Game(); 
+		game.createPlayer("test");
+		game.createPlayer("test2");
+		assertEquals(game.getNumberOfPlayers(),2);
+		game.resetPlayerCount();
+		assertEquals(game.getNumberOfPlayers(),0);
+	}
+/**
+	 * Testing resetHoleIndex(): Setting amount of holes to four. Playing 2 holes before resetting them.
+	 */
+	@Test
+	public void testResetHoleIndex() {
+		Game game = new Game();
+		game.setNumberOfHoles(4);
+		game.nextHole();
+		game.nextHole();
+		assertEquals(2,game.getHoleIndex());
+		game.resetHoleIndex();
+		assertEquals(0,0);
+	}
 //@Test
 //public void testResetDistancesRemainder() {
 //	fail("Not yet implemented");
